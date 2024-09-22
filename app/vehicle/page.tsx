@@ -1,0 +1,951 @@
+"use client";
+import React, { useEffect, useState } from "react";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import TablePagination from "@mui/material/TablePagination";
+import Image from "next/image";
+import Navbar from "../common/Navbar";
+import Elipse from "../../public/elipse.png";
+import { Modal, TextField, Button } from "@mui/material";
+import { RxCrossCircled } from "react-icons/rx";
+import axios from "axios";
+import { IoDocumentsSharp } from "react-icons/io5";
+import { FaEdit, FaDownload } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import { useRouter } from "next/navigation";
+
+const VehicleTable: React.FC = () => {
+  const [page, setPage] = useState<number>(0);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(5);
+  const [toggle, setToggle] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const router = useRouter();
+
+  const getCookie = (name: string): string | null => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) {
+      return parts.pop()?.split(";").shift() || null;
+    }
+    return null;
+  };
+
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      try {
+        const response = await axios.get("/api/auth/validate", {
+          withCredentials: true,
+        });
+
+        const accessToken = getCookie("accessToken");
+        if (!response.data.isLoggedIn || !accessToken) {
+          router.push("/");
+        }
+      } catch (error) {}
+    };
+
+    checkLoginStatus();
+  }, [router]);
+
+  useEffect(() => {
+    const timer: NodeJS.Timeout = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
+  const docField = {
+    vehicleNumber: "",
+    brand: "",
+    model: "",
+    rc: "",
+    rcFile: null,
+    insurance: "",
+    insuranceFile: null,
+    fitness: "",
+    fitnessFile: null,
+    pollution: "",
+    pollutionFile: null,
+    roadTax: "",
+    roadTaxFile: null,
+    odometer: "",
+    vehiclePass: "",
+    vehiclePassFile: null,
+    otherFile: null,
+  };
+
+  const [open, setOpen] = useState(false);
+  const [openDoc, setOpenDoc] = useState(false);
+  const [update, setUpdate] = useState(false);
+  const [vehicleDocument, setVehicleDocument] = useState(docField);
+  const [formData, setFormData] = useState(docField);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleOpenDoc = (doc: any) => {
+    setVehicleDocument(doc);
+    setOpenDoc(true);
+  };
+
+  const handleClose = () => {
+    setToggle(false);
+    setOpen(false);
+    setFormData(docField);
+  };
+  const handleCloseDoc = () => {
+    setToggle(false);
+    setOpenDoc(false);
+    setVehicleDocument(docField);
+  };
+
+  const handleInputChange = (e: any) => {
+    const { name, value } = e.target;
+    if (name === "rcFile") {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        setFormData((prev) => ({ ...prev, [name]: reader.result }));
+      };
+    } else if (name === "insuranceFile") {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        setFormData((prev) => ({ ...prev, [name]: reader.result }));
+      };
+    } else if (name === "fitnessFile") {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        setFormData((prev) => ({ ...prev, [name]: reader.result }));
+      };
+    } else if (name === "pollutionFile") {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        setFormData((prev) => ({ ...prev, [name]: reader.result }));
+      };
+    } else if (name === "roadTaxFile") {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        setFormData((prev) => ({ ...prev, [name]: reader.result }));
+      };
+    } else if (name === "vehiclePassFile") {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        setFormData((prev) => ({ ...prev, [name]: reader.result }));
+      };
+    } else if (name === "otherFile") {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        setFormData((prev) => ({ ...prev, [name]: reader.result }));
+      };
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
+  };
+
+  const handleSubmit = async (e: any) => {
+    setIsLoading(true);
+    e.preventDefault();
+    await axios
+      .post("/api/vehicle/create", formData)
+      .then((res) => {
+        if (res.data.message === "exists") {
+          alert("Project already exists");
+        } else {
+          fetchVehicle();
+        }
+      })
+      .catch((err) => console.error(err));
+    handleClose();
+  };
+
+  const [getVehicle, setGetVehicle] = useState<any[]>([]);
+
+  const fetchVehicle = async () => {
+    setIsLoading(true);
+    try {
+      const res = await axios.get("/api/vehicle/getall");
+      setGetVehicle(res.data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchVehicle();
+  }, []);
+
+  const updateClick = async (id: string) => {
+    setIsLoading(true);
+    await axios
+      .get(`/api/vehicle/${id}`)
+      .then((res) => {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          ...res.data,
+          rcFile: null,
+          insuranceFile: null,
+          fitnessFile: null,
+          pollutionFile: null,
+          roadTaxFile: null,
+          vehiclePassFile: null,
+          otherFile: null,
+        }));
+        handleOpen();
+      })
+      .catch((err) => console.error(err))
+      .finally(() => setIsLoading(false));
+    setUpdate(true);
+  };
+
+  const handleUpdate = async (e: any) => {
+    setIsLoading(true);
+    e.preventDefault();
+    await axios
+      .put(`/api/vehicle/update`, formData)
+      .then(() => {
+        handleClose();
+        setUpdate(false);
+        fetchVehicle();
+      })
+      .catch((err) => console.error(err))
+      .finally(() => setIsLoading(false));
+  };
+
+  const deleteClick = async (id: string) => {
+    setIsLoading(true);
+    await axios
+      .delete(`/api/vehicle/delete`, { data: { id } })
+      .then(() => {
+        fetchVehicle();
+      })
+      .catch((err) => console.error(err))
+      .finally(() => setIsLoading(false));
+  };
+
+  const handleDownloadPO = (file: any) => {
+    const link = document.createElement("a");
+
+    link.href = file;
+    link.download = file.split("/").pop();
+
+    document.body.appendChild(link);
+    link.click();
+
+    document.body.removeChild(link);
+  };
+
+  function getExpiryMessage(expiryDate: string): string {
+    const currentDate = new Date();
+    const expirationDate = new Date(expiryDate);
+
+    const diffInMilliseconds = expirationDate.getTime() - currentDate.getTime();
+    const diffInDays = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
+    if (diffInDays < 0) {
+      return "Expired";
+    }
+    if (diffInDays === 0) {
+      return "Today";
+    } else if (diffInDays === 1) {
+      return "1 day remaining";
+    } else if (diffInDays <= 7) {
+      return `${diffInDays} days remaining`;
+    } else if (diffInDays <= 30) {
+      const weeksRemaining = Math.floor(diffInDays / 7);
+      return weeksRemaining === 1
+        ? "1 week remaining"
+        : `${weeksRemaining} weeks remaining`;
+    } else {
+      const monthsRemaining = Math.floor(diffInDays / 30);
+      return monthsRemaining === 1
+        ? "1 month remaining"
+        : `${monthsRemaining} months remaining`;
+    }
+  }
+
+  return (
+    <>
+      {isLoading ? (
+        <div className="loader-container">
+          <div className="loader-container">
+            <i>GTT</i>
+          </div>
+        </div>
+      ) : null}
+      <section className="firm-main-container">
+        <Navbar />
+        <Image
+          src={Elipse}
+          alt="elipse_design"
+          style={{ width: "100%" }}
+          className="elipse-home-image"
+        />
+        <p className="text-p card-badge">
+          Home / <span style={{ color: "white" }}>Vehicles</span>
+        </p>
+
+        <Modal
+          className="bus-form-modal"
+          open={openDoc}
+          onClose={handleCloseDoc}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <div className="bus-form-container" style={{ width: "45%" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "20px",
+              }}
+            >
+              <h3>Vehicle Documents</h3>
+              <RxCrossCircled
+                className="bus-form-cross"
+                onClick={handleCloseDoc}
+              />
+            </div>
+            <TableContainer component={Paper} className="table-container">
+              <Table sx={{ minWidth: 650 }} aria-label="caption table">
+                <TableHead style={{ background: "#ddff8f" }}>
+                  <TableRow>
+                    <TableCell
+                      style={{
+                        fontWeight: "bold",
+                        top: 40,
+                        minWidth: 50,
+                        textAlign: "center",
+                      }}
+                    >
+                      Document
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        fontWeight: "bold",
+                        top: 40,
+                        minWidth: 50,
+                        textAlign: "center",
+                      }}
+                    >
+                      File
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        fontWeight: "bold",
+                        top: 40,
+                        minWidth: 50,
+                        textAlign: "center",
+                      }}
+                    >
+                      Expiry
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow hover role="checkbox" tabIndex={-1}>
+                    <TableCell style={{ textAlign: "center" }}>RC</TableCell>
+                    <TableCell style={{ textAlign: "center" }}>
+                      <FaDownload
+                        className="table-action-icon"
+                        style={{ color: "grey" }}
+                        onClick={() => handleDownloadPO(vehicleDocument.rcFile)}
+                      />
+                    </TableCell>
+                    <TableCell style={{ textAlign: "center" }}>
+                      {getExpiryMessage(vehicleDocument.rc)}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow hover role="checkbox" tabIndex={-1}>
+                    <TableCell style={{ textAlign: "center" }}>
+                      Insurance
+                    </TableCell>
+                    <TableCell style={{ textAlign: "center" }}>
+                      <FaDownload
+                        className="table-action-icon"
+                        style={{ color: "grey" }}
+                        onClick={() =>
+                          handleDownloadPO(vehicleDocument.insuranceFile)
+                        }
+                      />
+                    </TableCell>
+                    <TableCell className="body-tablecell">
+                      {getExpiryMessage(vehicleDocument.insurance)}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow hover role="checkbox" tabIndex={-1}>
+                    <TableCell style={{ textAlign: "center" }}>
+                      Fitness
+                    </TableCell>
+                    <TableCell style={{ textAlign: "center" }}>
+                      <FaDownload
+                        className="table-action-icon"
+                        style={{ color: "grey" }}
+                        onClick={() =>
+                          handleDownloadPO(vehicleDocument.fitnessFile)
+                        }
+                      />
+                    </TableCell>
+                    <TableCell style={{ textAlign: "center" }}>
+                      {getExpiryMessage(vehicleDocument.fitness)}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow hover role="checkbox" tabIndex={-1}>
+                    <TableCell style={{ textAlign: "center" }}>
+                      Pollution
+                    </TableCell>
+                    <TableCell style={{ textAlign: "center" }}>
+                      <FaDownload
+                        className="table-action-icon"
+                        style={{ color: "grey" }}
+                        onClick={() =>
+                          handleDownloadPO(vehicleDocument.pollutionFile)
+                        }
+                      />
+                    </TableCell>
+                    <TableCell style={{ textAlign: "center" }}>
+                      {getExpiryMessage(vehicleDocument.pollution)}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow hover role="checkbox" tabIndex={-1}>
+                    <TableCell style={{ textAlign: "center" }}>
+                      Road Tax
+                    </TableCell>
+                    <TableCell style={{ textAlign: "center" }}>
+                      <FaDownload
+                        className="table-action-icon"
+                        style={{ color: "grey" }}
+                        onClick={() =>
+                          handleDownloadPO(vehicleDocument.roadTaxFile)
+                        }
+                      />
+                    </TableCell>
+                    <TableCell style={{ textAlign: "center" }}>
+                      {getExpiryMessage(vehicleDocument.roadTax)}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow hover role="checkbox" tabIndex={-1}>
+                    <TableCell style={{ textAlign: "center" }}>
+                      Vehicle Pass
+                    </TableCell>
+                    <TableCell style={{ textAlign: "center" }}>
+                      <FaDownload
+                        className="table-action-icon"
+                        style={{ color: "grey" }}
+                        onClick={() =>
+                          handleDownloadPO(vehicleDocument.vehiclePassFile)
+                        }
+                      />
+                    </TableCell>
+                    <TableCell style={{ textAlign: "center" }}>
+                      {getExpiryMessage(vehicleDocument.vehiclePass)}
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </div>
+        </Modal>
+
+        <Modal
+          className="bus-form-modal"
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <div className="bus-form-container">
+            <form onSubmit={update ? handleUpdate : handleSubmit}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginBottom: "20px",
+                }}
+              >
+                <h3>Add Vehicle</h3>
+                <RxCrossCircled
+                  className="bus-form-cross"
+                  onClick={handleClose}
+                />
+              </div>
+
+              <div className="data-input-fields">
+                <div className="bus-input-label">
+                  <label className="input-label">Vehicle Number</label>
+                  <TextField
+                    className="bus-input"
+                    margin="dense"
+                    type="text"
+                    fullWidth
+                    name="vehicleNumber"
+                    id="vehicleNumber"
+                    value={formData.vehicleNumber}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+                <div className="bus-input-label">
+                  <label className="input-label">Brand</label>
+                  <TextField
+                    className="bus-input"
+                    margin="dense"
+                    type="text"
+                    fullWidth
+                    name="brand"
+                    id="brand"
+                    value={formData.brand}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+                <div className="bus-input-label">
+                  <label className="input-label">Model</label>
+                  <TextField
+                    className="bus-input"
+                    margin="dense"
+                    type="text"
+                    fullWidth
+                    name="model"
+                    id="model"
+                    value={formData.model}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="data-input-fields">
+                <div className="bus-input-label">
+                  <label className="input-label">
+                    Registration Certificate
+                  </label>
+
+                  <div className="input-upload-container">
+                    <TextField
+                      className="bus-input"
+                      margin="dense"
+                      type="date"
+                      fullWidth
+                      name="rc"
+                      id="rc"
+                      value={formData.rc}
+                      onChange={handleInputChange}
+                      required
+                    />
+                    <input
+                      accept="image/*,.pdf"
+                      style={{ display: "none" }}
+                      id="rcFile"
+                      type="file"
+                      name="rcFile"
+                      onChange={handleInputChange}
+                    />
+                    <label htmlFor="rcFile">
+                      <Button
+                        variant="contained"
+                        component="span"
+                        style={{ background: "#202023" }}
+                      >
+                        {formData.rcFile ? "DONE" : "UPLOAD"}
+                      </Button>
+                    </label>
+                  </div>
+                </div>
+
+                <div className="bus-input-label">
+                  <label className="input-label">Insurance</label>
+
+                  <div className="input-upload-container">
+                    <TextField
+                      className="bus-input"
+                      margin="dense"
+                      type="date"
+                      fullWidth
+                      name="insurance"
+                      id="insurance"
+                      value={formData.insurance}
+                      onChange={handleInputChange}
+                      required
+                    />
+                    <input
+                      accept="image/*,.pdf"
+                      style={{ display: "none" }}
+                      id="insuranceFile"
+                      type="file"
+                      name="insuranceFile"
+                      onChange={handleInputChange}
+                    />
+                    <label htmlFor="insuranceFile">
+                      <Button
+                        variant="contained"
+                        component="span"
+                        style={{ background: "#202023" }}
+                      >
+                        {formData.insuranceFile ? "DONE" : "UPLOAD"}
+                      </Button>
+                    </label>
+                  </div>
+                </div>
+                <div className="bus-input-label">
+                  <label className="input-label">Fitness</label>
+
+                  <div className="input-upload-container">
+                    <TextField
+                      className="bus-input"
+                      margin="dense"
+                      type="date"
+                      fullWidth
+                      name="fitness"
+                      id="fitness"
+                      value={formData.fitness}
+                      onChange={handleInputChange}
+                      required
+                    />
+                    <input
+                      accept="image/*,.pdf"
+                      style={{ display: "none" }}
+                      id="fitnessFile"
+                      type="file"
+                      name="fitnessFile"
+                      onChange={handleInputChange}
+                    />
+                    <label htmlFor="fitnessFile">
+                      <Button
+                        variant="contained"
+                        component="span"
+                        style={{ background: "#202023" }}
+                      >
+                        {formData.fitnessFile ? "DONE" : "UPLOAD"}
+                      </Button>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div className="data-input-fields">
+                <div className="bus-input-label">
+                  <label className="input-label">Pollution</label>
+
+                  <div className="input-upload-container">
+                    <TextField
+                      className="bus-input"
+                      margin="dense"
+                      type="date"
+                      fullWidth
+                      name="pollution"
+                      id="pollution"
+                      value={formData.pollution}
+                      onChange={handleInputChange}
+                      required
+                    />
+                    <input
+                      accept="image/*,.pdf"
+                      style={{ display: "none" }}
+                      id="pollutionFile"
+                      type="file"
+                      name="pollutionFile"
+                      onChange={handleInputChange}
+                    />
+                    <label htmlFor="pollutionFile">
+                      <Button
+                        variant="contained"
+                        component="span"
+                        style={{ background: "#202023" }}
+                      >
+                        {formData.pollutionFile ? "DONE" : "UPLOAD"}
+                      </Button>
+                    </label>
+                  </div>
+                </div>
+
+                <div className="bus-input-label">
+                  <label className="input-label">Road Tax</label>
+
+                  <div className="input-upload-container">
+                    <TextField
+                      className="bus-input"
+                      margin="dense"
+                      type="date"
+                      fullWidth
+                      name="roadTax"
+                      id="roadTax"
+                      value={formData.roadTax}
+                      onChange={handleInputChange}
+                      required
+                    />
+                    <input
+                      accept="image/*,.pdf"
+                      style={{ display: "none" }}
+                      id="roadTaxFile"
+                      type="file"
+                      name="roadTaxFile"
+                      onChange={handleInputChange}
+                    />
+                    <label htmlFor="roadTaxFile">
+                      <Button
+                        variant="contained"
+                        component="span"
+                        style={{ background: "#202023" }}
+                      >
+                        {formData.roadTaxFile ? "DONE" : "UPLOAD"}
+                      </Button>
+                    </label>
+                  </div>
+                </div>
+                <div className="bus-input-label">
+                  <label className="input-label">Odometer Reading</label>
+                  <TextField
+                    className="bus-input"
+                    margin="dense"
+                    type="text"
+                    fullWidth
+                    name="odometer"
+                    id="odometer"
+                    value={formData.odometer}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="data-input-fields">
+                <div className="bus-input-label">
+                  <label className="input-label">Vehicle Pass</label>
+
+                  <div className="input-upload-container">
+                    <TextField
+                      className="bus-input"
+                      margin="dense"
+                      type="date"
+                      fullWidth
+                      name="vehiclePass"
+                      id="vehiclePass"
+                      value={formData.vehiclePass}
+                      onChange={handleInputChange}
+                      required
+                    />
+                    <input
+                      accept="image/*,.pdf"
+                      style={{ display: "none" }}
+                      id="vehiclePassFile"
+                      type="file"
+                      name="vehiclePassFile"
+                      onChange={handleInputChange}
+                    />
+                    <label htmlFor="vehiclePassFile">
+                      <Button
+                        variant="contained"
+                        component="span"
+                        style={{ background: "#202023" }}
+                      >
+                        {formData.vehiclePassFile ? "DONE" : "UPLOAD"}
+                      </Button>
+                    </label>
+                  </div>
+                </div>
+                <div className="bus-input-label">
+                  <label className="input-label">Other File</label>
+
+                  <div
+                    className="input-upload-container"
+                    style={{ justifyContent: "flex-start" }}
+                  >
+                    <input
+                      accept="image/*,.pdf"
+                      style={{ display: "none" }}
+                      id="otherFile"
+                      type="file"
+                      name="otherFile"
+                      onChange={handleInputChange}
+                    />
+                    <label htmlFor="otherFile">
+                      <Button
+                        variant="contained"
+                        component="span"
+                        style={{ background: "#202023" }}
+                      >
+                        {formData.otherFile ? "DONE" : "UPLOAD OTHER FILE"}
+                      </Button>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div className="data-buttons" style={{ marginTop: "20px" }}>
+                <Button
+                  id="input-btn-submit"
+                  className="submit"
+                  type="submit"
+                  variant="outlined"
+                >
+                  {update ? "Update" : "Submit"}
+                </Button>
+                <Button
+                  id="input-btn-cancel"
+                  className="cancel"
+                  onClick={handleClose}
+                  variant="outlined"
+                >
+                  Cancel
+                </Button>
+              </div>
+            </form>
+          </div>
+        </Modal>
+        <div className="table-main-container">
+          <div className="title-button-container">
+            <h3 className="table-h3">Vehicles</h3>
+            <Button
+              variant="outlined"
+              onClick={() => {
+                setToggle(!toggle);
+              }}
+              id="add-btn"
+              className="add-btn-table"
+            >
+              {toggle ? (
+                <div className="hide" onClick={handleClose}>
+                  HIDE
+                </div>
+              ) : (
+                <div className="add" onClick={handleOpen}>
+                  + ADD VEHICLE
+                </div>
+              )}
+            </Button>
+          </div>
+          <TableContainer component={Paper} className="table-container">
+            <Table sx={{ minWidth: 650 }} aria-label="caption table">
+              {getVehicle.length === 0 ? (
+                ""
+              ) : (
+                <caption>
+                  <TablePagination
+                    rowsPerPageOptions={[5]}
+                    component="div"
+                    count={getVehicle.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                  />
+                </caption>
+              )}
+
+              <TableHead style={{ background: "#ddff8f" }}>
+                <TableRow style={{ textAlign: "center" }}>
+                  <TableCell className="head-tablecell">SL</TableCell>
+                  <TableCell className="head-tablecell">
+                    Vehicle Number
+                  </TableCell>
+                  <TableCell className="head-tablecell">Brand</TableCell>
+                  <TableCell className="head-tablecell">Model</TableCell>
+                  <TableCell className="head-tablecell">Odometer</TableCell>
+                  <TableCell className="head-tablecell">
+                    Documents & Expiry
+                  </TableCell>
+                  <TableCell className="head-tablecell">
+                    Other Document
+                  </TableCell>
+                  <TableCell colSpan={2} className="head-tablecell">
+                    Actions
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {getVehicle
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row, index) => (
+                    <TableRow hover role="checkbox" tabIndex={-1} key={row._id}>
+                      <TableCell className="body-tablecell">
+                        {index + 1}
+                      </TableCell>
+                      <TableCell className="body-tablecell">
+                        {row.vehicleNumber}
+                      </TableCell>
+                      <TableCell className="body-tablecell">
+                        {row.brand}
+                      </TableCell>
+                      <TableCell className="body-tablecell">
+                        {row.model}
+                      </TableCell>
+                      <TableCell className="body-tablecell">
+                        {row.odometer}
+                      </TableCell>
+                      <TableCell className="body-tablecell">
+                        <IoDocumentsSharp
+                          className="table-action-icon"
+                          style={{ color: "#000" }}
+                          onClick={() => handleOpenDoc(row)}
+                        />
+                      </TableCell>
+                      <TableCell className="body-tablecell">
+                        <FaDownload
+                          className="table-action-icon"
+                          style={{ color: "grey" }}
+                          onClick={() => handleDownloadPO(row.otherFile)}
+                        />
+                      </TableCell>
+                      <TableCell className="body-tablecell">
+                        <FaEdit
+                          className="table-action-icon"
+                          style={{ color: "blue" }}
+                          onClick={() => updateClick(row._id)}
+                        />
+                      </TableCell>
+                      <TableCell className="body-tablecell">
+                        <MdDelete
+                          className="table-action-icon"
+                          style={{ color: "red" }}
+                          onClick={() => deleteClick(row._id)}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+            {getVehicle.length === 0 ? (
+              <div className="table-nodata">
+                <h2>NO DATA</h2>
+              </div>
+            ) : null}
+          </TableContainer>
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default VehicleTable;
