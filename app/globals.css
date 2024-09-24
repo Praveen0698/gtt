@@ -245,6 +245,11 @@ body {
   padding: 8px 20px;
 }
 
+.css-1jk99ih-MuiInputBase-input-MuiOutlinedInput-input,
+.css-9jacqo {
+  padding: 8px 10px;
+}
+
 #input-btn-submit {
   background: #ddff8f;
   border: none;

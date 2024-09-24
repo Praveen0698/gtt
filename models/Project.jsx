@@ -2,15 +2,15 @@ import mongoose from "mongoose";
 
 const projectSchema = new mongoose.Schema(
   {
-    projectName: { type: String, required: true },
-    poNumber: { type: String, required: true },
+    projectName: { type: String },
+    poNumber: { type: String },
     poFile: { type: String },
     fleetSize: { type: String },
-    firmName: { type: String, required: true },
-    vehicle: { type: String, required: true },
-    source: { type: String, required: true },
-    destination: { type: String, required: true },
-    supervisor: { type: String, required: true },
+    firmName: { type: String },
+    vehicle: { type: String },
+    source: { type: String },
+    destination: { type: String },
+    supervisor: { type: String },
   },
   { timestamps: true }
 );

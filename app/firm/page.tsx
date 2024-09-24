@@ -236,7 +236,6 @@ const FirmsTable: React.FC = () => {
                     id="firmName"
                     value={formData.firmName}
                     onChange={handleInputChange}
-                    required
                   />
                 </div>
 
@@ -247,7 +246,6 @@ const FirmsTable: React.FC = () => {
                     name="firmType"
                     value={formData.firmType}
                     onChange={handleInputChange}
-                    required
                   >
                     {firmType.map((type) => (
                       <MenuItem key={type.value} value={type.value}>
@@ -269,7 +267,6 @@ const FirmsTable: React.FC = () => {
                     id="gstNumber"
                     value={formData.gstNumber}
                     onChange={handleInputChange}
-                    required
                   />
                 </div>
 
@@ -284,7 +281,6 @@ const FirmsTable: React.FC = () => {
                     id="gstAddress"
                     value={formData.gstAddress}
                     onChange={handleInputChange}
-                    required
                   />
                 </div>
               </div>
@@ -300,7 +296,6 @@ const FirmsTable: React.FC = () => {
                     id="panTanNumber"
                     value={formData.panTanNumber}
                     onChange={handleInputChange}
-                    required
                   />
                 </div>
 
@@ -315,7 +310,6 @@ const FirmsTable: React.FC = () => {
                     id="propertiorName"
                     value={formData.propertiorName}
                     onChange={handleInputChange}
-                    required
                   />
                 </div>
               </div>

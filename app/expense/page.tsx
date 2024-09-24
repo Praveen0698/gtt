@@ -92,6 +92,7 @@ const FirmsTable: React.FC = () => {
       amount: "",
       date: "",
     });
+    setUpdate(false);
   };
 
   const handleInputChange = (e: any) => {
@@ -261,13 +262,16 @@ const FirmsTable: React.FC = () => {
                       name="employeeId"
                       value={formData.employeeId}
                       onChange={handleEmployeeChange}
-                      required
                     >
-                      {getEmployee.map((type) => (
-                        <MenuItem key={type._id} value={type._id}>
-                          {type.employeeName}
-                        </MenuItem>
-                      ))}
+                      {getEmployee.length > 0 ? (
+                        getEmployee.map((type) => (
+                          <MenuItem key={type._id} value={type._id}>
+                            {type.employeeName}
+                          </MenuItem>
+                        ))
+                      ) : (
+                        <MenuItem disabled>No data available</MenuItem>
+                      )}
                     </Select>
                   </div>
                 </div>
@@ -285,7 +289,6 @@ const FirmsTable: React.FC = () => {
                     id="amount"
                     value={formData.amount}
                     onChange={handleInputChange}
-                    required
                   />
                 </div>
               </div>
@@ -301,7 +304,6 @@ const FirmsTable: React.FC = () => {
                     id="date"
                     value={formData.date}
                     onChange={handleInputChange}
-                    required
                   />
                 </div>
               </div>

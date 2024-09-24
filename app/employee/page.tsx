@@ -103,6 +103,7 @@ const EmployeeTable: React.FC = () => {
       experience: "",
       designation: "",
     });
+    setUpdate(false);
   };
 
   const [designation] = useState([
@@ -172,6 +173,7 @@ const EmployeeTable: React.FC = () => {
       .get(`/api/employee/${id}`)
       .then((res) => {
         handleOpen();
+        console.log(res.data);
         setFormData((prevFormData) => ({
           ...prevFormData,
           ...res.data,
@@ -264,10 +266,11 @@ const EmployeeTable: React.FC = () => {
         console.log(data);
         if (data) {
           const totalAmount = data.reduce(
-            (total: number, expense: { amount: number }) =>
-              total + expense.amount,
+            (total: number, expense: { amount: string }) =>
+              total + parseFloat(expense.amount),
             0
           );
+          console.log(totalAmount);
           setExpenses(totalAmount);
         }
       };
@@ -339,7 +342,7 @@ const EmployeeTable: React.FC = () => {
                     id="employeeName"
                     value={formData.employeeName}
                     onChange={handleInputChange}
-                    required
+                    style={{ padding: "5px 0px", margin: "0" }}
                   />
                 </div>
                 <div className="bus-input-label">
@@ -353,7 +356,6 @@ const EmployeeTable: React.FC = () => {
                     id="age"
                     value={formData.age}
                     onChange={handleInputChange}
-                    required
                   />
                 </div>
                 <div className="bus-input-label">
@@ -367,7 +369,6 @@ const EmployeeTable: React.FC = () => {
                     id="address"
                     value={formData.address}
                     onChange={handleInputChange}
-                    required
                   />
                 </div>
               </div>
@@ -384,7 +385,6 @@ const EmployeeTable: React.FC = () => {
                     id="experience"
                     value={formData.experience}
                     onChange={handleInputChange}
-                    required
                   />
                 </div>
 
@@ -395,7 +395,6 @@ const EmployeeTable: React.FC = () => {
                     name="designation"
                     value={formData.designation}
                     onChange={handleInputChange}
-                    required
                   >
                     {designation.map((type) => (
                       <MenuItem key={type.value} value={type.value}>
@@ -419,7 +418,6 @@ const EmployeeTable: React.FC = () => {
                       id="aadharNumber"
                       value={formData.aadharNumber}
                       onChange={handleInputChange}
-                      required
                     />
                     <input
                       accept="image/*,.pdf"
@@ -453,7 +451,6 @@ const EmployeeTable: React.FC = () => {
                       id="dlNumber"
                       value={formData.dlNumber}
                       onChange={handleInputChange}
-                      required
                     />
                     <input
                       accept="image/*,.pdf"

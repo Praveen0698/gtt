@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
 const expenseSchema = new mongoose.Schema({
-  employeeName: { type: String, required: true },
-  employeeId: { type: String, required: true },
-  amount: { type: Number, required: true },
-  date: { type: String, required: true },
+  employeeName: { type: String },
+  employeeId: { type: String },
+  amount: { type: String },
+  date: { type: String },
 });
 
 const Expense =

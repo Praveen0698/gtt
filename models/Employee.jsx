@@ -1,49 +1,38 @@
 import mongoose from "mongoose";
 
 const expenseSchema = new mongoose.Schema({
-  amount: { type: Number, required: true },
-  date: { type: String, required: true },
+  amount: { type: String },
+  date: { type: String },
 });
 
 const employeeSchema = new mongoose.Schema(
   {
     employeeName: {
       type: String,
-      required: true,
     },
     age: {
-      type: Number,
-      required: true,
+      type: String,
     },
     address: {
       type: String,
-      required: true,
     },
     aadharNumber: {
       type: String,
-      required: true,
-      unique: true,
     },
     aadharFile: {
       type: String,
-      required: true,
     },
     dlNumber: {
       type: String,
-      required: true,
-      unique: true,
     },
     dlFile: {
       type: String,
-      required: true,
     },
     experience: {
-      type: Number,
-      required: true,
+      type: String,
     },
     designation: {
       type: String,
-      required: true,
     },
     expenses: [expenseSchema],
   },

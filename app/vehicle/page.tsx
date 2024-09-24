@@ -514,7 +514,6 @@ const VehicleTable: React.FC = () => {
                     id="vehicleNumber"
                     value={formData.vehicleNumber}
                     onChange={handleInputChange}
-                    required
                   />
                 </div>
                 <div className="bus-input-label">
@@ -528,7 +527,6 @@ const VehicleTable: React.FC = () => {
                     id="brand"
                     value={formData.brand}
                     onChange={handleInputChange}
-                    required
                   />
                 </div>
                 <div className="bus-input-label">
@@ -542,7 +540,6 @@ const VehicleTable: React.FC = () => {
                     id="model"
                     value={formData.model}
                     onChange={handleInputChange}
-                    required
                   />
                 </div>
               </div>
@@ -563,7 +560,6 @@ const VehicleTable: React.FC = () => {
                       id="rc"
                       value={formData.rc}
                       onChange={handleInputChange}
-                      required
                     />
                     <input
                       accept="image/*,.pdf"
@@ -598,7 +594,6 @@ const VehicleTable: React.FC = () => {
                       id="insurance"
                       value={formData.insurance}
                       onChange={handleInputChange}
-                      required
                     />
                     <input
                       accept="image/*,.pdf"
@@ -632,7 +627,6 @@ const VehicleTable: React.FC = () => {
                       id="fitness"
                       value={formData.fitness}
                       onChange={handleInputChange}
-                      required
                     />
                     <input
                       accept="image/*,.pdf"
@@ -668,7 +662,6 @@ const VehicleTable: React.FC = () => {
                       id="pollution"
                       value={formData.pollution}
                       onChange={handleInputChange}
-                      required
                     />
                     <input
                       accept="image/*,.pdf"
@@ -703,7 +696,6 @@ const VehicleTable: React.FC = () => {
                       id="roadTax"
                       value={formData.roadTax}
                       onChange={handleInputChange}
-                      required
                     />
                     <input
                       accept="image/*,.pdf"
@@ -735,7 +727,6 @@ const VehicleTable: React.FC = () => {
                     id="odometer"
                     value={formData.odometer}
                     onChange={handleInputChange}
-                    required
                   />
                 </div>
               </div>
@@ -754,7 +745,6 @@ const VehicleTable: React.FC = () => {
                       id="vehiclePass"
                       value={formData.vehiclePass}
                       onChange={handleInputChange}
-                      required
                     />
                     <input
                       accept="image/*,.pdf"

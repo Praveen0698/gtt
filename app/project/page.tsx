@@ -285,7 +285,6 @@ const ProjectTable: React.FC = () => {
                     id="projectName"
                     value={formData.projectName}
                     onChange={handleInputChange}
-                    required
                   />
                 </div>
                 <div className="bus-input-label">
@@ -301,7 +300,6 @@ const ProjectTable: React.FC = () => {
                       id="poNumber"
                       value={formData.poNumber}
                       onChange={handleInputChange}
-                      required
                     />
                     <input
                       accept="image/*,.pdf"
@@ -336,7 +334,6 @@ const ProjectTable: React.FC = () => {
                     id="fleetSize"
                     value={formData.fleetSize}
                     onChange={handleInputChange}
-                    required
                   />
                 </div>
 
@@ -347,13 +344,16 @@ const ProjectTable: React.FC = () => {
                     name="firmName"
                     value={formData.firmName}
                     onChange={handleInputChange}
-                    required
                   >
-                    {getFirm.map((type) => (
-                      <MenuItem key={type._id} value={type.firmName}>
-                        {type.firmName}
-                      </MenuItem>
-                    ))}
+                    {getFirm.length > 0 ? (
+                      getFirm.map((type) => (
+                        <MenuItem key={type._id} value={type.firmName}>
+                          {type.firmName}
+                        </MenuItem>
+                      ))
+                    ) : (
+                      <MenuItem disabled>No data available</MenuItem>
+                    )}
                   </Select>
                 </div>
               </div>
@@ -365,7 +365,6 @@ const ProjectTable: React.FC = () => {
                     name="vehicle"
                     value={formData.vehicle}
                     onChange={handleInputChange}
-                    required
                   >
                     {designation.map((type) => (
                       <MenuItem key={type.value} value={type.value}>
@@ -385,7 +384,6 @@ const ProjectTable: React.FC = () => {
                     id="source"
                     value={formData.source}
                     onChange={handleInputChange}
-                    required
                   />
                 </div>
               </div>
@@ -402,7 +400,6 @@ const ProjectTable: React.FC = () => {
                     id="destination"
                     value={formData.destination}
                     onChange={handleInputChange}
-                    required
                   />
                 </div>
                 <div className="bus-input-label">
@@ -412,15 +409,18 @@ const ProjectTable: React.FC = () => {
                     name="supervisor"
                     value={formData.supervisor}
                     onChange={handleInputChange}
-                    required
                   >
-                    {getEmployee
-                      .filter((type) => type.designation === "manager")
-                      .map((type) => (
-                        <MenuItem key={type.value} value={type.designation}>
-                          {type.designation}
-                        </MenuItem>
-                      ))}
+                    {getEmployee.length > 0 ? (
+                      getEmployee
+                        .filter((type) => type.designation === "manager")
+                        .map((type) => (
+                          <MenuItem key={type.value} value={type.designation}>
+                            {type.designation}
+                          </MenuItem>
+                        ))
+                    ) : (
+                      <MenuItem disabled>No data available</MenuItem>
+                    )}
                   </Select>
                 </div>
               </div>
@@ -604,7 +604,7 @@ const ProjectTable: React.FC = () => {
                   ))}
               </TableBody>
             </Table>
-            {getFirm.length === 0 ? (
+            {getProject.length === 0 ? (
               <div className="table-nodata">
                 <h2>NO DATA</h2>
               </div>
