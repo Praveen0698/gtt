@@ -92,6 +92,6 @@ export async function POST(req) {
     );
   } catch (error) {
     console.error("Error occurred:", error);
-    return NextResponse.json({ message: "Server error" }, { status: 500 });
+    return NextResponse.json({ message: error }, { status: 500 });
   }
 }
