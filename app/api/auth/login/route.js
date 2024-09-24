@@ -6,6 +6,7 @@ import {
   generateAccessToken,
   generateRefreshToken,
 } from "../../../../utils/auth";
+export const dynamic = "force-dynamic";
 
 export async function POST(req) {
   await connectDB();

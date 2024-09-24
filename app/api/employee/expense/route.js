@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import connectDB from "../../../../utils/db";
 import Employee from "../../../../models/Employee";
+export const dynamic = "force-dynamic";
 
 // PATCH request to update expenses of an employee
 export async function PATCH(req) {

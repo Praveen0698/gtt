@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import User from "../../../../models/User";
 import { generateAccessToken } from "@/utils/auth";
+export const dynamic = "force-dynamic";
 
 export async function GET(req) {
   const { cookies } = req;

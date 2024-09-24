@@ -3,6 +3,7 @@ import connectDB from "../../../../utils/db";
 import Vehicle from "../../../../models/Vehicle";
 import fs from "fs";
 import path from "path";
+export const dynamic = "force-dynamic";
 
 export async function POST(req) {
   await connectDB();

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import connectDB from "../../../../utils/db";
 import Firm from "../../../../models/Firm";
+export const dynamic = "force-dynamic";
 
 // Handler to get firm by ID
 export async function GET(req, { params }) {
