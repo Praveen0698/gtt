@@ -27,50 +27,38 @@ export async function POST(req) {
       return NextResponse.json({ message: "exists" });
     }
 
-    // Handle file save (Base64 to file)
-    let aadharFilePath = null;
-    let dlFilePath = null;
+    const saveBase64File = (base64String, folder) => {
+      const base64Pattern = /^data:(.*?);base64,/;
+      const matches = base64String.match(base64Pattern);
+      const mimeType = matches ? matches[1] : "";
 
-    // Function to handle file saving
-    const saveFile = (base64File, fileType) => {
-      const base64Pattern = /^data:(.*?);base64,/; // Regex to extract MIME type
-      const matches = base64File.match(base64Pattern);
-      const mimeType = matches ? matches[1] : ""; // Get the MIME type
-
-      let fileExtension = "png"; // Default extension
+      let fileExtension = "png";
       if (mimeType.includes("pdf")) {
-        fileExtension = "pdf"; // Set extension to PDF if MIME type is PDF
+        fileExtension = "pdf";
       } else if (mimeType.includes("image")) {
-        fileExtension = mimeType.split("/")[1]; // Set to the appropriate image extension (png, jpg, etc.)
+        fileExtension = mimeType.split("/")[1];
       }
 
-      const base64Data = base64File.replace(base64Pattern, ""); // Remove the data URL part
+      const base64Data = base64String.replace(base64Pattern, "");
       const buffer = Buffer.from(base64Data, "base64");
-      const uploadDir = path.join(process.cwd(), "public", "uploads");
+      const uploadDir = path.join(process.cwd(), "public", "uploads", folder);
 
-      // Create the 'uploads' directory if it doesn't exist
       if (!fs.existsSync(uploadDir)) {
         fs.mkdirSync(uploadDir, { recursive: true });
       }
 
-      // Save the file with the appropriate extension
-      const filename = `${Date.now()}_${fileType}.${fileExtension}`;
-      const filePath = `/uploads/${filename}`;
+      const filename = `${Date.now()}.${fileExtension}`;
+      const filePath = `/uploads/${folder}/${filename}`;
       const fullPath = path.join(uploadDir, filename);
       fs.writeFileSync(fullPath, buffer);
 
-      return filePath; // Return the file path
+      return filePath;
     };
 
-    // Handle aadharFile
-    if (aadharFile) {
-      aadharFilePath = saveFile(aadharFile, "aadhar");
-    }
-
-    // Handle dlFile
-    if (dlFile) {
-      dlFilePath = saveFile(dlFile, "dl");
-    }
+    let aadharFilePath = aadharFile
+      ? saveBase64File(aadharFile, "aadhar")
+      : null;
+    let dlFilePath = dlFile ? saveBase64File(dlFile, "dl") : null;
 
     const newEmployee = new Employee({
       employeeName,
