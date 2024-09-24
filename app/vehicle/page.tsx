@@ -400,7 +400,7 @@ const VehicleTable: React.FC = () => {
                         }
                       />
                     </TableCell>
-                    <TableCell className="body-tablecell">
+                    <TableCell style={{ textAlign: "center" }}>
                       {getExpiryMessage(vehicleDocument.insurance)}
                     </TableCell>
                   </TableRow>
@@ -866,20 +866,45 @@ const VehicleTable: React.FC = () => {
 
               <TableHead style={{ background: "#ddff8f" }}>
                 <TableRow style={{ textAlign: "center" }}>
-                  <TableCell className="head-tablecell">SL</TableCell>
-                  <TableCell className="head-tablecell">
+                  <TableCell
+                    style={{ fontWeight: "bold", textAlign: "center" }}
+                  >
+                    SL
+                  </TableCell>
+                  <TableCell
+                    style={{ fontWeight: "bold", textAlign: "center" }}
+                  >
                     Vehicle Number
                   </TableCell>
-                  <TableCell className="head-tablecell">Brand</TableCell>
-                  <TableCell className="head-tablecell">Model</TableCell>
-                  <TableCell className="head-tablecell">Odometer</TableCell>
-                  <TableCell className="head-tablecell">
+                  <TableCell
+                    style={{ fontWeight: "bold", textAlign: "center" }}
+                  >
+                    Brand
+                  </TableCell>
+                  <TableCell
+                    style={{ fontWeight: "bold", textAlign: "center" }}
+                  >
+                    Model
+                  </TableCell>
+                  <TableCell
+                    style={{ fontWeight: "bold", textAlign: "center" }}
+                  >
+                    Odometer
+                  </TableCell>
+                  <TableCell
+                    style={{ fontWeight: "bold", textAlign: "center" }}
+                  >
                     Documents & Expiry
                   </TableCell>
-                  <TableCell className="head-tablecell">
+                  <TableCell
+                    style={{ fontWeight: "bold", textAlign: "center" }}
+                  >
                     Other Document
                   </TableCell>
-                  <TableCell colSpan={2} className="head-tablecell">
+                  <TableCell
+                    colSpan={2}
+                    style={{ fontWeight: "bold", textAlign: "center" }}
+                  >
                     Actions
                   </TableCell>
                 </TableRow>
@@ -889,43 +914,43 @@ const VehicleTable: React.FC = () => {
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => (
                     <TableRow hover role="checkbox" tabIndex={-1} key={row._id}>
-                      <TableCell className="body-tablecell">
+                      <TableCell style={{ textAlign: "center" }}>
                         {index + 1}
                       </TableCell>
-                      <TableCell className="body-tablecell">
+                      <TableCell style={{ textAlign: "center" }}>
                         {row.vehicleNumber}
                       </TableCell>
-                      <TableCell className="body-tablecell">
+                      <TableCell style={{ textAlign: "center" }}>
                         {row.brand}
                       </TableCell>
-                      <TableCell className="body-tablecell">
+                      <TableCell style={{ textAlign: "center" }}>
                         {row.model}
                       </TableCell>
-                      <TableCell className="body-tablecell">
+                      <TableCell style={{ textAlign: "center" }}>
                         {row.odometer}
                       </TableCell>
-                      <TableCell className="body-tablecell">
+                      <TableCell style={{ textAlign: "center" }}>
                         <IoDocumentsSharp
                           className="table-action-icon"
                           style={{ color: "#000" }}
                           onClick={() => handleOpenDoc(row)}
                         />
                       </TableCell>
-                      <TableCell className="body-tablecell">
+                      <TableCell style={{ textAlign: "center" }}>
                         <FaDownload
                           className="table-action-icon"
                           style={{ color: "grey" }}
                           onClick={() => handleDownloadPO(row.otherFile)}
                         />
                       </TableCell>
-                      <TableCell className="body-tablecell">
+                      <TableCell style={{ textAlign: "center" }}>
                         <FaEdit
                           className="table-action-icon"
                           style={{ color: "blue" }}
                           onClick={() => updateClick(row._id)}
                         />
                       </TableCell>
-                      <TableCell className="body-tablecell">
+                      <TableCell style={{ textAlign: "center" }}>
                         <MdDelete
                           className="table-action-icon"
                           style={{ color: "red" }}

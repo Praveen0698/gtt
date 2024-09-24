@@ -369,13 +369,30 @@ const FirmsTable: React.FC = () => {
 
               <TableHead style={{ background: "#ddff8f" }}>
                 <TableRow>
-                  <TableCell className="head-tablecell">SL</TableCell>
-                  <TableCell className="head-tablecell">
+                  <TableCell
+                    style={{ fontWeight: "bold", textAlign: "center" }}
+                  >
+                    SL
+                  </TableCell>
+                  <TableCell
+                    style={{ fontWeight: "bold", textAlign: "center" }}
+                  >
                     Employee Name
                   </TableCell>
-                  <TableCell className="head-tablecell">Amount</TableCell>
-                  <TableCell className="head-tablecell">Date</TableCell>
-                  <TableCell className="head-tablecell" colSpan={2}>
+                  <TableCell
+                    style={{ fontWeight: "bold", textAlign: "center" }}
+                  >
+                    Amount
+                  </TableCell>
+                  <TableCell
+                    style={{ fontWeight: "bold", textAlign: "center" }}
+                  >
+                    Date
+                  </TableCell>
+                  <TableCell
+                    style={{ fontWeight: "bold", textAlign: "center" }}
+                    colSpan={2}
+                  >
                     Action
                   </TableCell>
                 </TableRow>
@@ -385,26 +402,26 @@ const FirmsTable: React.FC = () => {
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => (
                     <TableRow hover role="checkbox" tabIndex={-1} key={row._id}>
-                      <TableCell className="body-tablecell">
+                      <TableCell style={{ textAlign: "center" }}>
                         {index + 1}
                       </TableCell>
-                      <TableCell className="body-tablecell">
+                      <TableCell style={{ textAlign: "center" }}>
                         {row.employeeName}
                       </TableCell>
-                      <TableCell className="body-tablecell">
+                      <TableCell style={{ textAlign: "center" }}>
                         {row.amount}
                       </TableCell>
-                      <TableCell className="body-tablecell">
+                      <TableCell style={{ textAlign: "center" }}>
                         {row.date}
                       </TableCell>
-                      <TableCell className="body-tablecell">
+                      <TableCell style={{ textAlign: "center" }}>
                         <FaEdit
                           className="table-action-icon"
                           style={{ color: "blue" }}
                           onClick={() => updateClick(row._id)}
                         />
                       </TableCell>
-                      <TableCell className="body-tablecell">
+                      <TableCell style={{ textAlign: "center" }}>
                         <MdDelete
                           className="table-action-icon"
                           style={{ color: "red" }}

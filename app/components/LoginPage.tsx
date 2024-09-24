@@ -59,6 +59,12 @@ const LoginPage = () => {
     }
   };
 
+  useEffect(() => {
+    if (error.length > 0) {
+      setIsLoading(false);
+    }
+  }, [error]);
+
   return (
     <>
       {isLoading ? (

@@ -276,7 +276,7 @@ const EmployeeTable: React.FC = () => {
     }, [employeeId]);
 
     return (
-      <TableCell className="body-tablecell">
+      <TableCell style={{ textAlign: "center" }}>
         {expenses !== null ? expenses : 0}
       </TableCell>
     );
@@ -539,22 +539,65 @@ const EmployeeTable: React.FC = () => {
 
               <TableHead style={{ background: "#ddff8f" }}>
                 <TableRow>
-                  <TableCell className="head-tablecell">SL</TableCell>
-                  <TableCell className="head-tablecell">
+                  <TableCell
+                    style={{ fontWeight: "bold", textAlign: "center" }}
+                  >
+                    SL
+                  </TableCell>
+                  <TableCell
+                    style={{ fontWeight: "bold", textAlign: "center" }}
+                  >
                     Employee Name
                   </TableCell>
-                  <TableCell className="head-tablecell">Age</TableCell>
-                  <TableCell className="head-tablecell">Address</TableCell>
-                  <TableCell className="head-tablecell">
+                  <TableCell
+                    style={{ fontWeight: "bold", textAlign: "center" }}
+                  >
+                    Age
+                  </TableCell>
+                  <TableCell
+                    style={{ fontWeight: "bold", textAlign: "center" }}
+                  >
+                    Address
+                  </TableCell>
+                  <TableCell
+                    style={{ fontWeight: "bold", textAlign: "center" }}
+                  >
                     Aadhar Number
                   </TableCell>
-                  <TableCell className="head-tablecell">Aadhar File</TableCell>
-                  <TableCell className="head-tablecell">DL Number</TableCell>
-                  <TableCell className="head-tablecell">DL File</TableCell>
-                  <TableCell className="head-tablecell">Experience</TableCell>
-                  <TableCell className="head-tablecell">Designation</TableCell>
-                  <TableCell className="head-tablecell">Expenses</TableCell>
-                  <TableCell className="head-tablecell" colSpan={2}>
+                  <TableCell
+                    style={{ fontWeight: "bold", textAlign: "center" }}
+                  >
+                    Aadhar File
+                  </TableCell>
+                  <TableCell
+                    style={{ fontWeight: "bold", textAlign: "center" }}
+                  >
+                    DL Number
+                  </TableCell>
+                  <TableCell
+                    style={{ fontWeight: "bold", textAlign: "center" }}
+                  >
+                    DL File
+                  </TableCell>
+                  <TableCell
+                    style={{ fontWeight: "bold", textAlign: "center" }}
+                  >
+                    Experience
+                  </TableCell>
+                  <TableCell
+                    style={{ fontWeight: "bold", textAlign: "center" }}
+                  >
+                    Designation
+                  </TableCell>
+                  <TableCell
+                    style={{ fontWeight: "bold", textAlign: "center" }}
+                  >
+                    Expenses
+                  </TableCell>
+                  <TableCell
+                    style={{ fontWeight: "bold", textAlign: "center" }}
+                    colSpan={2}
+                  >
                     Actions
                   </TableCell>
                 </TableRow>
@@ -564,53 +607,53 @@ const EmployeeTable: React.FC = () => {
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => (
                     <TableRow hover role="checkbox" tabIndex={-1} key={row._id}>
-                      <TableCell className="body-tablecell">
+                      <TableCell style={{ textAlign: "center" }}>
                         {index + 1}
                       </TableCell>
-                      <TableCell className="body-tablecell">
+                      <TableCell style={{ textAlign: "center" }}>
                         {row.employeeName}
                       </TableCell>
-                      <TableCell className="body-tablecell">
+                      <TableCell style={{ textAlign: "center" }}>
                         {row.age}
                       </TableCell>
-                      <TableCell className="body-tablecell">
+                      <TableCell style={{ textAlign: "center" }}>
                         {row.address}
                       </TableCell>
-                      <TableCell className="body-tablecell">
+                      <TableCell style={{ textAlign: "center" }}>
                         {row.aadharNumber}
                       </TableCell>
-                      <TableCell className="body-tablecell">
+                      <TableCell style={{ textAlign: "center" }}>
                         <FaDownload
                           className="table-action-icon"
                           style={{ color: "grey" }}
                           onClick={() => handleDownloadPO(row.aadharFile)}
                         />
                       </TableCell>
-                      <TableCell className="body-tablecell">
+                      <TableCell style={{ textAlign: "center" }}>
                         {row.dlNumber}
                       </TableCell>
-                      <TableCell className="body-tablecell">
+                      <TableCell style={{ textAlign: "center" }}>
                         <FaDownload
                           className="table-action-icon"
                           style={{ color: "grey" }}
                           onClick={() => handleDownloadPO(row.dlFile)}
                         />
                       </TableCell>
-                      <TableCell className="body-tablecell">
+                      <TableCell style={{ textAlign: "center" }}>
                         {row.experience}
                       </TableCell>
-                      <TableCell className="body-tablecell">
+                      <TableCell style={{ textAlign: "center" }}>
                         {row.designation}
                       </TableCell>
                       <ExpensesTableRow employeeId={row._id} />
-                      <TableCell className="body-tablecell">
+                      <TableCell style={{ textAlign: "center" }}>
                         <FaEdit
                           className="table-action-icon"
                           style={{ color: "blue" }}
                           onClick={() => updateClick(row._id)}
                         />
                       </TableCell>
-                      <TableCell className="body-tablecell">
+                      <TableCell style={{ textAlign: "center" }}>
                         <MdDelete
                           className="table-action-icon"
                           style={{ color: "red" }}
