@@ -10,6 +10,7 @@ html,
 body {
   width: 100%;
   height: 100%;
+  background: #202023;
 }
 
 .home-container {
@@ -139,8 +140,6 @@ body {
 
 .firm-main-container {
   width: 100%;
-  height: 100vh;
-  background: #202023;
   position: relative;
 }
 

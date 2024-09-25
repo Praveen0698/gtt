@@ -12,8 +12,8 @@ export async function GET(req, { params }) {
 
     if (!expenses || expenses.length === 0) {
       return NextResponse.json(
-        { message: "No expenses found for this employee" },
-        { status: 404 }
+        { message: "No expenses found for this employee" }
+        // { status: 404 }
       );
     }
 

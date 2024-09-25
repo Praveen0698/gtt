@@ -218,17 +218,17 @@ const EmployeeTable: React.FC = () => {
       .finally(() => setIsLoading(false));
   };
 
-  const handleDownloadPO = (file: any) => {
-    const link = document.createElement("a");
+  // const handleDownloadPO = (file: any) => {
+  //   const link = document.createElement("a");
 
-    link.href = file;
-    link.download = file.split("/").pop();
+  //   link.href = file;
+  //   link.download = file.split("/").pop();
 
-    document.body.appendChild(link);
-    link.click();
+  //   document.body.appendChild(link);
+  //   link.click();
 
-    document.body.removeChild(link);
-  };
+  //   document.body.removeChild(link);
+  // };
 
   interface ExpensesTableRowProps {
     employeeId: string;
@@ -263,14 +263,12 @@ const EmployeeTable: React.FC = () => {
     useEffect(() => {
       const fetchData = async () => {
         const data = await fetchExpensesByEmployeeId(employeeId);
-        console.log(data);
-        if (data) {
+        if (!data.message) {
           const totalAmount = data.reduce(
             (total: number, expense: { amount: string }) =>
               total + parseFloat(expense.amount),
             0
           );
-          console.log(totalAmount);
           setExpenses(totalAmount);
         }
       };
@@ -419,7 +417,7 @@ const EmployeeTable: React.FC = () => {
                       value={formData.aadharNumber}
                       onChange={handleInputChange}
                     />
-                    <input
+                    {/* <input
                       accept="image/*,.pdf"
                       style={{ display: "none" }}
                       id="aadharFile"
@@ -435,7 +433,7 @@ const EmployeeTable: React.FC = () => {
                       >
                         {formData.aadharFile ? "DONE" : "UPLOAD"}
                       </Button>
-                    </label>
+                    </label> */}
                   </div>
                 </div>
 
@@ -452,7 +450,7 @@ const EmployeeTable: React.FC = () => {
                       value={formData.dlNumber}
                       onChange={handleInputChange}
                     />
-                    <input
+                    {/* <input
                       accept="image/*,.pdf"
                       style={{ display: "none" }}
                       id="dlFile"
@@ -468,7 +466,7 @@ const EmployeeTable: React.FC = () => {
                       >
                         {formData.dlFile ? "DONE" : "UPLOAD"}
                       </Button>
-                    </label>
+                    </label> */}
                   </div>
                 </div>
               </div>
@@ -561,21 +559,21 @@ const EmployeeTable: React.FC = () => {
                   >
                     Aadhar Number
                   </TableCell>
-                  <TableCell
+                  {/* <TableCell
                     style={{ fontWeight: "bold", textAlign: "center" }}
                   >
                     Aadhar File
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell
                     style={{ fontWeight: "bold", textAlign: "center" }}
                   >
                     DL Number
                   </TableCell>
-                  <TableCell
+                  {/* <TableCell
                     style={{ fontWeight: "bold", textAlign: "center" }}
                   >
                     DL File
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell
                     style={{ fontWeight: "bold", textAlign: "center" }}
                   >
@@ -619,23 +617,23 @@ const EmployeeTable: React.FC = () => {
                       <TableCell style={{ textAlign: "center" }}>
                         {row.aadharNumber}
                       </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
+                      {/* <TableCell style={{ textAlign: "center" }}>
                         <FaDownload
                           className="table-action-icon"
                           style={{ color: "grey" }}
                           onClick={() => handleDownloadPO(row.aadharFile)}
                         />
-                      </TableCell>
+                      </TableCell> */}
                       <TableCell style={{ textAlign: "center" }}>
                         {row.dlNumber}
                       </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
+                      {/* <TableCell style={{ textAlign: "center" }}>
                         <FaDownload
                           className="table-action-icon"
                           style={{ color: "grey" }}
                           onClick={() => handleDownloadPO(row.dlFile)}
                         />
-                      </TableCell>
+                      </TableCell> */}
                       <TableCell style={{ textAlign: "center" }}>
                         {row.experience}
                       </TableCell>

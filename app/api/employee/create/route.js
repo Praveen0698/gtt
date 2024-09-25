@@ -83,6 +83,7 @@
 //     return NextResponse.json({ message: error }, { status: 500 });
 //   }
 // }
+
 import { NextResponse } from "next/server";
 import connectDB from "../../../../utils/db";
 import Employee from "../../../../models/Employee";
@@ -180,3 +181,87 @@ export async function POST(req) {
     );
   }
 }
+
+// import { NextResponse } from "next/server";
+// import connectDB from "../../../../utils/db";
+// import Employee from "../../../../models/Employee";
+// import cloudinary from "cloudinary";
+
+// // Initialize Cloudinary
+// cloudinary.v2.config({
+//   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+//   api_key: process.env.CLOUDINARY_API_KEY,
+//   api_secret: process.env.CLOUDINARY_API_SECRET,
+// });
+
+// export const dynamic = "force-dynamic";
+
+// export async function POST(req) {
+//   await connectDB();
+
+//   const EmployeeData = await req.json();
+//   const {
+//     employeeName,
+//     age,
+//     address,
+//     aadharNumber,
+//     aadharFile,
+//     dlNumber,
+//     dlFile,
+//     experience,
+//     designation,
+//   } = EmployeeData;
+
+//   try {
+//     const existingEmployee = await Employee.findOne({ employeeName });
+//     if (existingEmployee) {
+//       return NextResponse.json({ message: "Employee already exists" });
+//     }
+
+//     const uploadToCloudinary = async (base64String) => {
+//       try {
+//         // Upload file to Cloudinary, explicitly setting the resource_type to "auto"
+//         const result = await cloudinary.v2.uploader.upload(base64String, {
+//           folder: "uploads", // Cloudinary folder
+//           resource_type: "auto", // Ensure Cloudinary accepts PDFs and other non-image types
+//         });
+//         return result.secure_url; // Return the uploaded file's URL
+//       } catch (error) {
+//         console.error("Cloudinary upload error:", error);
+//         throw new Error("Failed to upload to Cloudinary");
+//       }
+//     };
+
+//     // Upload the Aadhar and DL files to Cloudinary
+//     let aadharFilePath = aadharFile
+//       ? await uploadToCloudinary(aadharFile)
+//       : null;
+//     let dlFilePath = dlFile ? await uploadToCloudinary(dlFile) : null;
+
+//     // Create a new employee document
+//     const newEmployee = new Employee({
+//       employeeName,
+//       age,
+//       address,
+//       aadharNumber,
+//       aadharFile: aadharFilePath,
+//       dlNumber,
+//       dlFile: dlFilePath,
+//       experience,
+//       designation,
+//       expenses: [],
+//     });
+
+//     await newEmployee.save();
+//     return NextResponse.json(
+//       { message: "Employee created successfully" },
+//       { status: 201 }
+//     );
+//   } catch (error) {
+//     console.error("Error occurred:", error);
+//     return NextResponse.json(
+//       { message: error.message || "Server error" },
+//       { status: 500 }
+//     );
+//   }
+// }
