@@ -449,7 +449,7 @@ const VehicleTable: React.FC = () => {
                         className="table-action-icon m-[auto]"
                         style={{ color: "grey" }}
                         onClick={() =>
-                          handleDownloadPO(vehicleDocument.insuranceFile)
+                          handleDownloadPO(vehicleDocument.insuranceFile || "")
                         }
                       />
                     </TableCell>
@@ -466,7 +466,7 @@ const VehicleTable: React.FC = () => {
                         className="table-action-icon m-[auto]"
                         style={{ color: "grey" }}
                         onClick={() =>
-                          handleDownloadPO(vehicleDocument.fitnessFile)
+                          handleDownloadPO(vehicleDocument.fitnessFile || "")
                         }
                       />
                     </TableCell>
@@ -483,7 +483,7 @@ const VehicleTable: React.FC = () => {
                         className="table-action-icon m-[auto]"
                         style={{ color: "grey" }}
                         onClick={() =>
-                          handleDownloadPO(vehicleDocument.pollutionFile)
+                          handleDownloadPO(vehicleDocument.pollutionFile || "")
                         }
                       />
                     </TableCell>
@@ -500,7 +500,7 @@ const VehicleTable: React.FC = () => {
                         className="table-action-icon m-[auto]"
                         style={{ color: "grey" }}
                         onClick={() =>
-                          handleDownloadPO(vehicleDocument.roadTaxFile)
+                          handleDownloadPO(vehicleDocument.roadTaxFile || "")
                         }
                       />
                     </TableCell>
@@ -517,7 +517,9 @@ const VehicleTable: React.FC = () => {
                         className="table-action-icon m-[auto]"
                         style={{ color: "grey" }}
                         onClick={() =>
-                          handleDownloadPO(vehicleDocument.vehiclePassFile)
+                          handleDownloadPO(
+                            vehicleDocument.vehiclePassFile || ""
+                          )
                         }
                       />
                     </TableCell>
@@ -588,7 +590,7 @@ const VehicleTable: React.FC = () => {
                         className="table-action-icon m-[auto]"
                         style={{ color: "grey" }}
                         onClick={() =>
-                          handleDownloadPO(vehicleDocument.otherFile)
+                          handleDownloadPO(vehicleDocument.otherFile || "")
                         }
                       />
                     </TableCell>
