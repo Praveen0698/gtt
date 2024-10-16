@@ -327,16 +327,30 @@ const FuelViewTable: React.FC = () => {
     }
   };
 
-  const handleDownloadPO = (poFile: any) => {
-    const link = document.createElement("a");
+  const handleDownloadPO = async (fileUrl: string) => {
+    try {
+      const response = await fetch(fileUrl, { method: "GET" });
 
-    link.href = poFile;
-    link.download = poFile.split("/").pop();
+      if (!response.ok) {
+        throw new Error(`Failed to download file: ${response.statusText}`);
+      }
 
-    document.body.appendChild(link);
-    link.click();
+      const blob = await response.blob();
+      const downloadUrl = URL.createObjectURL(blob);
+      const link = document.createElement("a");
 
-    document.body.removeChild(link);
+      link.href = downloadUrl;
+      link.download = fileUrl.split("/").pop() || "downloaded-file"; // Extract filename
+      document.body.appendChild(link);
+
+      link.click(); // Trigger the download
+      document.body.removeChild(link);
+
+      // Release the object URL to free memory
+      URL.revokeObjectURL(downloadUrl);
+    } catch (error) {
+      console.error("Error downloading the file:", error);
+    }
   };
 
   const currentDate = new Date();
