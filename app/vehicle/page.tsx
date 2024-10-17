@@ -291,7 +291,6 @@ const VehicleTable: React.FC = () => {
       await axios.post("/api/vehicle/create2", part2);
 
       fetchVehicle(); // Refresh vehicle data
-      alert("Vehicle created successfully");
     } catch (err) {
       console.error("Error submitting vehicle:", err);
       alert("An error occurred while creating the vehicle");
