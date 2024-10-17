@@ -41,6 +41,14 @@
 //   }
 // }
 
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: "10mb", // Adjust size as per your requirement
+    },
+  },
+};
+
 import { NextResponse } from "next/server";
 import connectDB from "../../../../../utils/db";
 import Maintenance from "../../../../../models/Maintenance";
