@@ -1,11 +1,3 @@
-export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: "10mb", // Adjust size as per your requirement
-    },
-  },
-};
-
 import { NextResponse } from "next/server";
 import connectDB from "../../../../utils/db";
 import Vehicle from "../../../../models/Vehicle";
@@ -39,19 +31,6 @@ export async function POST(req) {
     pollution,
     pollutionFile,
     roadTax,
-    roadTaxFile,
-    odometer,
-    vehiclePass,
-    vehiclePassFile,
-    otherFile,
-    chessisNumber,
-    engineNumber,
-    permitExpiryDate,
-    emiAmount,
-    emiDate,
-    financer,
-    bankAccount,
-    hpStatus,
   } = vehicleData;
 
   try {
@@ -101,15 +80,6 @@ export async function POST(req) {
     const pollutionFilePath = pollutionFile
       ? await uploadToS3(pollutionFile, "pollution")
       : null;
-    const roadTaxFilePath = roadTaxFile
-      ? await uploadToS3(roadTaxFile, "roadTax")
-      : null;
-    const vehiclePassFilePath = vehiclePassFile
-      ? await uploadToS3(vehiclePassFile, "vehiclePass")
-      : null;
-    const otherFilePath = otherFile
-      ? await uploadToS3(otherFile, "other")
-      : null;
 
     // Create a new vehicle document
     const newVehicle = new Vehicle({
@@ -125,19 +95,6 @@ export async function POST(req) {
       pollution,
       pollutionFile: pollutionFilePath,
       roadTax,
-      roadTaxFile: roadTaxFilePath,
-      odometer,
-      vehiclePass,
-      vehiclePassFile: vehiclePassFilePath,
-      otherFile: otherFilePath,
-      chessisNumber,
-      engineNumber,
-      permitExpiryDate,
-      emiAmount,
-      emiDate,
-      financer,
-      bankAccount,
-      hpStatus,
     });
 
     // Save the new vehicle to the database

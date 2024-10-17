@@ -224,20 +224,81 @@ const VehicleTable: React.FC = () => {
     }
   };
 
+  // const handleSubmit = async (e: any) => {
+  //   setIsLoading(true);
+  //   e.preventDefault();
+  //   await axios
+  //     .post("/api/vehicle/create", formData)
+  //     .then((res) => {
+  //       if (res.data.message === "exists") {
+  //         alert("Project already exists");
+  //       } else {
+  //         fetchVehicle();
+  //       }
+  //     })
+  //     .catch((err) => console.error(err));
+  //   handleClose();
+  // };
+
   const handleSubmit = async (e: any) => {
-    setIsLoading(true);
     e.preventDefault();
-    await axios
-      .post("/api/vehicle/create", formData)
-      .then((res) => {
-        if (res.data.message === "exists") {
-          alert("Project already exists");
-        } else {
-          fetchVehicle();
-        }
-      })
-      .catch((err) => console.error(err));
-    handleClose();
+    setIsLoading(true); // Show loading state
+
+    try {
+      // Part 1 data
+      const part1 = {
+        vehicleNumber: formData.vehicleNumber,
+        brand: formData.brand,
+        model: formData.model,
+        rc: formData.rc,
+        rcFile: formData.rcFile,
+        insurance: formData.insurance,
+        insuranceFile: formData.insuranceFile,
+        fitness: formData.fitness,
+        fitnessFile: formData.fitnessFile,
+        pollution: formData.pollution,
+        pollutionFile: formData.pollutionFile,
+        roadTax: formData.roadTax,
+      };
+
+      // Call API 1 to create the vehicle
+      const res1 = await axios.post("/api/vehicle/create", part1);
+      if (res1.data.message === "exists") {
+        alert("Vehicle already exists");
+        setIsLoading(false);
+        return; // Stop execution if vehicle exists
+      }
+
+      // Part 2 data (needs to update the same vehicle object)
+      const part2 = {
+        vehicleNumber: formData.vehicleNumber, // Ensure we send the same vehicleNumber
+        roadTaxFile: formData.roadTaxFile,
+        odometer: formData.odometer,
+        vehiclePass: formData.vehiclePass,
+        vehiclePassFile: formData.vehiclePassFile,
+        otherFile: formData.otherFile,
+        chessisNumber: formData.chessisNumber,
+        engineNumber: formData.engineNumber,
+        permitExpiryDate: formData.permitExpiryDate,
+        emiAmount: formData.emiAmount,
+        emiDate: formData.emiDate,
+        financer: formData.financer,
+        bankAccount: formData.bankAccount,
+        hpStatus: formData.hpStatus,
+      };
+
+      // Call API 2 to update the same vehicle
+      await axios.post("/api/vehicle/create2", part2);
+
+      fetchVehicle(); // Refresh vehicle data
+      alert("Vehicle created successfully");
+    } catch (err) {
+      console.error("Error submitting vehicle:", err);
+      alert("An error occurred while creating the vehicle");
+    } finally {
+      setIsLoading(false); // Hide loading state
+      handleClose(); // Close the modal or form
+    }
   };
 
   const [getVehicle, setGetVehicle] = useState<any[]>([]);
