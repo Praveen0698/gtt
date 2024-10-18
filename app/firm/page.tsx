@@ -129,9 +129,9 @@ const FirmsTable: React.FC = () => {
   };
 
   const [firmType] = useState([
-    { label: "Proprietorship", value: "proprietorship" },
-    { label: "Parntership", value: "partnerShip" },
-    { label: "Private Limited", value: "pvtLimited" },
+    { label: "Proprietorship", value: "Proprietorship" },
+    { label: "Parntership", value: "Parntership" },
+    { label: "Private Limited", value: "PVT Limited" },
   ]);
 
   const handleInputChange = (e: any) => {
