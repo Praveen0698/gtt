@@ -506,7 +506,7 @@ const FirmsTable: React.FC = () => {
                   <TableCell
                     style={{ fontWeight: "bold", textAlign: "center" }}
                   >
-                    Admin Name
+                    Payer Name
                   </TableCell>
                   <TableCell
                     style={{ fontWeight: "bold", textAlign: "center" }}

@@ -53,7 +53,6 @@ const EmployeeTable: React.FC = () => {
           withCredentials: true,
         });
         const cookieAccessToken = getCookie("accessToken");
-        console.log(cookieAccessToken);
         const accessToken = response.data.accessToken;
 
         const decodedToken = accessToken
@@ -137,16 +136,16 @@ const EmployeeTable: React.FC = () => {
   };
 
   const [designation] = useState([
-    { label: "Project Manager", value: "manager" },
-    { label: "Onsite Supervisor", value: "onsite supervisor" },
-    { label: "Driver-1", value: "driver-1" },
-    { label: "Driver-2", value: "driver-2" },
-    { label: "Driver-3", value: "driver-3" },
-    { label: "Maintenance Incharge", value: "maintenance incharge" },
-    { label: "Safety Officer", value: "safety officer" },
-    { label: "HR", value: "hr" },
-    { label: "Operations", value: "operations" },
-    { label: "Helper", value: "helper" },
+    { label: "Project Manager", value: "Project Manager" },
+    { label: "Onsite Supervisor", value: "Onsite Supervisor" },
+    { label: "Driver-1", value: "Driver-1" },
+    { label: "Driver-2", value: "Driver-2" },
+    { label: "Driver-3", value: "Driver-3" },
+    { label: "Maintenance Incharge", value: "Maintenance Incharge" },
+    { label: "Safety Officer", value: "Safety Officer" },
+    { label: "HR", value: "HR" },
+    { label: "Operations", value: "Operations" },
+    { label: "Helper", value: "Helper" },
   ]);
 
   const handleInputChange = (e: any) => {
@@ -215,6 +214,7 @@ const EmployeeTable: React.FC = () => {
           ...res.data,
           aadharFile: null,
           dlFile: null,
+          password: "Gudiabus@900",
         }));
       })
       .catch((err) => console.error(err))
@@ -372,25 +372,25 @@ const EmployeeTable: React.FC = () => {
     let maxCount = startCount;
 
     let prefix = "";
-    if (designation.toLowerCase() === "manager") {
+    if (designation === "Project Manager") {
       prefix = "MGTT";
-    } else if (designation.toLowerCase() === "onsite supervisor") {
+    } else if (designation === "Onsite Supervisor") {
       prefix = "OSGTT";
-    } else if (designation.toLowerCase() === "driver-1") {
+    } else if (designation === "Driver-1") {
       prefix = "D1GTT";
-    } else if (designation.toLowerCase() === "driver-2") {
+    } else if (designation === "Driver-2") {
       prefix = "D2GTT";
-    } else if (designation.toLowerCase() === "driver-3") {
+    } else if (designation === "Driver-3") {
       prefix = "D3GTT";
-    } else if (designation.toLowerCase() === "maintenance incharge") {
+    } else if (designation === "Maintenance Incharge") {
       prefix = "MIGTT";
-    } else if (designation.toLowerCase() === "safety officer") {
+    } else if (designation === "Safety Officer") {
       prefix = "SOGTT";
-    } else if (designation.toLowerCase() === "hr") {
+    } else if (designation === "HR") {
       prefix = "HRGTT";
-    } else if (designation.toLowerCase() === "operations") {
+    } else if (designation === "Operations") {
       prefix = "OGTT";
-    } else if (designation.toLowerCase() === "helper") {
+    } else if (designation === "Helper") {
       prefix = "HGTT";
     } else {
       prefix = "AGTT";
@@ -404,7 +404,7 @@ const EmployeeTable: React.FC = () => {
   };
 
   useEffect(() => {
-    if (formData.designation) {
+    if (formData.designation && update === false) {
       generateUsername(formData.designation);
     }
   }, [formData.designation, getEmployee]);
@@ -620,7 +620,7 @@ const EmployeeTable: React.FC = () => {
                     fullWidth
                     name="password"
                     id="password"
-                    value={formData.password}
+                    value={update ? "Gudiabus@900" : formData.password}
                     onChange={handleInputChange}
                   />
                 </div>

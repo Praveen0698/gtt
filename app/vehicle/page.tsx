@@ -420,6 +420,36 @@ const VehicleTable: React.FC = () => {
     }
   }
 
+  const [vehicleNumber, setVehicleNumber] = useState<string>("");
+  const [date, setDate] = useState<string>("");
+  const [results, setResults] = useState<any[]>([]);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSearch = async () => {
+    // e.preventDefault();
+    setError(null); // Reset error state
+
+    try {
+      const response = await axios.get(
+        `/api/fuel/search/${vehicleNumber}/${date}`
+      );
+
+      // if (!response) {
+      //   throw new Error(await response());
+      // }
+      console.log(response);
+      // const data = await response.json();
+      // setResults(data);
+    } catch (err: any) {
+      setError(err.message);
+    }
+  };
+
+  useEffect(() => {
+    handleSearch();
+  }, [date, vehicleNumber]);
+
+  console.log(results);
   return (
     <>
       {isLoading ? (
@@ -1195,6 +1225,28 @@ const VehicleTable: React.FC = () => {
         <div className="table-main-container">
           <div className="title-button-container">
             <h3 className="table-h3">Vehicles</h3>
+            <div>
+              <div>
+                <label htmlFor="vehicleNumber">Vehicle Number:</label>
+                <input
+                  type="text"
+                  id="vehicleNumber"
+                  value={vehicleNumber}
+                  onChange={(e) => setVehicleNumber(e.target.value)}
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="date">Date:</label>
+                <input
+                  type="date"
+                  id="date"
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                  required
+                />
+              </div>
+            </div>
             <Button
               variant="outlined"
               onClick={() => {

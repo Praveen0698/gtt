@@ -198,6 +198,8 @@ const ProjectTable: React.FC = () => {
       (employee) => employee.employeeName === selectedEmployeeName
     );
 
+    console.log(selectedEmployee);
+
     if (selectedEmployee) {
       setFormData((prevData) => ({
         ...prevData,
@@ -206,6 +208,8 @@ const ProjectTable: React.FC = () => {
       }));
     }
   };
+
+  console.log(formData);
 
   const handleSubmit = async (e: any) => {
     setIsLoading(true);
@@ -539,7 +543,9 @@ const ProjectTable: React.FC = () => {
                   >
                     {getEmployee.length > 0 ? (
                       getEmployee
-                        .filter((type) => type.designation === "manager")
+                        .filter(
+                          (type) => type.designation === "Project Manager"
+                        )
                         .map((type) => (
                           <MenuItem key={type._id} value={type.employeeName}>
                             {type.employeeName}

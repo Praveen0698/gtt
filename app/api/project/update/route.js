@@ -80,6 +80,7 @@ export async function PUT(req) {
     source,
     destination,
     supervisor,
+    employeeId,
   } = projectData;
 
   try {
@@ -111,6 +112,7 @@ export async function PUT(req) {
       source,
       destination,
       supervisor,
+      employeeId,
       poFile: poFileUrl, // Include the updated or existing PO file URL
     };
 
