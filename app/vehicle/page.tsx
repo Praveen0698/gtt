@@ -56,17 +56,11 @@ const VehicleTable: React.FC = () => {
           withCredentials: true,
         });
         const cookieAccessToken = getCookie("accessToken");
-        console.log(cookieAccessToken);
         const accessToken = response.data.accessToken;
 
         const decodedToken = accessToken
           ? decodeAccessToken(accessToken)
           : null;
-        console.log(
-          response.data.isLoggedIn ||
-            cookieAccessToken ||
-            decodedToken?.role === "admin"
-        );
         if (
           !response.data.isLoggedIn ||
           !cookieAccessToken ||
@@ -133,12 +127,16 @@ const VehicleTable: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [openDoc, setOpenDoc] = useState(false);
   const [openOther, setOpenOther] = useState(false);
+  const [openFuel, setOpenFuel] = useState(false);
   const [update, setUpdate] = useState(false);
   const [vehicleDocument, setVehicleDocument] = useState(docField);
   const [formData, setFormData] = useState(docField);
 
   const handleOpen = () => {
     setOpen(true);
+  };
+  const handleOpenFuel = () => {
+    setOpenFuel(true);
   };
 
   const handleOpenDoc = (doc: any) => {
@@ -154,6 +152,11 @@ const VehicleTable: React.FC = () => {
     setToggle(false);
     setOpen(false);
     setFormData(docField);
+  };
+
+  const handleCloseFuel = () => {
+    setToggle(false);
+    setOpenFuel(false);
   };
 
   const handleCloseDoc = () => {
@@ -223,22 +226,6 @@ const VehicleTable: React.FC = () => {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
   };
-
-  // const handleSubmit = async (e: any) => {
-  //   setIsLoading(true);
-  //   e.preventDefault();
-  //   await axios
-  //     .post("/api/vehicle/create", formData)
-  //     .then((res) => {
-  //       if (res.data.message === "exists") {
-  //         alert("Project already exists");
-  //       } else {
-  //         fetchVehicle();
-  //       }
-  //     })
-  //     .catch((err) => console.error(err));
-  //   handleClose();
-  // };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -423,31 +410,50 @@ const VehicleTable: React.FC = () => {
   const [vehicleNumber, setVehicleNumber] = useState<string>("");
   const [date, setDate] = useState<string>("");
   const [results, setResults] = useState<any[]>([]);
-  const [error, setError] = useState<string | null>(null);
 
-  const handleSearch = async () => {
-    // e.preventDefault();
-    setError(null); // Reset error state
+  interface Item {
+    id: string;
+    vehicle: string;
+    odometer: string;
+    odometerFile: string | null;
+    amount: string;
+    amountFile: string | null;
+    paymentType: string;
+    pumpName: string;
+    _id: string;
+  }
+
+  interface Entry {
+    _id: string;
+    projectId: string;
+    projectName: string;
+    employeeId: string;
+    date: string;
+    items: Item[];
+    __v: number;
+  }
+
+  const handleSearch = async (e: any) => {
+    e.preventDefault();
 
     try {
       const response = await axios.get(
         `/api/fuel/search/${vehicleNumber}/${date}`
       );
-
-      // if (!response) {
-      //   throw new Error(await response());
-      // }
-      console.log(response);
-      // const data = await response.json();
-      // setResults(data);
+      const filteredItems: Item[] = response.data.dataGot.flatMap(
+        (entry: Entry) =>
+          entry.items.filter((item: Item) => item.vehicle === vehicleNumber)
+      );
+      handleOpenFuel();
+      setResults(filteredItems);
     } catch (err: any) {
-      setError(err.message);
+      console.error(err.message);
     }
   };
 
-  useEffect(() => {
-    handleSearch();
-  }, [date, vehicleNumber]);
+  // useEffect(() => {
+  //   if (date.length > 0 && vehicleNumber.length > 0) handleSearch();
+  // }, [date, vehicleNumber]);
 
   console.log(results);
   return (
@@ -1222,31 +1228,197 @@ const VehicleTable: React.FC = () => {
             </form>
           </div>
         </Modal>
+        {/* fuel model */}
+        <Modal
+          className="bus-form-modal"
+          open={openFuel}
+          onClose={handleCloseFuel}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <div className="bus-form-container" style={{ width: "80%" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "20px",
+              }}
+            >
+              <h3>Vehicle Fuel Expenses</h3>
+              <RxCrossCircled
+                className="bus-form-cross"
+                onClick={handleCloseFuel}
+              />
+            </div>
+            <TableContainer component={Paper} className="table-container">
+              <Table sx={{ minWidth: 650 }} aria-label="caption table">
+                <TableHead style={{ background: "#ddff8f" }}>
+                  <TableRow>
+                    <TableCell
+                      style={{
+                        fontWeight: "bold",
+                        textAlign: "center",
+                      }}
+                    >
+                      Vehicle
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        fontWeight: "bold",
+                        textAlign: "center",
+                      }}
+                    >
+                      Odometer
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        fontWeight: "bold",
+                        textAlign: "center",
+                      }}
+                    >
+                      Odometer File
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        fontWeight: "bold",
+                        textAlign: "center",
+                      }}
+                    >
+                      Amount
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        fontWeight: "bold",
+                        textAlign: "center",
+                      }}
+                    >
+                      Amount File
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        fontWeight: "bold",
+                        textAlign: "center",
+                      }}
+                    >
+                      Pump Name
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        fontWeight: "bold",
+                        textAlign: "center",
+                      }}
+                    >
+                      Payment Type
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {results.map((item) => (
+                    <TableRow key={item.id} hover role="checkbox" tabIndex={-1}>
+                      <TableCell style={{ textAlign: "center" }}>
+                        {item.vehicle}
+                      </TableCell>
+                      <TableCell style={{ textAlign: "center" }}>
+                        {item.odometer}
+                      </TableCell>
+                      <TableCell style={{ textAlign: "center" }}>
+                        {item.odometerFile ? (
+                          <FaDownload
+                            className="table-action-icon m-[auto]"
+                            style={{ color: "grey" }}
+                            onClick={() =>
+                              handleDownloadPO(item.odometerFile || "")
+                            }
+                          />
+                        ) : (
+                          "N/A"
+                        )}
+                      </TableCell>
+                      <TableCell style={{ textAlign: "center" }}>
+                        {item.amount}
+                      </TableCell>
+                      <TableCell style={{ textAlign: "center" }}>
+                        {item.odometerFile ? (
+                          <FaDownload
+                            className="table-action-icon m-[auto]"
+                            style={{ color: "grey" }}
+                            onClick={() =>
+                              handleDownloadPO(item.amountFile || "")
+                            }
+                          />
+                        ) : (
+                          "N/A"
+                        )}
+                      </TableCell>
+                      <TableCell style={{ textAlign: "center" }}>
+                        {item.pumpName}
+                      </TableCell>
+                      <TableCell style={{ textAlign: "center" }}>
+                        {item.paymentType}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </div>
+        </Modal>
         <div className="table-main-container">
           <div className="title-button-container">
             <h3 className="table-h3">Vehicles</h3>
-            <div>
-              <div>
-                <label htmlFor="vehicleNumber">Vehicle Number:</label>
-                <input
-                  type="text"
+            <form
+              className="flex justify-center items-end gap-2"
+              onSubmit={handleSearch}
+            >
+              <div className="flex flex-col justify-start">
+                <label
+                  htmlFor="vehicleNumber"
+                  className="text-xs font-medium text-gray-400"
+                >
+                  Vehicle Number
+                </label>
+                <select
                   id="vehicleNumber"
                   value={vehicleNumber}
                   onChange={(e) => setVehicleNumber(e.target.value)}
                   required
-                />
+                  className="border-[1px] outline-none border-gray-400 w-[150px] px-2 py-2 rounded-md"
+                >
+                  <option value="" disabled>
+                    Select a vehicle
+                  </option>
+                  {getVehicle.map((vehicle) => (
+                    <option key={vehicle.id} value={vehicle.vehicleNumber}>
+                      {vehicle.vehicleNumber}
+                    </option>
+                  ))}
+                </select>
               </div>
-              <div>
-                <label htmlFor="date">Date:</label>
+              <div className="flex flex-col justify-start">
+                <label
+                  htmlFor="date"
+                  className="text-xs font-medium text-gray-400"
+                >
+                  Date
+                </label>
                 <input
                   type="date"
                   id="date"
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
                   required
+                  className="border-[1px] outline-none border-gray-400 w-[150px] px-2 py-1 rounded-md"
                 />
               </div>
-            </div>
+              <button
+                type="submit"
+                id="input-btn-submit"
+                className="px-2 py-1 rounded-sm"
+              >
+                view
+              </button>
+            </form>
             <Button
               variant="outlined"
               onClick={() => {

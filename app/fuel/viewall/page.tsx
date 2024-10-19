@@ -134,7 +134,7 @@ const FuelViewallTable: React.FC = () => {
   return (
     <Suspense fallback={<div>Loading fuel view...</div>}>
       {isLoading ? (
-        <div className="loader-container">
+        <div className="loader-container overflow-hidden">
           <div className="loader-container">
             <i>GTT</i>
           </div>

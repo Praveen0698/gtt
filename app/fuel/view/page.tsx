@@ -400,7 +400,6 @@ const FuelViewTable: React.FC = () => {
                   ].map((header, index) => (
                     <TableCell
                       key={index}
-                      colSpan={header === "Actions" && update === true ? 2 : 1}
                       style={{ fontWeight: "bold", textAlign: "center" }}
                     >
                       {header}
@@ -507,6 +506,30 @@ const FuelViewTable: React.FC = () => {
                             onChange={(e) => handleItemChange(e, row.id)}
                           />
                         </TableCell>
+                        {update ? (
+                          <>
+                            <TableCell style={{ textAlign: "center" }}>
+                              {formData.items.length !== 1 && (
+                                <MdDelete
+                                  color="red"
+                                  size={24}
+                                  style={{ cursor: "pointer" }}
+                                  onClick={() => deleteRow(row.id)}
+                                />
+                              )}
+                            </TableCell>
+                            <TableCell style={{ textAlign: "center" }}>
+                              {formData.items.length === index + 1 && (
+                                <IoMdAdd
+                                  color="green"
+                                  size={24}
+                                  style={{ cursor: "pointer" }}
+                                  onClick={addItem}
+                                />
+                              )}
+                            </TableCell>
+                          </>
+                        ) : null}
                       </TableRow>
                     </TableBody>
                   ))
@@ -545,26 +568,6 @@ const FuelViewTable: React.FC = () => {
                         </TableCell>
                         <TableCell style={{ textAlign: "center" }}>
                           {row.pumpName}
-                        </TableCell>
-                        <TableCell style={{ textAlign: "center" }}>
-                          {formData.items.length !== 1 && (
-                            <MdDelete
-                              color="red"
-                              size={24}
-                              style={{ cursor: "pointer" }}
-                              onClick={() => deleteRow(row.id)}
-                            />
-                          )}
-                        </TableCell>
-                        <TableCell style={{ textAlign: "center" }}>
-                          {formData.items.length === index + 1 && (
-                            <IoMdAdd
-                              color="green"
-                              size={24}
-                              style={{ cursor: "pointer" }}
-                              onClick={addItem}
-                            />
-                          )}
                         </TableCell>
                       </TableRow>
                     </TableBody>
