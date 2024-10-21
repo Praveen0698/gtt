@@ -25,9 +25,6 @@ const LoginPage = () => {
 
       // Store the access token in a cookie
       document.cookie = `accessToken=${accessToken}; path=/;`;
-      console.log(accessToken);
-      // Redirect after successful login
-      // router.push("/dashboard");
     } catch (error) {
       setError("Login failed. Please check your credentials and try again.");
     }

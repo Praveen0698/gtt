@@ -464,311 +464,27 @@ const VehicleTable: React.FC = () => {
             <i>GTT</i>
           </div>
         </div>
-      ) : null}
-      <section className="firm-main-container">
-        <Navbar />
-        <Image
-          src={Elipse}
-          alt="elipse_design"
-          style={{ width: "100%" }}
-          className="elipse-home-image"
-        />
-        <p className="text-p card-badge">
-          Home / <span style={{ color: "white" }}>Vehicles</span>
-        </p>
+      ) : (
+        <section className="firm-main-container">
+          <Navbar />
+          <Image
+            src={Elipse}
+            alt="elipse_design"
+            style={{ width: "100%" }}
+            className="elipse-home-image"
+          />
+          <p className="text-p card-badge">
+            Home / <span style={{ color: "white" }}>Vehicles</span>
+          </p>
 
-        <Modal
-          className="bus-form-modal"
-          open={openDoc}
-          onClose={handleCloseDoc}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <div className="bus-form-container" style={{ width: "45%" }}>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                marginBottom: "20px",
-              }}
-            >
-              <h3>Vehicle Documents</h3>
-              <RxCrossCircled
-                className="bus-form-cross"
-                onClick={handleCloseDoc}
-              />
-            </div>
-            <TableContainer component={Paper} className="table-container">
-              <Table sx={{ minWidth: 650 }} aria-label="caption table">
-                <TableHead style={{ background: "#ddff8f" }}>
-                  <TableRow>
-                    <TableCell
-                      style={{
-                        fontWeight: "bold",
-                        top: 40,
-                        minWidth: 50,
-                        textAlign: "center",
-                      }}
-                    >
-                      Document
-                    </TableCell>
-                    <TableCell
-                      style={{
-                        fontWeight: "bold",
-                        top: 40,
-                        minWidth: 50,
-                        textAlign: "center",
-                      }}
-                    >
-                      File
-                    </TableCell>
-                    <TableCell
-                      style={{
-                        fontWeight: "bold",
-                        top: 40,
-                        minWidth: 50,
-                        textAlign: "center",
-                      }}
-                    >
-                      Expiry
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow hover role="checkbox" tabIndex={-1}>
-                    <TableCell style={{ textAlign: "center" }}>
-                      Insurance
-                    </TableCell>
-                    <TableCell style={{ textAlign: "center" }}>
-                      <FaDownload
-                        className="table-action-icon m-[auto]"
-                        style={{ color: "grey" }}
-                        onClick={() =>
-                          handleDownloadPO(vehicleDocument.insuranceFile || "")
-                        }
-                      />
-                    </TableCell>
-                    <TableCell style={{ textAlign: "center" }}>
-                      {getExpiryMessage(vehicleDocument.insurance)}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow hover role="checkbox" tabIndex={-1}>
-                    <TableCell style={{ textAlign: "center" }}>
-                      Fitness
-                    </TableCell>
-                    <TableCell style={{ textAlign: "center" }}>
-                      <FaDownload
-                        className="table-action-icon m-[auto]"
-                        style={{ color: "grey" }}
-                        onClick={() =>
-                          handleDownloadPO(vehicleDocument.fitnessFile || "")
-                        }
-                      />
-                    </TableCell>
-                    <TableCell style={{ textAlign: "center" }}>
-                      {getExpiryMessage(vehicleDocument.fitness)}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow hover role="checkbox" tabIndex={-1}>
-                    <TableCell style={{ textAlign: "center" }}>
-                      Pollution
-                    </TableCell>
-                    <TableCell style={{ textAlign: "center" }}>
-                      <FaDownload
-                        className="table-action-icon m-[auto]"
-                        style={{ color: "grey" }}
-                        onClick={() =>
-                          handleDownloadPO(vehicleDocument.pollutionFile || "")
-                        }
-                      />
-                    </TableCell>
-                    <TableCell style={{ textAlign: "center" }}>
-                      {getExpiryMessage(vehicleDocument.pollution)}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow hover role="checkbox" tabIndex={-1}>
-                    <TableCell style={{ textAlign: "center" }}>
-                      Road Tax
-                    </TableCell>
-                    <TableCell style={{ textAlign: "center" }}>
-                      <FaDownload
-                        className="table-action-icon m-[auto]"
-                        style={{ color: "grey" }}
-                        onClick={() =>
-                          handleDownloadPO(vehicleDocument.roadTaxFile || "")
-                        }
-                      />
-                    </TableCell>
-                    <TableCell style={{ textAlign: "center" }}>
-                      {getExpiryMessage(vehicleDocument.roadTax)}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow hover role="checkbox" tabIndex={-1}>
-                    <TableCell style={{ textAlign: "center" }}>
-                      Vehicle Pass
-                    </TableCell>
-                    <TableCell style={{ textAlign: "center" }}>
-                      <FaDownload
-                        className="table-action-icon m-[auto]"
-                        style={{ color: "grey" }}
-                        onClick={() =>
-                          handleDownloadPO(
-                            vehicleDocument.vehiclePassFile || ""
-                          )
-                        }
-                      />
-                    </TableCell>
-                    <TableCell style={{ textAlign: "center" }}>
-                      {getExpiryMessage(vehicleDocument.vehiclePass)}
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </div>
-        </Modal>
-        <Modal
-          className="bus-form-modal"
-          open={openOther}
-          onClose={handleCloseOther}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <div className="bus-form-container" style={{ width: "45%" }}>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                marginBottom: "20px",
-              }}
-            >
-              <h3>Other Details</h3>
-              <RxCrossCircled
-                className="bus-form-cross"
-                onClick={handleCloseOther}
-              />
-            </div>
-            <TableContainer component={Paper} className="table-container">
-              <Table sx={{ minWidth: 650 }} aria-label="caption table">
-                <TableHead style={{ background: "#ddff8f" }}>
-                  <TableRow>
-                    <TableCell
-                      style={{
-                        fontWeight: "bold",
-                        top: 40,
-                        minWidth: 50,
-                        textAlign: "center",
-                      }}
-                    >
-                      Details
-                    </TableCell>
-                    <TableCell
-                      style={{
-                        fontWeight: "bold",
-                        top: 40,
-                        minWidth: 50,
-                        textAlign: "center",
-                      }}
-                    >
-                      Value
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow hover role="checkbox" tabIndex={-1}>
-                    <TableCell style={{ textAlign: "center" }}>
-                      Other Documents
-                    </TableCell>
-                    <TableCell style={{ textAlign: "center" }}>
-                      <FaDownload
-                        className="table-action-icon m-[auto]"
-                        style={{ color: "grey" }}
-                        onClick={() =>
-                          handleDownloadPO(vehicleDocument.otherFile || "")
-                        }
-                      />
-                    </TableCell>
-                  </TableRow>
-                  <TableRow hover role="checkbox" tabIndex={-1}>
-                    <TableCell style={{ textAlign: "center" }}>
-                      Chessis Number
-                    </TableCell>
-                    <TableCell style={{ textAlign: "center" }}>
-                      {vehicleDocument.chessisNumber}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow hover role="checkbox" tabIndex={-1}>
-                    <TableCell style={{ textAlign: "center" }}>
-                      Engine Number
-                    </TableCell>
-                    <TableCell style={{ textAlign: "center" }}>
-                      {vehicleDocument.engineNumber}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow hover role="checkbox" tabIndex={-1}>
-                    <TableCell style={{ textAlign: "center" }}>
-                      Permit Expiry Date
-                    </TableCell>
-                    <TableCell style={{ textAlign: "center" }}>
-                      {vehicleDocument.permitExpiryDate}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow hover role="checkbox" tabIndex={-1}>
-                    <TableCell style={{ textAlign: "center" }}>
-                      EMI Amount
-                    </TableCell>
-                    <TableCell style={{ textAlign: "center" }}>
-                      {vehicleDocument.emiAmount}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow hover role="checkbox" tabIndex={-1}>
-                    <TableCell style={{ textAlign: "center" }}>
-                      EMI Date
-                    </TableCell>
-                    <TableCell style={{ textAlign: "center" }}>
-                      {vehicleDocument.emiDate}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow hover role="checkbox" tabIndex={-1}>
-                    <TableCell style={{ textAlign: "center" }}>
-                      Financer
-                    </TableCell>
-                    <TableCell style={{ textAlign: "center" }}>
-                      {vehicleDocument.financer}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow hover role="checkbox" tabIndex={-1}>
-                    <TableCell style={{ textAlign: "center" }}>
-                      Bank Account
-                    </TableCell>
-                    <TableCell style={{ textAlign: "center" }}>
-                      {vehicleDocument.bankAccount}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow hover role="checkbox" tabIndex={-1}>
-                    <TableCell style={{ textAlign: "center" }}>
-                      HP Status
-                    </TableCell>
-                    <TableCell style={{ textAlign: "center" }}>
-                      {vehicleDocument.hpStatus}
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </div>
-        </Modal>
-        <Modal
-          className="bus-form-modal"
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <div className="bus-form-container">
-            <form onSubmit={update ? handleUpdate : handleSubmit}>
+          <Modal
+            className="bus-form-modal"
+            open={openDoc}
+            onClose={handleCloseDoc}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <div className="bus-form-container" style={{ width: "45%" }}>
               <div
                 style={{
                   display: "flex",
@@ -777,802 +493,1101 @@ const VehicleTable: React.FC = () => {
                   marginBottom: "20px",
                 }}
               >
-                <h3>Add Vehicle</h3>
+                <h3>Vehicle Documents</h3>
                 <RxCrossCircled
                   className="bus-form-cross"
-                  onClick={handleClose}
+                  onClick={handleCloseDoc}
                 />
               </div>
-
-              <div className="data-input-fields">
-                <div className="bus-input-label">
-                  <label className="input-label">Vehicle Number</label>
-                  <TextField
-                    className="bus-input"
-                    margin="dense"
-                    type="text"
-                    fullWidth
-                    name="vehicleNumber"
-                    id="vehicleNumber"
-                    value={formData.vehicleNumber}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                <div className="bus-input-label">
-                  <label className="input-label">Brand</label>
-                  <TextField
-                    className="bus-input"
-                    margin="dense"
-                    type="text"
-                    fullWidth
-                    name="brand"
-                    id="brand"
-                    value={formData.brand}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                <div className="bus-input-label">
-                  <label className="input-label">Model</label>
-                  <TextField
-                    className="bus-input"
-                    margin="dense"
-                    type="text"
-                    fullWidth
-                    name="model"
-                    id="model"
-                    value={formData.model}
-                    onChange={handleInputChange}
-                  />
-                </div>
-              </div>
-              <div className="data-input-fields">
-                <div className="bus-input-label">
-                  <label className="input-label">Chessis Number</label>
-
-                  <div className="input-upload-container">
-                    <TextField
-                      className="bus-input"
-                      margin="dense"
-                      type="text"
-                      fullWidth
-                      name="chessisNumber"
-                      id="chessisNumber"
-                      value={formData.chessisNumber}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                </div>
-                <div className="bus-input-label">
-                  <label className="input-label">Engine Number</label>
-
-                  <div className="input-upload-container">
-                    <TextField
-                      className="bus-input"
-                      margin="dense"
-                      type="text"
-                      fullWidth
-                      name="engineNumber"
-                      id="engineNumber"
-                      value={formData.engineNumber}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                </div>
-                <div className="bus-input-label">
-                  <label className="input-label">Permit Expiry Date</label>
-
-                  <div className="input-upload-container">
-                    <TextField
-                      className="bus-input"
-                      margin="dense"
-                      type="date"
-                      fullWidth
-                      name="permitExpiryDate"
-                      id="permitExpiryDate"
-                      value={formData.permitExpiryDate}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="data-input-fields">
-                <div className="bus-input-label">
-                  <label className="input-label">EMI Amount</label>
-
-                  <div className="input-upload-container">
-                    <TextField
-                      className="bus-input"
-                      margin="dense"
-                      type="text"
-                      fullWidth
-                      name="emiAmount"
-                      id="emiAmount"
-                      value={formData.emiAmount}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                </div>
-                <div className="bus-input-label">
-                  <label className="input-label">EMI Date</label>
-
-                  <div className="input-upload-container">
-                    <TextField
-                      className="bus-input"
-                      margin="dense"
-                      type="date"
-                      fullWidth
-                      name="emiDate"
-                      id="emiDate"
-                      value={formData.emiDate}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                </div>
-                <div className="bus-input-label">
-                  <label className="input-label">Financer</label>
-
-                  <div className="input-upload-container">
-                    <TextField
-                      className="bus-input"
-                      margin="dense"
-                      type="text"
-                      fullWidth
-                      name="financer"
-                      id="financer"
-                      value={formData.financer}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                </div>
-                <div className="bus-input-label">
-                  <label className="input-label">Bank Account</label>
-
-                  <div className="input-upload-container">
-                    <TextField
-                      className="bus-input"
-                      margin="dense"
-                      type="text"
-                      fullWidth
-                      name="bankAccount"
-                      id="bankAccount"
-                      value={formData.bankAccount}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="data-input-fields">
-                <div className="bus-input-label">
-                  <label className="input-label">
-                    Registration Certificate Number
-                  </label>
-
-                  <div className="input-upload-container">
-                    <TextField
-                      className="bus-input"
-                      margin="dense"
-                      type="date"
-                      fullWidth
-                      name="rc"
-                      id="rc"
-                      value={formData.rc}
-                      onChange={handleInputChange}
-                    />
-                    <input
-                      accept="image/*,.pdf"
-                      style={{ display: "none" }}
-                      id="rcFile"
-                      type="file"
-                      name="rcFile"
-                      onChange={handleInputChange}
-                    />
-                    <label htmlFor="rcFile">
-                      <Button
-                        variant="contained"
-                        component="span"
-                        style={{ background: "#202023" }}
+              <TableContainer component={Paper} className="table-container">
+                <Table sx={{ minWidth: 650 }} aria-label="caption table">
+                  <TableHead style={{ background: "#ddff8f" }}>
+                    <TableRow>
+                      <TableCell
+                        style={{
+                          fontWeight: "bold",
+                          top: 40,
+                          minWidth: 50,
+                          textAlign: "center",
+                        }}
                       >
-                        {formData.rcFile ? "DONE" : "UPLOAD"}
-                      </Button>
-                    </label>
-                  </div>
-                </div>
-
-                <div className="bus-input-label">
-                  <label className="input-label">Insurance Expiry</label>
-
-                  <div className="input-upload-container">
-                    <TextField
-                      className="bus-input"
-                      margin="dense"
-                      type="date"
-                      fullWidth
-                      name="insurance"
-                      id="insurance"
-                      value={formData.insurance}
-                      onChange={handleInputChange}
-                    />
-                    <input
-                      accept="image/*,.pdf"
-                      style={{ display: "none" }}
-                      id="insuranceFile"
-                      type="file"
-                      name="insuranceFile"
-                      onChange={handleInputChange}
-                    />
-                    <label htmlFor="insuranceFile">
-                      <Button
-                        variant="contained"
-                        component="span"
-                        style={{ background: "#202023" }}
-                      >
-                        {formData.insuranceFile ? "DONE" : "UPLOAD"}
-                      </Button>
-                    </label>
-                  </div>
-                </div>
-                <div className="bus-input-label">
-                  <label className="input-label">Fitness Expiry</label>
-
-                  <div className="input-upload-container">
-                    <TextField
-                      className="bus-input"
-                      margin="dense"
-                      type="date"
-                      fullWidth
-                      name="fitness"
-                      id="fitness"
-                      value={formData.fitness}
-                      onChange={handleInputChange}
-                    />
-                    <input
-                      accept="image/*,.pdf"
-                      style={{ display: "none" }}
-                      id="fitnessFile"
-                      type="file"
-                      name="fitnessFile"
-                      onChange={handleInputChange}
-                    />
-                    <label htmlFor="fitnessFile">
-                      <Button
-                        variant="contained"
-                        component="span"
-                        style={{ background: "#202023" }}
-                      >
-                        {formData.fitnessFile ? "DONE" : "UPLOAD"}
-                      </Button>
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div className="data-input-fields">
-                <div className="bus-input-label">
-                  <label className="input-label">Pollution Expiry</label>
-
-                  <div className="input-upload-container">
-                    <TextField
-                      className="bus-input"
-                      margin="dense"
-                      type="date"
-                      fullWidth
-                      name="pollution"
-                      id="pollution"
-                      value={formData.pollution}
-                      onChange={handleInputChange}
-                    />
-                    <input
-                      accept="image/*,.pdf"
-                      style={{ display: "none" }}
-                      id="pollutionFile"
-                      type="file"
-                      name="pollutionFile"
-                      onChange={handleInputChange}
-                    />
-                    <label htmlFor="pollutionFile">
-                      <Button
-                        variant="contained"
-                        component="span"
-                        style={{ background: "#202023" }}
-                      >
-                        {formData.pollutionFile ? "DONE" : "UPLOAD"}
-                      </Button>
-                    </label>
-                  </div>
-                </div>
-
-                <div className="bus-input-label">
-                  <label className="input-label">Road Tax Expiry</label>
-
-                  <div className="input-upload-container">
-                    <TextField
-                      className="bus-input"
-                      margin="dense"
-                      type="date"
-                      fullWidth
-                      name="roadTax"
-                      id="roadTax"
-                      value={formData.roadTax}
-                      onChange={handleInputChange}
-                    />
-                    <input
-                      accept="image/*,.pdf"
-                      style={{ display: "none" }}
-                      id="roadTaxFile"
-                      type="file"
-                      name="roadTaxFile"
-                      onChange={handleInputChange}
-                    />
-                    <label htmlFor="roadTaxFile">
-                      <Button
-                        variant="contained"
-                        component="span"
-                        style={{ background: "#202023" }}
-                      >
-                        {formData.roadTaxFile ? "DONE" : "UPLOAD"}
-                      </Button>
-                    </label>
-                  </div>
-                </div>
-                <div className="bus-input-label">
-                  <label className="input-label">Odometer Reading</label>
-                  <TextField
-                    className="bus-input"
-                    margin="dense"
-                    type="text"
-                    fullWidth
-                    name="odometer"
-                    id="odometer"
-                    value={formData.odometer}
-                    onChange={handleInputChange}
-                  />
-                </div>
-              </div>
-
-              <div className="data-input-fields">
-                <div className="bus-input-label">
-                  <label className="input-label">Vehicle Pass Expiry</label>
-
-                  <div className="input-upload-container">
-                    <TextField
-                      className="bus-input"
-                      margin="dense"
-                      type="date"
-                      fullWidth
-                      name="vehiclePass"
-                      id="vehiclePass"
-                      value={formData.vehiclePass}
-                      onChange={handleInputChange}
-                    />
-                    <input
-                      accept="image/*,.pdf"
-                      style={{ display: "none" }}
-                      id="vehiclePassFile"
-                      type="file"
-                      name="vehiclePassFile"
-                      onChange={handleInputChange}
-                    />
-                    <label htmlFor="vehiclePassFile">
-                      <Button
-                        variant="contained"
-                        component="span"
-                        style={{ background: "#202023" }}
-                      >
-                        {formData.vehiclePassFile ? "DONE" : "UPLOAD"}
-                      </Button>
-                    </label>
-                  </div>
-                </div>
-                <div className="bus-input-label">
-                  <label className="input-label">Other File</label>
-
-                  <div
-                    className="input-upload-container"
-                    style={{ justifyContent: "flex-start" }}
-                  >
-                    <input
-                      accept="image/*,.pdf"
-                      style={{ display: "none" }}
-                      id="otherFile"
-                      type="file"
-                      name="otherFile"
-                      onChange={handleInputChange}
-                    />
-                    <label htmlFor="otherFile">
-                      <Button
-                        variant="contained"
-                        component="span"
-                        style={{ background: "#202023" }}
-                      >
-                        {formData.otherFile ? "DONE" : "UPLOAD OTHER FILE"}
-                      </Button>
-                    </label>
-                  </div>
-                </div>
-                <div className="bus-input-label">
-                  <label className="input-label">HP Status</label>
-
-                  <div className="input-upload-container">
-                    <TextField
-                      className="bus-input"
-                      margin="dense"
-                      type="text"
-                      fullWidth
-                      name="hpStatus"
-                      id="hpStatus"
-                      value={formData.hpStatus}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="data-buttons" style={{ marginTop: "20px" }}>
-                <Button
-                  id="input-btn-submit"
-                  className="submit"
-                  type="submit"
-                  variant="outlined"
-                >
-                  {update ? "Update" : "Submit"}
-                </Button>
-                <Button
-                  id="input-btn-cancel"
-                  className="cancel"
-                  onClick={handleClose}
-                  variant="outlined"
-                >
-                  Cancel
-                </Button>
-              </div>
-            </form>
-          </div>
-        </Modal>
-        {/* fuel model */}
-        <Modal
-          className="bus-form-modal"
-          open={openFuel}
-          onClose={handleCloseFuel}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <div className="bus-form-container" style={{ width: "80%" }}>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                marginBottom: "20px",
-              }}
-            >
-              <h3>Vehicle Fuel Expenses</h3>
-              <RxCrossCircled
-                className="bus-form-cross"
-                onClick={handleCloseFuel}
-              />
-            </div>
-            <TableContainer component={Paper} className="table-container">
-              <Table sx={{ minWidth: 650 }} aria-label="caption table">
-                <TableHead style={{ background: "#ddff8f" }}>
-                  <TableRow>
-                    <TableCell
-                      style={{
-                        fontWeight: "bold",
-                        textAlign: "center",
-                      }}
-                    >
-                      Vehicle
-                    </TableCell>
-                    <TableCell
-                      style={{
-                        fontWeight: "bold",
-                        textAlign: "center",
-                      }}
-                    >
-                      Odometer
-                    </TableCell>
-                    <TableCell
-                      style={{
-                        fontWeight: "bold",
-                        textAlign: "center",
-                      }}
-                    >
-                      Odometer File
-                    </TableCell>
-                    <TableCell
-                      style={{
-                        fontWeight: "bold",
-                        textAlign: "center",
-                      }}
-                    >
-                      Amount
-                    </TableCell>
-                    <TableCell
-                      style={{
-                        fontWeight: "bold",
-                        textAlign: "center",
-                      }}
-                    >
-                      Amount File
-                    </TableCell>
-                    <TableCell
-                      style={{
-                        fontWeight: "bold",
-                        textAlign: "center",
-                      }}
-                    >
-                      Pump Name
-                    </TableCell>
-                    <TableCell
-                      style={{
-                        fontWeight: "bold",
-                        textAlign: "center",
-                      }}
-                    >
-                      Payment Type
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {results.map((item) => (
-                    <TableRow key={item.id} hover role="checkbox" tabIndex={-1}>
-                      <TableCell style={{ textAlign: "center" }}>
-                        {item.vehicle}
+                        Document
                       </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
-                        {item.odometer}
+                      <TableCell
+                        style={{
+                          fontWeight: "bold",
+                          top: 40,
+                          minWidth: 50,
+                          textAlign: "center",
+                        }}
+                      >
+                        File
                       </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
-                        {item.odometerFile ? (
-                          <FaDownload
-                            className="table-action-icon m-[auto]"
-                            style={{ color: "grey" }}
-                            onClick={() =>
-                              handleDownloadPO(item.odometerFile || "")
-                            }
-                          />
-                        ) : (
-                          "N/A"
-                        )}
-                      </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
-                        {item.amount}
-                      </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
-                        {item.odometerFile ? (
-                          <FaDownload
-                            className="table-action-icon m-[auto]"
-                            style={{ color: "grey" }}
-                            onClick={() =>
-                              handleDownloadPO(item.amountFile || "")
-                            }
-                          />
-                        ) : (
-                          "N/A"
-                        )}
-                      </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
-                        {item.pumpName}
-                      </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
-                        {item.paymentType}
+                      <TableCell
+                        style={{
+                          fontWeight: "bold",
+                          top: 40,
+                          minWidth: 50,
+                          textAlign: "center",
+                        }}
+                      >
+                        Expiry
                       </TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </div>
-        </Modal>
-        <div className="table-main-container">
-          <div className="title-button-container">
-            <h3 className="table-h3">Vehicles</h3>
-            <form
-              className="flex justify-center items-end gap-2"
-              onSubmit={handleSearch}
-            >
-              <div className="flex flex-col justify-start">
-                <label
-                  htmlFor="vehicleNumber"
-                  className="text-xs font-medium text-gray-400"
-                >
-                  Vehicle Number
-                </label>
-                <select
-                  id="vehicleNumber"
-                  value={vehicleNumber}
-                  onChange={(e) => setVehicleNumber(e.target.value)}
-                  required
-                  className="border-[1px] outline-none border-gray-400 w-[150px] px-2 py-2 rounded-md"
-                >
-                  <option value="" disabled>
-                    Select a vehicle
-                  </option>
-                  {getVehicle.map((vehicle) => (
-                    <option key={vehicle.id} value={vehicle.vehicleNumber}>
-                      {vehicle.vehicleNumber}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="flex flex-col justify-start">
-                <label
-                  htmlFor="date"
-                  className="text-xs font-medium text-gray-400"
-                >
-                  Date
-                </label>
-                <input
-                  type="date"
-                  id="date"
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                  required
-                  className="border-[1px] outline-none border-gray-400 w-[150px] px-2 py-1 rounded-md"
-                />
-              </div>
-              <button
-                type="submit"
-                id="input-btn-submit"
-                className="px-2 py-1 rounded-sm"
-              >
-                view
-              </button>
-            </form>
-            <Button
-              variant="outlined"
-              onClick={() => {
-                setToggle(!toggle);
-              }}
-              id="add-btn"
-              className="add-btn-table"
-            >
-              {toggle ? (
-                <div className="hide" onClick={handleClose}>
-                  HIDE
-                </div>
-              ) : (
-                <div className="add" onClick={handleOpen}>
-                  + ADD VEHICLE
-                </div>
-              )}
-            </Button>
-          </div>
-          <TableContainer component={Paper} className="table-container">
-            <Table sx={{ minWidth: 650 }} aria-label="caption table">
-              {getVehicle.length === 0 ? (
-                ""
-              ) : (
-                <caption>
-                  <TablePagination
-                    rowsPerPageOptions={[5]}
-                    component="div"
-                    count={getVehicle.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                  />
-                </caption>
-              )}
-
-              <TableHead style={{ background: "#ddff8f" }}>
-                <TableRow style={{ textAlign: "center" }}>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    SL
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    Vehicle Number
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    Brand
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    Model
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    RC File
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    Odometer
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    Documents & Expiry
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    Other Details
-                  </TableCell>
-                  <TableCell
-                    colSpan={2}
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    Actions
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {getVehicle
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, index) => (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={row._id}>
+                  </TableHead>
+                  <TableBody>
+                    <TableRow hover role="checkbox" tabIndex={-1}>
                       <TableCell style={{ textAlign: "center" }}>
-                        {index + 1}
-                      </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
-                        {row.vehicleNumber}
-                      </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
-                        {row.brand}
-                      </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
-                        {row.model}
+                        Insurance
                       </TableCell>
                       <TableCell style={{ textAlign: "center" }}>
                         <FaDownload
                           className="table-action-icon m-[auto]"
                           style={{ color: "grey" }}
-                          onClick={() => handleDownloadPO(row.rcFile)}
+                          onClick={() =>
+                            handleDownloadPO(
+                              vehicleDocument.insuranceFile || ""
+                            )
+                          }
                         />
                       </TableCell>
                       <TableCell style={{ textAlign: "center" }}>
-                        {row.odometer}
+                        {getExpiryMessage(vehicleDocument.insurance)}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow hover role="checkbox" tabIndex={-1}>
+                      <TableCell style={{ textAlign: "center" }}>
+                        Fitness
                       </TableCell>
                       <TableCell style={{ textAlign: "center" }}>
-                        <IoDocumentsSharp
+                        <FaDownload
                           className="table-action-icon m-[auto]"
-                          style={{ color: "#000" }}
-                          onClick={() => handleOpenDoc(row)}
+                          style={{ color: "grey" }}
+                          onClick={() =>
+                            handleDownloadPO(vehicleDocument.fitnessFile || "")
+                          }
                         />
                       </TableCell>
                       <TableCell style={{ textAlign: "center" }}>
-                        <IoDocumentsSharp
+                        {getExpiryMessage(vehicleDocument.fitness)}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow hover role="checkbox" tabIndex={-1}>
+                      <TableCell style={{ textAlign: "center" }}>
+                        Pollution
+                      </TableCell>
+                      <TableCell style={{ textAlign: "center" }}>
+                        <FaDownload
                           className="table-action-icon m-[auto]"
-                          style={{ color: "#000" }}
-                          onClick={() => handleOpenOther(row)}
+                          style={{ color: "grey" }}
+                          onClick={() =>
+                            handleDownloadPO(
+                              vehicleDocument.pollutionFile || ""
+                            )
+                          }
                         />
                       </TableCell>
                       <TableCell style={{ textAlign: "center" }}>
-                        <FaEdit
+                        {getExpiryMessage(vehicleDocument.pollution)}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow hover role="checkbox" tabIndex={-1}>
+                      <TableCell style={{ textAlign: "center" }}>
+                        Road Tax
+                      </TableCell>
+                      <TableCell style={{ textAlign: "center" }}>
+                        <FaDownload
                           className="table-action-icon m-[auto]"
-                          style={{ color: "blue" }}
-                          onClick={() => updateClick(row._id)}
+                          style={{ color: "grey" }}
+                          onClick={() =>
+                            handleDownloadPO(vehicleDocument.roadTaxFile || "")
+                          }
                         />
                       </TableCell>
                       <TableCell style={{ textAlign: "center" }}>
-                        <MdDelete
+                        {getExpiryMessage(vehicleDocument.roadTax)}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow hover role="checkbox" tabIndex={-1}>
+                      <TableCell style={{ textAlign: "center" }}>
+                        Vehicle Pass
+                      </TableCell>
+                      <TableCell style={{ textAlign: "center" }}>
+                        <FaDownload
                           className="table-action-icon m-[auto]"
-                          style={{ color: "red" }}
-                          onClick={() => deleteClick(row._id)}
+                          style={{ color: "grey" }}
+                          onClick={() =>
+                            handleDownloadPO(
+                              vehicleDocument.vehiclePassFile || ""
+                            )
+                          }
+                        />
+                      </TableCell>
+                      <TableCell style={{ textAlign: "center" }}>
+                        {getExpiryMessage(vehicleDocument.vehiclePass)}
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </div>
+          </Modal>
+          <Modal
+            className="bus-form-modal"
+            open={openOther}
+            onClose={handleCloseOther}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <div className="bus-form-container" style={{ width: "45%" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginBottom: "20px",
+                }}
+              >
+                <h3>Other Details</h3>
+                <RxCrossCircled
+                  className="bus-form-cross"
+                  onClick={handleCloseOther}
+                />
+              </div>
+              <TableContainer component={Paper} className="table-container">
+                <Table sx={{ minWidth: 650 }} aria-label="caption table">
+                  <TableHead style={{ background: "#ddff8f" }}>
+                    <TableRow>
+                      <TableCell
+                        style={{
+                          fontWeight: "bold",
+                          top: 40,
+                          minWidth: 50,
+                          textAlign: "center",
+                        }}
+                      >
+                        Details
+                      </TableCell>
+                      <TableCell
+                        style={{
+                          fontWeight: "bold",
+                          top: 40,
+                          minWidth: 50,
+                          textAlign: "center",
+                        }}
+                      >
+                        Value
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    <TableRow hover role="checkbox" tabIndex={-1}>
+                      <TableCell style={{ textAlign: "center" }}>
+                        Other Documents
+                      </TableCell>
+                      <TableCell style={{ textAlign: "center" }}>
+                        <FaDownload
+                          className="table-action-icon m-[auto]"
+                          style={{ color: "grey" }}
+                          onClick={() =>
+                            handleDownloadPO(vehicleDocument.otherFile || "")
+                          }
                         />
                       </TableCell>
                     </TableRow>
-                  ))}
-              </TableBody>
-            </Table>
-            {getVehicle.length === 0 ? (
-              <div className="table-nodata">
-                <h2>NO DATA</h2>
+                    <TableRow hover role="checkbox" tabIndex={-1}>
+                      <TableCell style={{ textAlign: "center" }}>
+                        Chessis Number
+                      </TableCell>
+                      <TableCell style={{ textAlign: "center" }}>
+                        {vehicleDocument.chessisNumber}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow hover role="checkbox" tabIndex={-1}>
+                      <TableCell style={{ textAlign: "center" }}>
+                        Engine Number
+                      </TableCell>
+                      <TableCell style={{ textAlign: "center" }}>
+                        {vehicleDocument.engineNumber}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow hover role="checkbox" tabIndex={-1}>
+                      <TableCell style={{ textAlign: "center" }}>
+                        Permit Expiry Date
+                      </TableCell>
+                      <TableCell style={{ textAlign: "center" }}>
+                        {vehicleDocument.permitExpiryDate}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow hover role="checkbox" tabIndex={-1}>
+                      <TableCell style={{ textAlign: "center" }}>
+                        EMI Amount
+                      </TableCell>
+                      <TableCell style={{ textAlign: "center" }}>
+                        {vehicleDocument.emiAmount}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow hover role="checkbox" tabIndex={-1}>
+                      <TableCell style={{ textAlign: "center" }}>
+                        EMI Date
+                      </TableCell>
+                      <TableCell style={{ textAlign: "center" }}>
+                        {vehicleDocument.emiDate}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow hover role="checkbox" tabIndex={-1}>
+                      <TableCell style={{ textAlign: "center" }}>
+                        Financer
+                      </TableCell>
+                      <TableCell style={{ textAlign: "center" }}>
+                        {vehicleDocument.financer}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow hover role="checkbox" tabIndex={-1}>
+                      <TableCell style={{ textAlign: "center" }}>
+                        Bank Account
+                      </TableCell>
+                      <TableCell style={{ textAlign: "center" }}>
+                        {vehicleDocument.bankAccount}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow hover role="checkbox" tabIndex={-1}>
+                      <TableCell style={{ textAlign: "center" }}>
+                        HP Status
+                      </TableCell>
+                      <TableCell style={{ textAlign: "center" }}>
+                        {vehicleDocument.hpStatus}
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </div>
+          </Modal>
+          <Modal
+            className="bus-form-modal"
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <div className="bus-form-container">
+              <form onSubmit={update ? handleUpdate : handleSubmit}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginBottom: "20px",
+                  }}
+                >
+                  <h3>Add Vehicle</h3>
+                  <RxCrossCircled
+                    className="bus-form-cross"
+                    onClick={handleClose}
+                  />
+                </div>
+
+                <div className="data-input-fields">
+                  <div className="bus-input-label">
+                    <label className="input-label">Vehicle Number</label>
+                    <TextField
+                      className="bus-input"
+                      margin="dense"
+                      type="text"
+                      fullWidth
+                      name="vehicleNumber"
+                      id="vehicleNumber"
+                      value={formData.vehicleNumber}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                  <div className="bus-input-label">
+                    <label className="input-label">Brand</label>
+                    <TextField
+                      className="bus-input"
+                      margin="dense"
+                      type="text"
+                      fullWidth
+                      name="brand"
+                      id="brand"
+                      value={formData.brand}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                  <div className="bus-input-label">
+                    <label className="input-label">Model</label>
+                    <TextField
+                      className="bus-input"
+                      margin="dense"
+                      type="text"
+                      fullWidth
+                      name="model"
+                      id="model"
+                      value={formData.model}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                </div>
+                <div className="data-input-fields">
+                  <div className="bus-input-label">
+                    <label className="input-label">Chessis Number</label>
+
+                    <div className="input-upload-container">
+                      <TextField
+                        className="bus-input"
+                        margin="dense"
+                        type="text"
+                        fullWidth
+                        name="chessisNumber"
+                        id="chessisNumber"
+                        value={formData.chessisNumber}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                  </div>
+                  <div className="bus-input-label">
+                    <label className="input-label">Engine Number</label>
+
+                    <div className="input-upload-container">
+                      <TextField
+                        className="bus-input"
+                        margin="dense"
+                        type="text"
+                        fullWidth
+                        name="engineNumber"
+                        id="engineNumber"
+                        value={formData.engineNumber}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                  </div>
+                  <div className="bus-input-label">
+                    <label className="input-label">Permit Expiry Date</label>
+
+                    <div className="input-upload-container">
+                      <TextField
+                        className="bus-input"
+                        margin="dense"
+                        type="date"
+                        fullWidth
+                        name="permitExpiryDate"
+                        id="permitExpiryDate"
+                        value={formData.permitExpiryDate}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="data-input-fields">
+                  <div className="bus-input-label">
+                    <label className="input-label">EMI Amount</label>
+
+                    <div className="input-upload-container">
+                      <TextField
+                        className="bus-input"
+                        margin="dense"
+                        type="text"
+                        fullWidth
+                        name="emiAmount"
+                        id="emiAmount"
+                        value={formData.emiAmount}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                  </div>
+                  <div className="bus-input-label">
+                    <label className="input-label">EMI Date</label>
+
+                    <div className="input-upload-container">
+                      <TextField
+                        className="bus-input"
+                        margin="dense"
+                        type="date"
+                        fullWidth
+                        name="emiDate"
+                        id="emiDate"
+                        value={formData.emiDate}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                  </div>
+                  <div className="bus-input-label">
+                    <label className="input-label">Financer</label>
+
+                    <div className="input-upload-container">
+                      <TextField
+                        className="bus-input"
+                        margin="dense"
+                        type="text"
+                        fullWidth
+                        name="financer"
+                        id="financer"
+                        value={formData.financer}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                  </div>
+                  <div className="bus-input-label">
+                    <label className="input-label">Bank Account</label>
+
+                    <div className="input-upload-container">
+                      <TextField
+                        className="bus-input"
+                        margin="dense"
+                        type="text"
+                        fullWidth
+                        name="bankAccount"
+                        id="bankAccount"
+                        value={formData.bankAccount}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="data-input-fields">
+                  <div className="bus-input-label">
+                    <label className="input-label">
+                      Registration Certificate Number
+                    </label>
+
+                    <div className="input-upload-container">
+                      <TextField
+                        className="bus-input"
+                        margin="dense"
+                        type="date"
+                        fullWidth
+                        name="rc"
+                        id="rc"
+                        value={formData.rc}
+                        onChange={handleInputChange}
+                      />
+                      <input
+                        accept="image/*,.pdf"
+                        style={{ display: "none" }}
+                        id="rcFile"
+                        type="file"
+                        name="rcFile"
+                        onChange={handleInputChange}
+                      />
+                      <label htmlFor="rcFile">
+                        <Button
+                          variant="contained"
+                          component="span"
+                          style={{ background: "#202023" }}
+                        >
+                          {formData.rcFile ? "DONE" : "UPLOAD"}
+                        </Button>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="bus-input-label">
+                    <label className="input-label">Insurance Expiry</label>
+
+                    <div className="input-upload-container">
+                      <TextField
+                        className="bus-input"
+                        margin="dense"
+                        type="date"
+                        fullWidth
+                        name="insurance"
+                        id="insurance"
+                        value={formData.insurance}
+                        onChange={handleInputChange}
+                      />
+                      <input
+                        accept="image/*,.pdf"
+                        style={{ display: "none" }}
+                        id="insuranceFile"
+                        type="file"
+                        name="insuranceFile"
+                        onChange={handleInputChange}
+                      />
+                      <label htmlFor="insuranceFile">
+                        <Button
+                          variant="contained"
+                          component="span"
+                          style={{ background: "#202023" }}
+                        >
+                          {formData.insuranceFile ? "DONE" : "UPLOAD"}
+                        </Button>
+                      </label>
+                    </div>
+                  </div>
+                  <div className="bus-input-label">
+                    <label className="input-label">Fitness Expiry</label>
+
+                    <div className="input-upload-container">
+                      <TextField
+                        className="bus-input"
+                        margin="dense"
+                        type="date"
+                        fullWidth
+                        name="fitness"
+                        id="fitness"
+                        value={formData.fitness}
+                        onChange={handleInputChange}
+                      />
+                      <input
+                        accept="image/*,.pdf"
+                        style={{ display: "none" }}
+                        id="fitnessFile"
+                        type="file"
+                        name="fitnessFile"
+                        onChange={handleInputChange}
+                      />
+                      <label htmlFor="fitnessFile">
+                        <Button
+                          variant="contained"
+                          component="span"
+                          style={{ background: "#202023" }}
+                        >
+                          {formData.fitnessFile ? "DONE" : "UPLOAD"}
+                        </Button>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div className="data-input-fields">
+                  <div className="bus-input-label">
+                    <label className="input-label">Pollution Expiry</label>
+
+                    <div className="input-upload-container">
+                      <TextField
+                        className="bus-input"
+                        margin="dense"
+                        type="date"
+                        fullWidth
+                        name="pollution"
+                        id="pollution"
+                        value={formData.pollution}
+                        onChange={handleInputChange}
+                      />
+                      <input
+                        accept="image/*,.pdf"
+                        style={{ display: "none" }}
+                        id="pollutionFile"
+                        type="file"
+                        name="pollutionFile"
+                        onChange={handleInputChange}
+                      />
+                      <label htmlFor="pollutionFile">
+                        <Button
+                          variant="contained"
+                          component="span"
+                          style={{ background: "#202023" }}
+                        >
+                          {formData.pollutionFile ? "DONE" : "UPLOAD"}
+                        </Button>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="bus-input-label">
+                    <label className="input-label">Road Tax Expiry</label>
+
+                    <div className="input-upload-container">
+                      <TextField
+                        className="bus-input"
+                        margin="dense"
+                        type="date"
+                        fullWidth
+                        name="roadTax"
+                        id="roadTax"
+                        value={formData.roadTax}
+                        onChange={handleInputChange}
+                      />
+                      <input
+                        accept="image/*,.pdf"
+                        style={{ display: "none" }}
+                        id="roadTaxFile"
+                        type="file"
+                        name="roadTaxFile"
+                        onChange={handleInputChange}
+                      />
+                      <label htmlFor="roadTaxFile">
+                        <Button
+                          variant="contained"
+                          component="span"
+                          style={{ background: "#202023" }}
+                        >
+                          {formData.roadTaxFile ? "DONE" : "UPLOAD"}
+                        </Button>
+                      </label>
+                    </div>
+                  </div>
+                  <div className="bus-input-label">
+                    <label className="input-label">Odometer Reading</label>
+                    <TextField
+                      className="bus-input"
+                      margin="dense"
+                      type="text"
+                      fullWidth
+                      name="odometer"
+                      id="odometer"
+                      value={formData.odometer}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                </div>
+
+                <div className="data-input-fields">
+                  <div className="bus-input-label">
+                    <label className="input-label">Vehicle Pass Expiry</label>
+
+                    <div className="input-upload-container">
+                      <TextField
+                        className="bus-input"
+                        margin="dense"
+                        type="date"
+                        fullWidth
+                        name="vehiclePass"
+                        id="vehiclePass"
+                        value={formData.vehiclePass}
+                        onChange={handleInputChange}
+                      />
+                      <input
+                        accept="image/*,.pdf"
+                        style={{ display: "none" }}
+                        id="vehiclePassFile"
+                        type="file"
+                        name="vehiclePassFile"
+                        onChange={handleInputChange}
+                      />
+                      <label htmlFor="vehiclePassFile">
+                        <Button
+                          variant="contained"
+                          component="span"
+                          style={{ background: "#202023" }}
+                        >
+                          {formData.vehiclePassFile ? "DONE" : "UPLOAD"}
+                        </Button>
+                      </label>
+                    </div>
+                  </div>
+                  <div className="bus-input-label">
+                    <label className="input-label">Other File</label>
+
+                    <div
+                      className="input-upload-container"
+                      style={{ justifyContent: "flex-start" }}
+                    >
+                      <input
+                        accept="image/*,.pdf"
+                        style={{ display: "none" }}
+                        id="otherFile"
+                        type="file"
+                        name="otherFile"
+                        onChange={handleInputChange}
+                      />
+                      <label htmlFor="otherFile">
+                        <Button
+                          variant="contained"
+                          component="span"
+                          style={{ background: "#202023" }}
+                        >
+                          {formData.otherFile ? "DONE" : "UPLOAD OTHER FILE"}
+                        </Button>
+                      </label>
+                    </div>
+                  </div>
+                  <div className="bus-input-label">
+                    <label className="input-label">HP Status</label>
+
+                    <div className="input-upload-container">
+                      <TextField
+                        className="bus-input"
+                        margin="dense"
+                        type="text"
+                        fullWidth
+                        name="hpStatus"
+                        id="hpStatus"
+                        value={formData.hpStatus}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="data-buttons" style={{ marginTop: "20px" }}>
+                  <Button
+                    id="input-btn-submit"
+                    className="submit"
+                    type="submit"
+                    variant="outlined"
+                  >
+                    {update ? "Update" : "Submit"}
+                  </Button>
+                  <Button
+                    id="input-btn-cancel"
+                    className="cancel"
+                    onClick={handleClose}
+                    variant="outlined"
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </form>
+            </div>
+          </Modal>
+          {/* fuel model */}
+          <Modal
+            className="bus-form-modal"
+            open={openFuel}
+            onClose={handleCloseFuel}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <div className="bus-form-container" style={{ width: "80%" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginBottom: "20px",
+                }}
+              >
+                <h3>Vehicle Fuel Expenses</h3>
+                <RxCrossCircled
+                  className="bus-form-cross"
+                  onClick={handleCloseFuel}
+                />
               </div>
-            ) : null}
-          </TableContainer>
-        </div>
-      </section>
+              <TableContainer component={Paper} className="table-container">
+                <Table sx={{ minWidth: 650 }} aria-label="caption table">
+                  <TableHead style={{ background: "#ddff8f" }}>
+                    <TableRow>
+                      <TableCell
+                        style={{
+                          fontWeight: "bold",
+                          textAlign: "center",
+                        }}
+                      >
+                        Vehicle
+                      </TableCell>
+                      <TableCell
+                        style={{
+                          fontWeight: "bold",
+                          textAlign: "center",
+                        }}
+                      >
+                        Odometer
+                      </TableCell>
+                      <TableCell
+                        style={{
+                          fontWeight: "bold",
+                          textAlign: "center",
+                        }}
+                      >
+                        Odometer File
+                      </TableCell>
+                      <TableCell
+                        style={{
+                          fontWeight: "bold",
+                          textAlign: "center",
+                        }}
+                      >
+                        Amount
+                      </TableCell>
+                      <TableCell
+                        style={{
+                          fontWeight: "bold",
+                          textAlign: "center",
+                        }}
+                      >
+                        Amount File
+                      </TableCell>
+                      <TableCell
+                        style={{
+                          fontWeight: "bold",
+                          textAlign: "center",
+                        }}
+                      >
+                        Pump Name
+                      </TableCell>
+                      <TableCell
+                        style={{
+                          fontWeight: "bold",
+                          textAlign: "center",
+                        }}
+                      >
+                        Payment Type
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {results.map((item) => (
+                      <TableRow
+                        key={item.id}
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                      >
+                        <TableCell style={{ textAlign: "center" }}>
+                          {item.vehicle}
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {item.odometer}
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {item.odometerFile ? (
+                            <FaDownload
+                              className="table-action-icon m-[auto]"
+                              style={{ color: "grey" }}
+                              onClick={() =>
+                                handleDownloadPO(item.odometerFile || "")
+                              }
+                            />
+                          ) : (
+                            "N/A"
+                          )}
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {item.amount}
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {item.odometerFile ? (
+                            <FaDownload
+                              className="table-action-icon m-[auto]"
+                              style={{ color: "grey" }}
+                              onClick={() =>
+                                handleDownloadPO(item.amountFile || "")
+                              }
+                            />
+                          ) : (
+                            "N/A"
+                          )}
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {item.pumpName}
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {item.paymentType}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </div>
+          </Modal>
+          <div className="table-main-container">
+            <div className="title-button-container">
+              <h3 className="table-h3">Vehicles</h3>
+              <form
+                className="flex justify-center items-end gap-2"
+                onSubmit={handleSearch}
+              >
+                <div className="flex flex-col justify-start">
+                  <label
+                    htmlFor="vehicleNumber"
+                    className="text-xs font-medium text-gray-400"
+                  >
+                    Vehicle Number
+                  </label>
+                  <select
+                    id="vehicleNumber"
+                    value={vehicleNumber}
+                    onChange={(e) => setVehicleNumber(e.target.value)}
+                    required
+                    className="border-[1px] outline-none border-gray-400 w-[150px] px-2 py-2 rounded-md"
+                  >
+                    <option value="" disabled>
+                      Select a vehicle
+                    </option>
+                    {getVehicle.map((vehicle) => (
+                      <option key={vehicle.id} value={vehicle.vehicleNumber}>
+                        {vehicle.vehicleNumber}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="flex flex-col justify-start">
+                  <label
+                    htmlFor="date"
+                    className="text-xs font-medium text-gray-400"
+                  >
+                    Date
+                  </label>
+                  <input
+                    type="date"
+                    id="date"
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                    required
+                    className="border-[1px] outline-none border-gray-400 w-[150px] px-2 py-1 rounded-md"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  id="input-btn-submit"
+                  className="px-2 py-1 rounded-sm"
+                >
+                  view
+                </button>
+              </form>
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  setToggle(!toggle);
+                }}
+                id="add-btn"
+                className="add-btn-table"
+              >
+                {toggle ? (
+                  <div className="hide" onClick={handleClose}>
+                    HIDE
+                  </div>
+                ) : (
+                  <div className="add" onClick={handleOpen}>
+                    + ADD VEHICLE
+                  </div>
+                )}
+              </Button>
+            </div>
+            <TableContainer component={Paper} className="table-container">
+              <Table sx={{ minWidth: 650 }} aria-label="caption table">
+                {getVehicle.length === 0 ? (
+                  ""
+                ) : (
+                  <caption>
+                    <TablePagination
+                      rowsPerPageOptions={[5]}
+                      component="div"
+                      count={getVehicle.length}
+                      rowsPerPage={rowsPerPage}
+                      page={page}
+                      onPageChange={handleChangePage}
+                      onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+                  </caption>
+                )}
+
+                <TableHead style={{ background: "#ddff8f" }}>
+                  <TableRow style={{ textAlign: "center" }}>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      SL
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      Vehicle Number
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      Brand
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      Model
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      RC File
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      Odometer
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      Documents & Expiry
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      Other Details
+                    </TableCell>
+                    <TableCell
+                      colSpan={2}
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      Actions
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {getVehicle
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row, index) => (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={row._id}
+                      >
+                        <TableCell style={{ textAlign: "center" }}>
+                          {index + 1}
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {row.vehicleNumber}
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {row.brand}
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {row.model}
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          <FaDownload
+                            className="table-action-icon m-[auto]"
+                            style={{ color: "grey" }}
+                            onClick={() => handleDownloadPO(row.rcFile)}
+                          />
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {row.odometer}
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          <IoDocumentsSharp
+                            className="table-action-icon m-[auto]"
+                            style={{ color: "#000" }}
+                            onClick={() => handleOpenDoc(row)}
+                          />
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          <IoDocumentsSharp
+                            className="table-action-icon m-[auto]"
+                            style={{ color: "#000" }}
+                            onClick={() => handleOpenOther(row)}
+                          />
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          <FaEdit
+                            className="table-action-icon m-[auto]"
+                            style={{ color: "blue" }}
+                            onClick={() => updateClick(row._id)}
+                          />
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          <MdDelete
+                            className="table-action-icon m-[auto]"
+                            style={{ color: "red" }}
+                            onClick={() => deleteClick(row._id)}
+                          />
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                </TableBody>
+              </Table>
+              {getVehicle.length === 0 ? (
+                <div className="table-nodata">
+                  <h2>NO DATA</h2>
+                </div>
+              ) : null}
+            </TableContainer>
+          </div>
+        </section>
+      )}
     </>
   );
 };

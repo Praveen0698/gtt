@@ -276,302 +276,308 @@ const FirmsTable: React.FC = () => {
             <i>GTT</i>
           </div>
         </div>
-      ) : null}
-      <section className="firm-main-container">
-        <Navbar />
-        <Image
-          src={Elipse}
-          alt="elipse_design"
-          style={{ width: "100%" }}
-          className="elipse-home-image"
-        />
-        <p className="text-p card-badge">
-          Home / <span style={{ color: "white" }}>Expenses</span>
-        </p>
+      ) : (
+        <section className="firm-main-container">
+          <Navbar />
+          <Image
+            src={Elipse}
+            alt="elipse_design"
+            style={{ width: "100%" }}
+            className="elipse-home-image"
+          />
+          <p className="text-p card-badge">
+            Home / <span style={{ color: "white" }}>Expenses</span>
+          </p>
 
-        <Modal
-          className="bus-form-modal"
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <div className="bus-form-container">
-            <form onSubmit={update ? handleUpdate : handleSubmit}>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  marginBottom: "20px",
-                }}
-              >
-                <h3>Add Expense</h3>
-                <RxCrossCircled
-                  className="bus-form-cross"
-                  onClick={handleClose}
-                />
-              </div>
-              {update ? (
-                <></>
-              ) : (
-                <div className="data-input-fields">
-                  <div className="bus-input-label">
-                    <label className="input-label">Employee Name</label>
-                    <Select
-                      fullWidth
-                      name="employeeId"
-                      value={formData.employeeId}
-                      onChange={handleEmployeeChange}
-                    >
-                      {getEmployee.length > 0 ? (
-                        getEmployee.map((type) => (
-                          <MenuItem key={type._id} value={type._id}>
-                            {type.employeeName}
-                          </MenuItem>
-                        ))
-                      ) : (
-                        <MenuItem disabled>No data available</MenuItem>
-                      )}
-                    </Select>
-                  </div>
+          <Modal
+            className="bus-form-modal"
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <div className="bus-form-container">
+              <form onSubmit={update ? handleUpdate : handleSubmit}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginBottom: "20px",
+                  }}
+                >
+                  <h3>Add Expense</h3>
+                  <RxCrossCircled
+                    className="bus-form-cross"
+                    onClick={handleClose}
+                  />
                 </div>
-              )}
-              {update ? (
-                <></>
-              ) : (
+                {update ? (
+                  <></>
+                ) : (
+                  <div className="data-input-fields">
+                    <div className="bus-input-label">
+                      <label className="input-label">Employee Name</label>
+                      <Select
+                        fullWidth
+                        name="employeeId"
+                        value={formData.employeeId}
+                        onChange={handleEmployeeChange}
+                      >
+                        {getEmployee.length > 0 ? (
+                          getEmployee.map((type) => (
+                            <MenuItem key={type._id} value={type._id}>
+                              {type.employeeName}
+                            </MenuItem>
+                          ))
+                        ) : (
+                          <MenuItem disabled>No data available</MenuItem>
+                        )}
+                      </Select>
+                    </div>
+                  </div>
+                )}
+                {update ? (
+                  <></>
+                ) : (
+                  <div className="data-input-fields">
+                    <div className="bus-input-label">
+                      <label className="input-label">Admin Name</label>
+                      <Select
+                        fullWidth
+                        name="adminName"
+                        value={formData.adminName}
+                        onChange={handleInputChange}
+                      >
+                        {getAdmin.length > 0 ? (
+                          getAdmin.map((type) => (
+                            <MenuItem key={type._id} value={type.fullName}>
+                              {type.fullName}
+                            </MenuItem>
+                          ))
+                        ) : (
+                          <MenuItem disabled>No data available</MenuItem>
+                        )}
+                      </Select>
+                    </div>
+                  </div>
+                )}
+
                 <div className="data-input-fields">
                   <div className="bus-input-label">
-                    <label className="input-label">Admin Name</label>
-                    <Select
+                    <label className="input-label">Amount</label>
+                    <TextField
+                      className="bus-input"
+                      margin="dense"
+                      type="text"
                       fullWidth
-                      name="adminName"
-                      value={formData.adminName}
+                      name="amount"
+                      id="amount"
+                      value={formData.amount}
                       onChange={handleInputChange}
-                    >
-                      {getAdmin.length > 0 ? (
-                        getAdmin.map((type) => (
-                          <MenuItem key={type._id} value={type.fullName}>
-                            {type.fullName}
-                          </MenuItem>
-                        ))
-                      ) : (
-                        <MenuItem disabled>No data available</MenuItem>
-                      )}
-                    </Select>
+                    />
                   </div>
                 </div>
-              )}
-
-              <div className="data-input-fields">
-                <div className="bus-input-label">
-                  <label className="input-label">Amount</label>
-                  <TextField
-                    className="bus-input"
-                    margin="dense"
-                    type="text"
-                    fullWidth
-                    name="amount"
-                    id="amount"
-                    value={formData.amount}
-                    onChange={handleInputChange}
-                  />
+                <div className="data-input-fields">
+                  <div className="bus-input-label">
+                    <label className="input-label">Date</label>
+                    <TextField
+                      className="bus-input"
+                      margin="dense"
+                      type="Date"
+                      fullWidth
+                      name="date"
+                      id="date"
+                      value={formData.date}
+                      onChange={handleInputChange}
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className="data-input-fields">
-                <div className="bus-input-label">
-                  <label className="input-label">Date</label>
-                  <TextField
-                    className="bus-input"
-                    margin="dense"
-                    type="Date"
-                    fullWidth
-                    name="date"
-                    id="date"
-                    value={formData.date}
-                    onChange={handleInputChange}
-                  />
+
+                <div className="data-buttons" style={{ marginTop: "20px" }}>
+                  <Button
+                    id="input-btn-submit"
+                    className="submit"
+                    type="submit"
+                    variant="outlined"
+                  >
+                    {update ? "Update" : "Submit"}
+                  </Button>
+                  <Button
+                    id="input-btn-cancel"
+                    className="cancel"
+                    onClick={handleClose}
+                    variant="outlined"
+                  >
+                    Cancel
+                  </Button>
                 </div>
-              </div>
-
-              <div className="data-buttons" style={{ marginTop: "20px" }}>
-                <Button
-                  id="input-btn-submit"
-                  className="submit"
-                  type="submit"
-                  variant="outlined"
-                >
-                  {update ? "Update" : "Submit"}
-                </Button>
-                <Button
-                  id="input-btn-cancel"
-                  className="cancel"
-                  onClick={handleClose}
-                  variant="outlined"
-                >
-                  Cancel
-                </Button>
-              </div>
-            </form>
-          </div>
-        </Modal>
-        <div className="table-main-container">
-          <div className="title-button-container">
-            <Button
-              variant="outlined"
-              onClick={() => {
-                setToggle(!toggle);
-              }}
-              id="add-btn"
-              className="add-btn-table"
-            >
-              {toggle ? (
-                <div className="hide" onClick={handleClose}>
-                  HIDE
-                </div>
-              ) : (
-                <div className="add" onClick={handleOpen}>
-                  + ADD EXPENSE
-                </div>
-              )}
-            </Button>
-            <div className="flex justify-center items-center gap-2">
-              <Select
-                className="w-[150px]"
-                name="employee"
-                value={selectedEmployee}
-                onChange={(e) => setSelectedEmployee(e.target.value)}
-              >
-                <MenuItem value="" disabled>
-                  All Employees
-                </MenuItem>
-                {getEmployee.map((employee) => (
-                  <MenuItem key={employee._id} value={employee._id}>
-                    {employee.employeeName}
-                  </MenuItem>
-                ))}
-              </Select>
-
-              <TextField
-                type="date"
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-              />
-
-              <TextField
-                type="date"
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-              />
-
+              </form>
+            </div>
+          </Modal>
+          <div className="table-main-container">
+            <div className="title-button-container">
               <Button
                 variant="outlined"
-                id="input-btn-submit"
-                onClick={handleFilter}
+                onClick={() => {
+                  setToggle(!toggle);
+                }}
+                id="add-btn"
+                className="add-btn-table"
               >
-                Filter
+                {toggle ? (
+                  <div className="hide" onClick={handleClose}>
+                    HIDE
+                  </div>
+                ) : (
+                  <div className="add" onClick={handleOpen}>
+                    + ADD EXPENSE
+                  </div>
+                )}
               </Button>
-            </div>
-          </div>
-          <TableContainer component={Paper} className="table-container">
-            <Table sx={{ minWidth: 650 }} aria-label="caption table">
-              {getExpense.length === 0 ? (
-                ""
-              ) : (
-                <caption>
-                  <TablePagination
-                    rowsPerPageOptions={[5]}
-                    component="div"
-                    count={getExpense.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                  />
-                </caption>
-              )}
-
-              <TableHead style={{ background: "#ddff8f" }}>
-                <TableRow>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    SL
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    Employee Name
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    Payer Name
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    Amount
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    Date
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                    colSpan={2}
-                  >
-                    Action
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {(filteredExpenses.length > 0 ? filteredExpenses : getExpense)
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, index) => (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={row._id}>
-                      <TableCell style={{ textAlign: "center" }}>
-                        {index + 1}
-                      </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
-                        {row.employeeName}
-                      </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
-                        {row.adminName}
-                      </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
-                        {row.amount}
-                      </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
-                        {row.date}
-                      </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
-                        <FaEdit
-                          className="table-action-icon m-[auto]"
-                          style={{ color: "blue" }}
-                          onClick={() => updateClick(row._id)}
-                        />
-                      </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
-                        <MdDelete
-                          className="table-action-icon m-[auto]"
-                          style={{ color: "red" }}
-                          onClick={() => deleteClick(row._id)}
-                        />
-                      </TableCell>
-                    </TableRow>
+              <div className="flex justify-center items-center gap-2">
+                <Select
+                  className="w-[150px]"
+                  name="employee"
+                  value={selectedEmployee}
+                  onChange={(e) => setSelectedEmployee(e.target.value)}
+                >
+                  <MenuItem value="" disabled>
+                    All Employees
+                  </MenuItem>
+                  {getEmployee.map((employee) => (
+                    <MenuItem key={employee._id} value={employee._id}>
+                      {employee.employeeName}
+                    </MenuItem>
                   ))}
-              </TableBody>
-            </Table>
-            {getExpense.length === 0 ? (
-              <div className="table-nodata">
-                <h2>NO DATA</h2>
+                </Select>
+
+                <TextField
+                  type="date"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                />
+
+                <TextField
+                  type="date"
+                  value={endDate}
+                  onChange={(e) => setEndDate(e.target.value)}
+                />
+
+                <Button
+                  variant="outlined"
+                  id="input-btn-submit"
+                  onClick={handleFilter}
+                >
+                  Filter
+                </Button>
               </div>
-            ) : null}
-          </TableContainer>
-        </div>
-      </section>
+            </div>
+            <TableContainer component={Paper} className="table-container">
+              <Table sx={{ minWidth: 650 }} aria-label="caption table">
+                {getExpense.length === 0 ? (
+                  ""
+                ) : (
+                  <caption>
+                    <TablePagination
+                      rowsPerPageOptions={[5]}
+                      component="div"
+                      count={getExpense.length}
+                      rowsPerPage={rowsPerPage}
+                      page={page}
+                      onPageChange={handleChangePage}
+                      onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+                  </caption>
+                )}
+
+                <TableHead style={{ background: "#ddff8f" }}>
+                  <TableRow>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      SL
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      Employee Name
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      Payer Name
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      Amount
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      Date
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                      colSpan={2}
+                    >
+                      Action
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {(filteredExpenses.length > 0 ? filteredExpenses : getExpense)
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row, index) => (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={row._id}
+                      >
+                        <TableCell style={{ textAlign: "center" }}>
+                          {index + 1}
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {row.employeeName}
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {row.adminName}
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {row.amount}
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {row.date}
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          <FaEdit
+                            className="table-action-icon m-[auto]"
+                            style={{ color: "blue" }}
+                            onClick={() => updateClick(row._id)}
+                          />
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          <MdDelete
+                            className="table-action-icon m-[auto]"
+                            style={{ color: "red" }}
+                            onClick={() => deleteClick(row._id)}
+                          />
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                </TableBody>
+              </Table>
+              {getExpense.length === 0 ? (
+                <div className="table-nodata">
+                  <h2>NO DATA</h2>
+                </div>
+              ) : null}
+            </TableContainer>
+          </div>
+        </section>
+      )}
     </>
   );
 };

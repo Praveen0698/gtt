@@ -309,382 +309,383 @@ const ShiftTable: React.FC = () => {
   };
 
   return (
-    <Suspense fallback={<div>Loading shift view...</div>}>
+    <>
       {isLoading ? (
         <div className="loader-container">
           <div className="loader-container">
             <i>GTT</i>
           </div>
         </div>
-      ) : null}
-      <section className="firm-main-container">
-        <Navbar />
-        <Image
-          src={Elipse}
-          alt="elipse_design"
-          style={{ width: "100%" }}
-          className="elipse-home-image"
-        />
-        <p className="text-p card-badge">
-          Home / <span style={{ color: "white" }}>Shifts</span>
-        </p>
+      ) : (
+        <section className="firm-main-container">
+          <Navbar />
+          <Image
+            src={Elipse}
+            alt="elipse_design"
+            style={{ width: "100%" }}
+            className="elipse-home-image"
+          />
+          <p className="text-p card-badge">
+            Home / <span style={{ color: "white" }}>Shifts</span>
+          </p>
 
-        <div className="table-main-container">
-          <div
-            className="title-button-container"
-            style={{ justifyContent: "flex-start", gap: "20px" }}
-          >
-            {getShift.length > 0 ? (
-              <Button
-                id="input-btn-cancel"
-                className="cancel"
-                style={{ background: "#ccc", color: "black" }}
-                onClick={handleAutoFill}
-                variant="outlined"
-              >
-                Auto
-              </Button>
-            ) : null}
-            <h3 className="table-h3">Project wise Shifts</h3>
-          </div>
-          <TableContainer component={Paper} className="table-container">
-            <Table sx={{ minWidth: 650 }} aria-label="caption table">
-              <TableHead style={{ background: "#ddff8f" }}>
-                <TableRow>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    SL
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    Vehicle
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    Source
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    Destination
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    A-in / C-out
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    General In
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    Shuttle 2
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    B-in / A-out
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    Shuttle 3
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    General Out
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    C-in / C-out
-                  </TableCell>
-
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                    colSpan={2}
-                  >
-                    Actions
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {item.map((row, index) => (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                    <TableCell style={{ textAlign: "center" }}>
-                      {index + 1}
-                    </TableCell>
-                    <TableCell>
-                      <Select
-                        fullWidth
-                        name="vehicle"
-                        style={{ width: "200px" }}
-                        value={row.vehicle}
-                        onChange={(e) => handleItemChange(e, row.id)}
-                      >
-                        {Array.isArray(getSource) && getVehicle.length > 0 ? (
-                          getVehicle.map((type) => (
-                            <MenuItem key={type} value={type}>
-                              {type}
-                            </MenuItem>
-                          ))
-                        ) : (
-                          <MenuItem disabled>No data available</MenuItem>
-                        )}
-                      </Select>
-                    </TableCell>
-                    <TableCell>
-                      <Select
-                        fullWidth
-                        name="source"
-                        style={{ width: "200px" }}
-                        value={row.source}
-                        onChange={(e) => handleItemChange(e, row.id)}
-                      >
-                        {Array.isArray(getSource) && getSource.length > 0 ? (
-                          getSource.map((type) => (
-                            <MenuItem key={type} value={type}>
-                              {type}
-                            </MenuItem>
-                          ))
-                        ) : (
-                          <MenuItem disabled>No data available</MenuItem>
-                        )}
-                      </Select>
-                    </TableCell>
-                    <TableCell>
-                      <Select
-                        fullWidth
-                        name="destination"
-                        style={{ width: "200px" }}
-                        value={row.destination}
-                        onChange={(e) => handleItemChange(e, row.id)}
-                      >
-                        {Array.isArray(getDestination) &&
-                        getDestination.length > 0 ? (
-                          getDestination.map((type) => (
-                            <MenuItem key={type} value={type}>
-                              {type}
-                            </MenuItem>
-                          ))
-                        ) : (
-                          <MenuItem disabled>No data available</MenuItem>
-                        )}
-                      </Select>
-                    </TableCell>
-                    <TableCell>
-                      <Select
-                        fullWidth
-                        name="aincout"
-                        style={{ width: "200px" }}
-                        value={row.aincout}
-                        onChange={(e) => handleItemChange(e, row.id)}
-                      >
-                        {getEmployee.length > 0 ? (
-                          getEmployee
-                            .filter((type) => type.designation === "driver")
-                            .map((type) => (
-                              <MenuItem
-                                key={type._id}
-                                value={type.employeeName}
-                              >
-                                {type.employeeName}
-                              </MenuItem>
-                            ))
-                        ) : (
-                          <MenuItem disabled>No data available</MenuItem>
-                        )}
-                      </Select>
-                    </TableCell>
-                    <TableCell>
-                      <Select
-                        fullWidth
-                        name="generalIn"
-                        style={{ width: "200px" }}
-                        value={row.generalIn}
-                        onChange={(e) => handleItemChange(e, row.id)}
-                      >
-                        {getEmployee.length > 0 ? (
-                          getEmployee
-                            .filter((type) => type.designation === "driver")
-                            .map((type) => (
-                              <MenuItem
-                                key={type._id}
-                                value={type.employeeName}
-                              >
-                                {type.employeeName}
-                              </MenuItem>
-                            ))
-                        ) : (
-                          <MenuItem disabled>No data available</MenuItem>
-                        )}
-                      </Select>
-                    </TableCell>
-                    <TableCell>
-                      <Select
-                        fullWidth
-                        name="shuttle2"
-                        style={{ width: "200px" }}
-                        value={row.shuttle2}
-                        onChange={(e) => handleItemChange(e, row.id)}
-                      >
-                        {getEmployee.length > 0 ? (
-                          getEmployee
-                            .filter((type) => type.designation === "driver")
-                            .map((type) => (
-                              <MenuItem
-                                key={type._id}
-                                value={type.employeeName}
-                              >
-                                {type.employeeName}
-                              </MenuItem>
-                            ))
-                        ) : (
-                          <MenuItem disabled>No data available</MenuItem>
-                        )}
-                      </Select>
-                    </TableCell>
-                    <TableCell>
-                      <Select
-                        fullWidth
-                        name="binaout"
-                        style={{ width: "200px" }}
-                        value={row.binaout}
-                        onChange={(e) => handleItemChange(e, row.id)}
-                      >
-                        {getEmployee.length > 0 ? (
-                          getEmployee
-                            .filter((type) => type.designation === "driver")
-                            .map((type) => (
-                              <MenuItem
-                                key={type._id}
-                                value={type.employeeName}
-                              >
-                                {type.employeeName}
-                              </MenuItem>
-                            ))
-                        ) : (
-                          <MenuItem disabled>No data available</MenuItem>
-                        )}
-                      </Select>
-                    </TableCell>
-                    <TableCell>
-                      <Select
-                        fullWidth
-                        name="shuttle3"
-                        style={{ width: "200px" }}
-                        value={row.shuttle3}
-                        onChange={(e) => handleItemChange(e, row.id)}
-                      >
-                        {getEmployee.length > 0 ? (
-                          getEmployee
-                            .filter((type) => type.designation === "driver")
-                            .map((type) => (
-                              <MenuItem
-                                key={type._id}
-                                value={type.employeeName}
-                              >
-                                {type.employeeName}
-                              </MenuItem>
-                            ))
-                        ) : (
-                          <MenuItem disabled>No data available</MenuItem>
-                        )}
-                      </Select>
-                    </TableCell>
-                    <TableCell>
-                      <Select
-                        fullWidth
-                        name="generalOut"
-                        style={{ width: "200px" }}
-                        value={row.generalOut}
-                        onChange={(e) => handleItemChange(e, row.id)}
-                      >
-                        {getEmployee.length > 0 ? (
-                          getEmployee
-                            .filter((type) => type.designation === "driver")
-                            .map((type) => (
-                              <MenuItem
-                                key={type._id}
-                                value={type.employeeName}
-                              >
-                                {type.employeeName}
-                              </MenuItem>
-                            ))
-                        ) : (
-                          <MenuItem disabled>No data available</MenuItem>
-                        )}
-                      </Select>
-                    </TableCell>
-                    <TableCell>
-                      <Select
-                        fullWidth
-                        name="cincout"
-                        style={{ width: "200px" }}
-                        value={row.cincout}
-                        onChange={(e) => handleItemChange(e, row.id)}
-                      >
-                        {getEmployee.length > 0 ? (
-                          getEmployee
-                            .filter((type) => type.designation === "driver")
-                            .map((type) => (
-                              <MenuItem
-                                key={type._id}
-                                value={type.employeeName}
-                              >
-                                {type.employeeName}
-                              </MenuItem>
-                            ))
-                        ) : (
-                          <MenuItem disabled>No data available</MenuItem>
-                        )}
-                      </Select>
-                    </TableCell>
-                    {formData.items.length !== 1 ? (
-                      <TableCell
-                        style={{
-                          textAlign: "center",
-                          cursor: "pointer",
-                        }}
-                        onClick={() => deleteRow(row.id)}
-                      >
-                        <MdDelete color="red" size={24} />
-                      </TableCell>
-                    ) : null}
-                    {formData.items.length === index + 1 ? (
-                      <TableCell
-                        style={{ textAlign: "center", cursor: "pointer" }}
-                        onClick={addItem}
-                      >
-                        <IoMdAdd color="green" size={24} />
-                      </TableCell>
-                    ) : null}
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-            <div className="ml-10 m-2.5">
-              <Button
-                id="input-btn-submit"
-                className="submit"
-                type="submit"
-                variant="outlined"
-                onClick={handleSave}
-              >
-                Submit
-              </Button>
+          <div className="table-main-container">
+            <div
+              className="title-button-container"
+              style={{ justifyContent: "flex-start", gap: "20px" }}
+            >
+              {getShift.length > 0 ? (
+                <Button
+                  id="input-btn-cancel"
+                  className="cancel"
+                  style={{ background: "#ccc", color: "black" }}
+                  onClick={handleAutoFill}
+                  variant="outlined"
+                >
+                  Auto
+                </Button>
+              ) : null}
+              <h3 className="table-h3">Project wise Shifts</h3>
             </div>
-          </TableContainer>
-        </div>
-      </section>
-    </Suspense>
+            <TableContainer component={Paper} className="table-container">
+              <Table sx={{ minWidth: 650 }} aria-label="caption table">
+                <TableHead style={{ background: "#ddff8f" }}>
+                  <TableRow>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      SL
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      Vehicle
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      Source
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      Destination
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      A-in / C-out
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      General In
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      Shuttle 2
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      B-in / A-out
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      Shuttle 3
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      General Out
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      C-in / C-out
+                    </TableCell>
+
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                      colSpan={2}
+                    >
+                      Actions
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {item.map((row, index) => (
+                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                      <TableCell style={{ textAlign: "center" }}>
+                        {index + 1}
+                      </TableCell>
+                      <TableCell>
+                        <Select
+                          fullWidth
+                          name="vehicle"
+                          style={{ width: "200px" }}
+                          value={row.vehicle}
+                          onChange={(e) => handleItemChange(e, row.id)}
+                        >
+                          {Array.isArray(getSource) && getVehicle.length > 0 ? (
+                            getVehicle.map((type) => (
+                              <MenuItem key={type} value={type}>
+                                {type}
+                              </MenuItem>
+                            ))
+                          ) : (
+                            <MenuItem disabled>No data available</MenuItem>
+                          )}
+                        </Select>
+                      </TableCell>
+                      <TableCell>
+                        <Select
+                          fullWidth
+                          name="source"
+                          style={{ width: "200px" }}
+                          value={row.source}
+                          onChange={(e) => handleItemChange(e, row.id)}
+                        >
+                          {Array.isArray(getSource) && getSource.length > 0 ? (
+                            getSource.map((type) => (
+                              <MenuItem key={type} value={type}>
+                                {type}
+                              </MenuItem>
+                            ))
+                          ) : (
+                            <MenuItem disabled>No data available</MenuItem>
+                          )}
+                        </Select>
+                      </TableCell>
+                      <TableCell>
+                        <Select
+                          fullWidth
+                          name="destination"
+                          style={{ width: "200px" }}
+                          value={row.destination}
+                          onChange={(e) => handleItemChange(e, row.id)}
+                        >
+                          {Array.isArray(getDestination) &&
+                          getDestination.length > 0 ? (
+                            getDestination.map((type) => (
+                              <MenuItem key={type} value={type}>
+                                {type}
+                              </MenuItem>
+                            ))
+                          ) : (
+                            <MenuItem disabled>No data available</MenuItem>
+                          )}
+                        </Select>
+                      </TableCell>
+                      <TableCell>
+                        <Select
+                          fullWidth
+                          name="aincout"
+                          style={{ width: "200px" }}
+                          value={row.aincout}
+                          onChange={(e) => handleItemChange(e, row.id)}
+                        >
+                          {getEmployee.length > 0 ? (
+                            getEmployee
+                              .filter((type) => type.designation === "driver")
+                              .map((type) => (
+                                <MenuItem
+                                  key={type._id}
+                                  value={type.employeeName}
+                                >
+                                  {type.employeeName}
+                                </MenuItem>
+                              ))
+                          ) : (
+                            <MenuItem disabled>No data available</MenuItem>
+                          )}
+                        </Select>
+                      </TableCell>
+                      <TableCell>
+                        <Select
+                          fullWidth
+                          name="generalIn"
+                          style={{ width: "200px" }}
+                          value={row.generalIn}
+                          onChange={(e) => handleItemChange(e, row.id)}
+                        >
+                          {getEmployee.length > 0 ? (
+                            getEmployee
+                              .filter((type) => type.designation === "driver")
+                              .map((type) => (
+                                <MenuItem
+                                  key={type._id}
+                                  value={type.employeeName}
+                                >
+                                  {type.employeeName}
+                                </MenuItem>
+                              ))
+                          ) : (
+                            <MenuItem disabled>No data available</MenuItem>
+                          )}
+                        </Select>
+                      </TableCell>
+                      <TableCell>
+                        <Select
+                          fullWidth
+                          name="shuttle2"
+                          style={{ width: "200px" }}
+                          value={row.shuttle2}
+                          onChange={(e) => handleItemChange(e, row.id)}
+                        >
+                          {getEmployee.length > 0 ? (
+                            getEmployee
+                              .filter((type) => type.designation === "driver")
+                              .map((type) => (
+                                <MenuItem
+                                  key={type._id}
+                                  value={type.employeeName}
+                                >
+                                  {type.employeeName}
+                                </MenuItem>
+                              ))
+                          ) : (
+                            <MenuItem disabled>No data available</MenuItem>
+                          )}
+                        </Select>
+                      </TableCell>
+                      <TableCell>
+                        <Select
+                          fullWidth
+                          name="binaout"
+                          style={{ width: "200px" }}
+                          value={row.binaout}
+                          onChange={(e) => handleItemChange(e, row.id)}
+                        >
+                          {getEmployee.length > 0 ? (
+                            getEmployee
+                              .filter((type) => type.designation === "driver")
+                              .map((type) => (
+                                <MenuItem
+                                  key={type._id}
+                                  value={type.employeeName}
+                                >
+                                  {type.employeeName}
+                                </MenuItem>
+                              ))
+                          ) : (
+                            <MenuItem disabled>No data available</MenuItem>
+                          )}
+                        </Select>
+                      </TableCell>
+                      <TableCell>
+                        <Select
+                          fullWidth
+                          name="shuttle3"
+                          style={{ width: "200px" }}
+                          value={row.shuttle3}
+                          onChange={(e) => handleItemChange(e, row.id)}
+                        >
+                          {getEmployee.length > 0 ? (
+                            getEmployee
+                              .filter((type) => type.designation === "driver")
+                              .map((type) => (
+                                <MenuItem
+                                  key={type._id}
+                                  value={type.employeeName}
+                                >
+                                  {type.employeeName}
+                                </MenuItem>
+                              ))
+                          ) : (
+                            <MenuItem disabled>No data available</MenuItem>
+                          )}
+                        </Select>
+                      </TableCell>
+                      <TableCell>
+                        <Select
+                          fullWidth
+                          name="generalOut"
+                          style={{ width: "200px" }}
+                          value={row.generalOut}
+                          onChange={(e) => handleItemChange(e, row.id)}
+                        >
+                          {getEmployee.length > 0 ? (
+                            getEmployee
+                              .filter((type) => type.designation === "driver")
+                              .map((type) => (
+                                <MenuItem
+                                  key={type._id}
+                                  value={type.employeeName}
+                                >
+                                  {type.employeeName}
+                                </MenuItem>
+                              ))
+                          ) : (
+                            <MenuItem disabled>No data available</MenuItem>
+                          )}
+                        </Select>
+                      </TableCell>
+                      <TableCell>
+                        <Select
+                          fullWidth
+                          name="cincout"
+                          style={{ width: "200px" }}
+                          value={row.cincout}
+                          onChange={(e) => handleItemChange(e, row.id)}
+                        >
+                          {getEmployee.length > 0 ? (
+                            getEmployee
+                              .filter((type) => type.designation === "driver")
+                              .map((type) => (
+                                <MenuItem
+                                  key={type._id}
+                                  value={type.employeeName}
+                                >
+                                  {type.employeeName}
+                                </MenuItem>
+                              ))
+                          ) : (
+                            <MenuItem disabled>No data available</MenuItem>
+                          )}
+                        </Select>
+                      </TableCell>
+                      {formData.items.length !== 1 ? (
+                        <TableCell
+                          style={{
+                            textAlign: "center",
+                            cursor: "pointer",
+                          }}
+                          onClick={() => deleteRow(row.id)}
+                        >
+                          <MdDelete color="red" size={24} />
+                        </TableCell>
+                      ) : null}
+                      {formData.items.length === index + 1 ? (
+                        <TableCell
+                          style={{ textAlign: "center", cursor: "pointer" }}
+                          onClick={addItem}
+                        >
+                          <IoMdAdd color="green" size={24} />
+                        </TableCell>
+                      ) : null}
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+              <div className="ml-10 m-2.5">
+                <Button
+                  id="input-btn-submit"
+                  className="submit"
+                  type="submit"
+                  variant="outlined"
+                  onClick={handleSave}
+                >
+                  Submit
+                </Button>
+              </div>
+            </TableContainer>
+          </div>
+        </section>
+      )}
+    </>
   );
 };
 

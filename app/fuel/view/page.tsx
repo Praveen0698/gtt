@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, Suspense } from "react";
+import React, { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -357,246 +357,249 @@ const FuelViewTable: React.FC = () => {
   currentDate.setDate(currentDate.getDate() - 1);
 
   return (
-    <Suspense fallback={<div>Loading fuel view...</div>}>
+    <>
       {isLoading ? (
         <div className="loader-container">
           <div className="loader-container">
             <i>GTT</i>
           </div>
         </div>
-      ) : null}
-      <section className="firm-main-container">
-        <Navbar />
-        <Image
-          src={Elipse}
-          alt="elipse_design"
-          style={{ width: "100%" }}
-          className="elipse-home-image"
-        />
-        <p className="text-p card-badge">
-          Home / <span style={{ color: "white" }}>Fuel</span>
-        </p>
+      ) : (
+        <section className="firm-main-container">
+          <Navbar />
+          <Image
+            src={Elipse}
+            alt="elipse_design"
+            style={{ width: "100%" }}
+            className="elipse-home-image"
+          />
+          <p className="text-p card-badge">
+            Home / <span style={{ color: "white" }}>Fuel</span>
+          </p>
 
-        <div className="table-main-container">
-          <div
-            className="title-button-container"
-            style={{ justifyContent: "flex-start", gap: "20px" }}
-          >
-            <h3 className="table-h3">Fuel Expenses</h3>
-          </div>
-          <TableContainer component={Paper} className="table-container">
-            <Table sx={{ minWidth: 650 }} aria-label="caption table">
-              <TableHead style={{ background: "#ddff8f" }}>
-                <TableRow>
-                  {[
-                    "SL",
-                    "Vehicle",
-                    "Odometer",
-                    "Odometer Image",
-                    "Amount",
-                    "Amount Reciept",
-                    "Payment Type",
-                    "Pump Name",
-                  ].map((header, index) => (
-                    <TableCell
-                      key={index}
-                      style={{ fontWeight: "bold", textAlign: "center" }}
-                    >
-                      {header}
-                    </TableCell>
-                  ))}
-                  {update ? (
-                    <TableCell
-                      colSpan={2}
-                      style={{ fontWeight: "bold", textAlign: "center" }}
-                    >
-                      Actions
-                    </TableCell>
-                  ) : null}
-                </TableRow>
-              </TableHead>
-              {update
-                ? item.map((row, index) => (
-                    <TableBody key={row.id}>
-                      <TableRow hover role="checkbox" tabIndex={-1}>
-                        <TableCell style={{ textAlign: "center" }}>
-                          {index + 1}
-                        </TableCell>
-
-                        {/* Vehicle */}
-                        <TableCell style={{ width: "200px" }}>
-                          <Select
-                            fullWidth
-                            name="vehicle"
-                            style={{ width: "200px" }}
-                            value={row.vehicle}
-                            onChange={(e) => handleItemChange(e, row.id)}
-                          >
-                            {Array.isArray(getVehicle) &&
-                            getVehicle.length > 0 ? (
-                              getVehicle.map((type) => (
-                                <MenuItem key={type} value={type}>
-                                  {type}
-                                </MenuItem>
-                              ))
-                            ) : (
-                              <MenuItem disabled>No data available</MenuItem>
-                            )}
-                          </Select>
-                        </TableCell>
-                        <TableCell>
-                          <TextField
-                            fullWidth
-                            type="text"
-                            name="odometer"
-                            value={row.odometer}
-                            onChange={(e) => handleItemChange(e, row.id)}
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <TextField
-                            fullWidth
-                            type="file"
-                            name="odometerFile"
-                            onChange={(e) =>
-                              handleItemChange(
-                                e as React.ChangeEvent<HTMLInputElement>,
-                                row.id
-                              )
-                            }
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <TextField
-                            fullWidth
-                            type="text"
-                            name="amount"
-                            value={row.amount}
-                            onChange={(e) => handleItemChange(e, row.id)}
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <TextField
-                            fullWidth
-                            type="file"
-                            name="amountFile"
-                            onChange={(e) =>
-                              handleItemChange(
-                                e as React.ChangeEvent<HTMLInputElement>,
-                                row.id
-                              )
-                            }
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <TextField
-                            fullWidth
-                            type="text"
-                            name="paymentType"
-                            value={row.paymentType}
-                            onChange={(e) => handleItemChange(e, row.id)}
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <TextField
-                            fullWidth
-                            type="text"
-                            name="pumpName"
-                            value={row.pumpName}
-                            onChange={(e) => handleItemChange(e, row.id)}
-                          />
-                        </TableCell>
-                        {update ? (
-                          <>
-                            <TableCell style={{ textAlign: "center" }}>
-                              {formData.items.length !== 1 && (
-                                <MdDelete
-                                  color="red"
-                                  size={24}
-                                  style={{ cursor: "pointer" }}
-                                  onClick={() => deleteRow(row.id)}
-                                />
-                              )}
-                            </TableCell>
-                            <TableCell style={{ textAlign: "center" }}>
-                              {formData.items.length === index + 1 && (
-                                <IoMdAdd
-                                  color="green"
-                                  size={24}
-                                  style={{ cursor: "pointer" }}
-                                  onClick={addItem}
-                                />
-                              )}
-                            </TableCell>
-                          </>
-                        ) : null}
-                      </TableRow>
-                    </TableBody>
-                  ))
-                : getMaintenanceData?.map((row, index) => (
-                    <TableBody key={row.id}>
-                      <TableRow hover role="checkbox" tabIndex={-1}>
-                        <TableCell style={{ textAlign: "center" }}>
-                          {index + 1}
-                        </TableCell>
-                        <TableCell style={{ textAlign: "center" }}>
-                          {row.vehicle}
-                        </TableCell>
-                        {/* Fuel */}
-                        <TableCell style={{ textAlign: "center" }}>
-                          {row.odometer}
-                        </TableCell>
-                        <TableCell>
-                          <FaDownload
-                            className="table-action-icon m-[auto]"
-                            style={{ color: "grey" }}
-                            onClick={() => handleDownloadPO(row.odometerFile)}
-                          />
-                        </TableCell>
-                        <TableCell style={{ textAlign: "center" }}>
-                          {row.amount}
-                        </TableCell>
-                        <TableCell>
-                          <FaDownload
-                            className="table-action-icon m-[auto]"
-                            style={{ color: "grey" }}
-                            onClick={() => handleDownloadPO(row.amountFile)}
-                          />
-                        </TableCell>
-                        <TableCell style={{ textAlign: "center" }}>
-                          {row.paymentType}
-                        </TableCell>
-                        <TableCell style={{ textAlign: "center" }}>
-                          {row.pumpName}
-                        </TableCell>
-                      </TableRow>
-                    </TableBody>
-                  ))}
-            </Table>
-            <div className="ml-10 m-2.5">
-              <Button
-                id="input-btn-submit"
-                className="submit"
-                type="submit"
-                variant="outlined"
-                onClick={update ? handleUpdateSubmit : handleUpdateClick}
-              >
-                {update ? "Submit" : "Update"}
-              </Button>
-              <Button
-                id="input-btn-cancel"
-                className="submit"
-                type="submit"
-                variant="outlined"
-                onClick={() => setUpdate(false)}
-              >
-                Cancel
-              </Button>
+          <div className="table-main-container">
+            <div
+              className="title-button-container"
+              style={{ justifyContent: "flex-start", gap: "20px" }}
+            >
+              <h3 className="table-h3">Fuel Expenses</h3>
             </div>
-          </TableContainer>
-        </div>
-      </section>
-    </Suspense>
+            <TableContainer component={Paper} className="table-container">
+              <Table sx={{ minWidth: 650 }} aria-label="caption table">
+                <TableHead style={{ background: "#ddff8f" }}>
+                  <TableRow>
+                    {[
+                      "SL",
+                      "Vehicle",
+                      "Odometer",
+                      "Odometer Image",
+                      "Amount",
+                      "Amount Reciept",
+                      "Payment Type",
+                      "Pump Name",
+                    ].map((header, index) => (
+                      <TableCell
+                        key={index}
+                        style={{ fontWeight: "bold", textAlign: "center" }}
+                      >
+                        {header}
+                      </TableCell>
+                    ))}
+                    {update ? (
+                      <TableCell
+                        colSpan={2}
+                        style={{ fontWeight: "bold", textAlign: "center" }}
+                      >
+                        Actions
+                      </TableCell>
+                    ) : null}
+                  </TableRow>
+                </TableHead>
+                {update
+                  ? item.map((row, index) => (
+                      <TableBody key={row.id}>
+                        <TableRow hover role="checkbox" tabIndex={-1}>
+                          <TableCell style={{ textAlign: "center" }}>
+                            {index + 1}
+                          </TableCell>
+
+                          {/* Vehicle */}
+                          <TableCell style={{ width: "200px" }}>
+                            <Select
+                              fullWidth
+                              name="vehicle"
+                              style={{ width: "200px" }}
+                              value={row.vehicle}
+                              onChange={(e) => handleItemChange(e, row.id)}
+                            >
+                              {Array.isArray(getVehicle) &&
+                              getVehicle.length > 0 ? (
+                                getVehicle.map((type) => (
+                                  <MenuItem key={type} value={type}>
+                                    {type}
+                                  </MenuItem>
+                                ))
+                              ) : (
+                                <MenuItem disabled>No data available</MenuItem>
+                              )}
+                            </Select>
+                          </TableCell>
+                          <TableCell>
+                            <TextField
+                              fullWidth
+                              type="text"
+                              name="odometer"
+                              value={row.odometer}
+                              onChange={(e) => handleItemChange(e, row.id)}
+                            />
+                          </TableCell>
+                          <TableCell>
+                            <TextField
+                              fullWidth
+                              type="file"
+                              name="odometerFile"
+                              onChange={(e) =>
+                                handleItemChange(
+                                  e as React.ChangeEvent<HTMLInputElement>,
+                                  row.id
+                                )
+                              }
+                            />
+                          </TableCell>
+                          <TableCell>
+                            <TextField
+                              fullWidth
+                              type="text"
+                              name="amount"
+                              value={row.amount}
+                              onChange={(e) => handleItemChange(e, row.id)}
+                            />
+                          </TableCell>
+                          <TableCell>
+                            <TextField
+                              fullWidth
+                              type="file"
+                              name="amountFile"
+                              onChange={(e) =>
+                                handleItemChange(
+                                  e as React.ChangeEvent<HTMLInputElement>,
+                                  row.id
+                                )
+                              }
+                            />
+                          </TableCell>
+                          <TableCell>
+                            <TextField
+                              fullWidth
+                              type="text"
+                              name="paymentType"
+                              value={row.paymentType}
+                              onChange={(e) => handleItemChange(e, row.id)}
+                            />
+                          </TableCell>
+                          <TableCell>
+                            <TextField
+                              fullWidth
+                              type="text"
+                              name="pumpName"
+                              value={row.pumpName}
+                              onChange={(e) => handleItemChange(e, row.id)}
+                            />
+                          </TableCell>
+                          {update ? (
+                            <>
+                              <TableCell style={{ textAlign: "center" }}>
+                                {formData.items.length !== 1 && (
+                                  <MdDelete
+                                    color="red"
+                                    size={24}
+                                    style={{ cursor: "pointer" }}
+                                    onClick={() => deleteRow(row.id)}
+                                  />
+                                )}
+                              </TableCell>
+                              <TableCell style={{ textAlign: "center" }}>
+                                {formData.items.length === index + 1 && (
+                                  <IoMdAdd
+                                    color="green"
+                                    size={24}
+                                    style={{ cursor: "pointer" }}
+                                    onClick={addItem}
+                                  />
+                                )}
+                              </TableCell>
+                            </>
+                          ) : null}
+                        </TableRow>
+                      </TableBody>
+                    ))
+                  : getMaintenanceData?.map((row, index) => (
+                      <TableBody key={row.id}>
+                        <TableRow hover role="checkbox" tabIndex={-1}>
+                          <TableCell style={{ textAlign: "center" }}>
+                            {index + 1}
+                          </TableCell>
+                          <TableCell style={{ textAlign: "center" }}>
+                            {row.vehicle}
+                          </TableCell>
+                          {/* Fuel */}
+                          <TableCell style={{ textAlign: "center" }}>
+                            {row.odometer}
+                          </TableCell>
+                          <TableCell>
+                            <FaDownload
+                              className="table-action-icon m-[auto]"
+                              style={{ color: "grey" }}
+                              onClick={() => handleDownloadPO(row.odometerFile)}
+                            />
+                          </TableCell>
+                          <TableCell style={{ textAlign: "center" }}>
+                            {row.amount}
+                          </TableCell>
+                          <TableCell>
+                            <FaDownload
+                              className="table-action-icon m-[auto]"
+                              style={{ color: "grey" }}
+                              onClick={() => handleDownloadPO(row.amountFile)}
+                            />
+                          </TableCell>
+                          <TableCell style={{ textAlign: "center" }}>
+                            {row.paymentType}
+                          </TableCell>
+                          <TableCell style={{ textAlign: "center" }}>
+                            {row.pumpName}
+                          </TableCell>
+                        </TableRow>
+                      </TableBody>
+                    ))}
+              </Table>
+              <div className="ml-10 m-2.5">
+                <Button
+                  id="input-btn-submit"
+                  className="submit"
+                  type="submit"
+                  variant="outlined"
+                  onClick={update ? handleUpdateSubmit : handleUpdateClick}
+                >
+                  {update ? "Submit" : "Update"}
+                </Button>
+                {update ? (
+                  <Button
+                    id="input-btn-cancel"
+                    className="submit"
+                    type="submit"
+                    variant="outlined"
+                    onClick={() => setUpdate(false)}
+                  >
+                    Cancel
+                  </Button>
+                ) : null}
+              </div>
+            </TableContainer>
+          </div>
+        </section>
+      )}
+    </>
   );
 };
 

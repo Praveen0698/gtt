@@ -392,380 +392,411 @@ const ShiftViewTable: React.FC = () => {
   currentDate.setDate(currentDate.getDate() - 1);
 
   return (
-    <Suspense fallback={<div>Loading maintenance view...</div>}>
+    <>
       {isLoading ? (
         <div className="loader-container">
           <div className="loader-container">
             <i>GTT</i>
           </div>
         </div>
-      ) : null}
-      <section className="firm-main-container">
-        <Navbar />
-        <Image
-          src={Elipse}
-          alt="elipse_design"
-          style={{ width: "100%" }}
-          className="elipse-home-image"
-        />
-        <p className="text-p card-badge">
-          Home / <span style={{ color: "white" }}>Shifts</span>
-        </p>
+      ) : (
+        <section className="firm-main-container">
+          <Navbar />
+          <Image
+            src={Elipse}
+            alt="elipse_design"
+            style={{ width: "100%" }}
+            className="elipse-home-image"
+          />
+          <p className="text-p card-badge">
+            Home / <span style={{ color: "white" }}>Shifts</span>
+          </p>
 
-        <div className="table-main-container">
-          <div
-            className="title-button-container"
-            style={{ justifyContent: "flex-start", gap: "20px" }}
-          >
-            <h3 className="table-h3">Shift</h3>
-          </div>
-          <TableContainer component={Paper} className="table-container">
-            <Table sx={{ minWidth: 650 }} aria-label="caption table">
-              <TableHead style={{ background: "#ddff8f" }}>
-                <TableRow>
-                  {[
-                    "SL",
-                    "Vehicle",
-                    "Expense Type",
-                    "Amount",
-                    "Image",
-                    "Description",
-                  ].map((header, index) => (
-                    <TableCell
-                      key={index}
-                      colSpan={header === "Actions" && update === true ? 2 : 1}
-                      style={{ fontWeight: "bold", textAlign: "center" }}
-                    >
-                      {header}
-                    </TableCell>
-                  ))}
-                  {update ? (
-                    <TableCell
-                      colSpan={2}
-                      style={{ fontWeight: "bold", textAlign: "center" }}
-                    >
-                      Actions
-                    </TableCell>
-                  ) : null}
-                </TableRow>
-              </TableHead>
-              {update
-                ? item.map((row, index) => (
-                    <TableBody key={row.id}>
-                      <TableRow hover role="checkbox" tabIndex={-1}>
-                        <TableCell style={{ textAlign: "center" }}>
-                          {index + 1}
-                        </TableCell>
+          <div className="table-main-container">
+            <div
+              className="title-button-container"
+              style={{ justifyContent: "flex-start", gap: "20px" }}
+            >
+              <h3 className="table-h3">Shift</h3>
+            </div>
+            <TableContainer component={Paper} className="table-container">
+              <Table sx={{ minWidth: 650 }} aria-label="caption table">
+                <TableHead style={{ background: "#ddff8f" }}>
+                  <TableRow>
+                    {[
+                      "SL",
+                      "Vehicle",
+                      "Expense Type",
+                      "Amount",
+                      "Image",
+                      "Description",
+                    ].map((header, index) => (
+                      <TableCell
+                        key={index}
+                        colSpan={
+                          header === "Actions" && update === true ? 2 : 1
+                        }
+                        style={{ fontWeight: "bold", textAlign: "center" }}
+                      >
+                        {header}
+                      </TableCell>
+                    ))}
+                    {update ? (
+                      <TableCell
+                        colSpan={2}
+                        style={{ fontWeight: "bold", textAlign: "center" }}
+                      >
+                        Actions
+                      </TableCell>
+                    ) : null}
+                  </TableRow>
+                </TableHead>
+                {update
+                  ? item.map((row, index) => (
+                      <TableBody key={row.id}>
+                        <TableRow hover role="checkbox" tabIndex={-1}>
+                          <TableCell style={{ textAlign: "center" }}>
+                            {index + 1}
+                          </TableCell>
 
-                        {/* Vehicle */}
-                        <TableCell style={{ width: "200px" }}>
-                          <Select
-                            fullWidth
-                            name="vehicle"
-                            style={{ width: "200px" }}
-                            value={row.vehicle}
-                            onChange={(e) => handleItemChange(e, row.id)}
-                          >
-                            {Array.isArray(getVehicle) &&
-                            getVehicle.length > 0 ? (
-                              getVehicle.map((type) => (
-                                <MenuItem key={type} value={type}>
-                                  {type}
-                                </MenuItem>
-                              ))
-                            ) : (
-                              <MenuItem disabled>No data available</MenuItem>
+                          {/* Vehicle */}
+                          <TableCell style={{ width: "200px" }}>
+                            <Select
+                              fullWidth
+                              name="vehicle"
+                              style={{ width: "200px" }}
+                              value={row.vehicle}
+                              onChange={(e) => handleItemChange(e, row.id)}
+                            >
+                              {Array.isArray(getVehicle) &&
+                              getVehicle.length > 0 ? (
+                                getVehicle.map((type) => (
+                                  <MenuItem key={type} value={type}>
+                                    {type}
+                                  </MenuItem>
+                                ))
+                              ) : (
+                                <MenuItem disabled>No data available</MenuItem>
+                              )}
+                            </Select>
+                          </TableCell>
+                          {/* Fuel */}
+                          <TableCell style={{ textAlign: "center" }}>
+                            Tyre Rotation
+                          </TableCell>
+                          <TableCell>
+                            <TextField
+                              fullWidth
+                              type="text"
+                              name="tyreRotation"
+                              value={row.tyreRotation}
+                              onChange={(e) => handleItemChange(e, row.id)}
+                            />
+                          </TableCell>
+                          <TableCell>
+                            <TextField
+                              fullWidth
+                              type="file"
+                              name="tyreRotationFile"
+                              onChange={(e) =>
+                                handleItemChange(
+                                  e as React.ChangeEvent<HTMLInputElement>,
+                                  row.id
+                                )
+                              }
+                            />
+                          </TableCell>
+                          <TableCell>
+                            <TextField
+                              fullWidth
+                              type="text"
+                              name="tyreRotationDesc"
+                              value={row.tyreRotationDesc}
+                              onChange={(e) => handleItemChange(e, row.id)}
+                            />
+                          </TableCell>
+                        </TableRow>
+                        {/* Maintenance */}
+                        <TableRow hover role="checkbox" tabIndex={-1}>
+                          <TableCell
+                            style={{ textAlign: "center" }}
+                          ></TableCell>
+                          <TableCell
+                            style={{ textAlign: "center" }}
+                          ></TableCell>
+                          <TableCell style={{ textAlign: "center" }}>
+                            Maintenance
+                          </TableCell>
+                          <TableCell>
+                            <TextField
+                              fullWidth
+                              type="text"
+                              name="maintenance"
+                              value={row.maintenance}
+                              onChange={(e) => handleItemChange(e, row.id)}
+                            />
+                          </TableCell>
+                          <TableCell>
+                            <TextField
+                              fullWidth
+                              type="file"
+                              name="maintenanceFile"
+                              onChange={(e) =>
+                                handleItemChange(
+                                  e as React.ChangeEvent<HTMLInputElement>,
+                                  row.id
+                                )
+                              }
+                            />
+                          </TableCell>
+                          <TableCell>
+                            <TextField
+                              fullWidth
+                              type="text"
+                              name="maintenanceDesc"
+                              value={row.maintenanceDesc}
+                              onChange={(e) => handleItemChange(e, row.id)}
+                            />
+                          </TableCell>
+                        </TableRow>
+                        {/* Odometer */}
+                        <TableRow hover role="checkbox" tabIndex={-1}>
+                          <TableCell
+                            style={{ textAlign: "center" }}
+                          ></TableCell>
+                          <TableCell
+                            style={{ textAlign: "center" }}
+                          ></TableCell>
+                          <TableCell style={{ textAlign: "center" }}>
+                            Odometer
+                          </TableCell>
+                          <TableCell>
+                            <TextField
+                              fullWidth
+                              type="text"
+                              name="odometer"
+                              value={row.odometer}
+                              onChange={(e) => handleItemChange(e, row.id)}
+                            />
+                          </TableCell>
+                          <TableCell>
+                            <TextField
+                              fullWidth
+                              type="file"
+                              name="odometerFile"
+                              onChange={(e) =>
+                                handleItemChange(
+                                  e as React.ChangeEvent<HTMLInputElement>,
+                                  row.id
+                                )
+                              }
+                            />
+                          </TableCell>
+                          <TableCell>
+                            <TextField
+                              fullWidth
+                              type="text"
+                              name="odometerDesc"
+                              value={row.odometerDesc}
+                              onChange={(e) => handleItemChange(e, row.id)}
+                            />
+                          </TableCell>
+                        </TableRow>
+                        {/* Washing */}
+                        <TableRow hover role="checkbox" tabIndex={-1}>
+                          <TableCell
+                            style={{ textAlign: "center" }}
+                          ></TableCell>
+                          <TableCell
+                            style={{ textAlign: "center" }}
+                          ></TableCell>
+                          <TableCell style={{ textAlign: "center" }}>
+                            Washing
+                          </TableCell>
+                          <TableCell style={{ width: "200px" }}>
+                            <TextField
+                              fullWidth
+                              type="text"
+                              name="washing"
+                              value={row.washing}
+                              onChange={(e) => handleItemChange(e, row.id)}
+                            />
+                          </TableCell>
+                          <TableCell style={{ width: "250px" }}>
+                            <TextField
+                              fullWidth
+                              type="file"
+                              name="washingFile"
+                              onChange={(e) =>
+                                handleItemChange(
+                                  e as React.ChangeEvent<HTMLInputElement>,
+                                  row.id
+                                )
+                              }
+                            />
+                          </TableCell>
+                          <TableCell>
+                            <TextField
+                              fullWidth
+                              type="text"
+                              name="washingDesc"
+                              value={row.washingDesc}
+                              onChange={(e) => handleItemChange(e, row.id)}
+                            />
+                          </TableCell>
+                          <TableCell style={{ textAlign: "center" }}>
+                            {formData.items.length !== 1 && (
+                              <MdDelete
+                                color="red"
+                                size={24}
+                                style={{ cursor: "pointer" }}
+                                onClick={() => deleteRow(row.id)}
+                              />
                             )}
-                          </Select>
-                        </TableCell>
-                        {/* Fuel */}
-                        <TableCell style={{ textAlign: "center" }}>
-                          Tyre Rotation
-                        </TableCell>
-                        <TableCell>
-                          <TextField
-                            fullWidth
-                            type="text"
-                            name="tyreRotation"
-                            value={row.tyreRotation}
-                            onChange={(e) => handleItemChange(e, row.id)}
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <TextField
-                            fullWidth
-                            type="file"
-                            name="tyreRotationFile"
-                            onChange={(e) =>
-                              handleItemChange(
-                                e as React.ChangeEvent<HTMLInputElement>,
-                                row.id
-                              )
-                            }
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <TextField
-                            fullWidth
-                            type="text"
-                            name="tyreRotationDesc"
-                            value={row.tyreRotationDesc}
-                            onChange={(e) => handleItemChange(e, row.id)}
-                          />
-                        </TableCell>
-                      </TableRow>
-                      {/* Maintenance */}
-                      <TableRow hover role="checkbox" tabIndex={-1}>
-                        <TableCell style={{ textAlign: "center" }}></TableCell>
-                        <TableCell style={{ textAlign: "center" }}></TableCell>
-                        <TableCell style={{ textAlign: "center" }}>
-                          Maintenance
-                        </TableCell>
-                        <TableCell>
-                          <TextField
-                            fullWidth
-                            type="text"
-                            name="maintenance"
-                            value={row.maintenance}
-                            onChange={(e) => handleItemChange(e, row.id)}
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <TextField
-                            fullWidth
-                            type="file"
-                            name="maintenanceFile"
-                            onChange={(e) =>
-                              handleItemChange(
-                                e as React.ChangeEvent<HTMLInputElement>,
-                                row.id
-                              )
-                            }
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <TextField
-                            fullWidth
-                            type="text"
-                            name="maintenanceDesc"
-                            value={row.maintenanceDesc}
-                            onChange={(e) => handleItemChange(e, row.id)}
-                          />
-                        </TableCell>
-                      </TableRow>
-                      {/* Odometer */}
-                      <TableRow hover role="checkbox" tabIndex={-1}>
-                        <TableCell style={{ textAlign: "center" }}></TableCell>
-                        <TableCell style={{ textAlign: "center" }}></TableCell>
-                        <TableCell style={{ textAlign: "center" }}>
-                          Odometer
-                        </TableCell>
-                        <TableCell>
-                          <TextField
-                            fullWidth
-                            type="text"
-                            name="odometer"
-                            value={row.odometer}
-                            onChange={(e) => handleItemChange(e, row.id)}
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <TextField
-                            fullWidth
-                            type="file"
-                            name="odometerFile"
-                            onChange={(e) =>
-                              handleItemChange(
-                                e as React.ChangeEvent<HTMLInputElement>,
-                                row.id
-                              )
-                            }
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <TextField
-                            fullWidth
-                            type="text"
-                            name="odometerDesc"
-                            value={row.odometerDesc}
-                            onChange={(e) => handleItemChange(e, row.id)}
-                          />
-                        </TableCell>
-                      </TableRow>
-                      {/* Washing */}
-                      <TableRow hover role="checkbox" tabIndex={-1}>
-                        <TableCell style={{ textAlign: "center" }}></TableCell>
-                        <TableCell style={{ textAlign: "center" }}></TableCell>
-                        <TableCell style={{ textAlign: "center" }}>
-                          Washing
-                        </TableCell>
-                        <TableCell style={{ width: "200px" }}>
-                          <TextField
-                            fullWidth
-                            type="text"
-                            name="washing"
-                            value={row.washing}
-                            onChange={(e) => handleItemChange(e, row.id)}
-                          />
-                        </TableCell>
-                        <TableCell style={{ width: "250px" }}>
-                          <TextField
-                            fullWidth
-                            type="file"
-                            name="washingFile"
-                            onChange={(e) =>
-                              handleItemChange(
-                                e as React.ChangeEvent<HTMLInputElement>,
-                                row.id
-                              )
-                            }
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <TextField
-                            fullWidth
-                            type="text"
-                            name="washingDesc"
-                            value={row.washingDesc}
-                            onChange={(e) => handleItemChange(e, row.id)}
-                          />
-                        </TableCell>
-                        <TableCell style={{ textAlign: "center" }}>
-                          {formData.items.length !== 1 && (
-                            <MdDelete
-                              color="red"
-                              size={24}
-                              style={{ cursor: "pointer" }}
-                              onClick={() => deleteRow(row.id)}
+                          </TableCell>
+                          <TableCell style={{ textAlign: "center" }}>
+                            {formData.items.length === index + 1 && (
+                              <IoMdAdd
+                                color="green"
+                                size={24}
+                                style={{ cursor: "pointer" }}
+                                onClick={addItem}
+                              />
+                            )}
+                          </TableCell>
+                        </TableRow>
+                      </TableBody>
+                    ))
+                  : getMaintenanceData?.map((row, index) => (
+                      <TableBody key={row.id}>
+                        <TableRow hover role="checkbox" tabIndex={-1}>
+                          <TableCell style={{ textAlign: "center" }}>
+                            {index + 1}
+                          </TableCell>
+                          <TableCell style={{ textAlign: "center" }}>
+                            {row.vehicle}
+                          </TableCell>
+                          {/* Fuel */}
+                          <TableCell style={{ textAlign: "center" }}>
+                            Tyre Rotation
+                          </TableCell>
+                          <TableCell style={{ textAlign: "center" }}>
+                            {row.tyreRotation}
+                          </TableCell>
+                          <TableCell>
+                            <FaDownload
+                              className="table-action-icon m-[auto]"
+                              style={{ color: "grey" }}
+                              onClick={() =>
+                                handleDownloadPO(row.tyreRotationFile)
+                              }
                             />
-                          )}
-                        </TableCell>
-                        <TableCell style={{ textAlign: "center" }}>
-                          {formData.items.length === index + 1 && (
-                            <IoMdAdd
-                              color="green"
-                              size={24}
-                              style={{ cursor: "pointer" }}
-                              onClick={addItem}
-                            />
-                          )}
-                        </TableCell>
-                      </TableRow>
-                    </TableBody>
-                  ))
-                : getMaintenanceData?.map((row, index) => (
-                    <TableBody key={row.id}>
-                      <TableRow hover role="checkbox" tabIndex={-1}>
-                        <TableCell style={{ textAlign: "center" }}>
-                          {index + 1}
-                        </TableCell>
-                        <TableCell style={{ textAlign: "center" }}>
-                          {row.vehicle}
-                        </TableCell>
-                        {/* Fuel */}
-                        <TableCell style={{ textAlign: "center" }}>
-                          Tyre Rotation
-                        </TableCell>
-                        <TableCell style={{ textAlign: "center" }}>
-                          {row.tyreRotation}
-                        </TableCell>
-                        <TableCell>
+                          </TableCell>
+                          <TableCell style={{ textAlign: "center" }}>
+                            {row.tyreRotationDesc}
+                          </TableCell>
+                        </TableRow>
+                        {/* Maintenance */}
+                        <TableRow hover role="checkbox" tabIndex={-1}>
+                          <TableCell
+                            style={{ textAlign: "center" }}
+                          ></TableCell>
+                          <TableCell
+                            style={{ textAlign: "center" }}
+                          ></TableCell>
+                          <TableCell style={{ textAlign: "center" }}>
+                            Maintenance
+                          </TableCell>
+                          <TableCell style={{ textAlign: "center" }}>
+                            {row.maintenance}
+                          </TableCell>
                           <FaDownload
                             className="table-action-icon m-[auto]"
                             style={{ color: "grey" }}
                             onClick={() =>
-                              handleDownloadPO(row.tyreRotationFile)
+                              handleDownloadPO(row.maintenanceFile)
                             }
                           />
-                        </TableCell>
-                        <TableCell style={{ textAlign: "center" }}>
-                          {row.tyreRotationDesc}
-                        </TableCell>
-                      </TableRow>
-                      {/* Maintenance */}
-                      <TableRow hover role="checkbox" tabIndex={-1}>
-                        <TableCell style={{ textAlign: "center" }}></TableCell>
-                        <TableCell style={{ textAlign: "center" }}></TableCell>
-                        <TableCell style={{ textAlign: "center" }}>
-                          Maintenance
-                        </TableCell>
-                        <TableCell style={{ textAlign: "center" }}>
-                          {row.maintenance}
-                        </TableCell>
-                        <FaDownload
-                          className="table-action-icon m-[auto]"
-                          style={{ color: "grey" }}
-                          onClick={() => handleDownloadPO(row.maintenanceFile)}
-                        />
-                        <TableCell style={{ textAlign: "center" }}>
-                          {row.maintenanceDesc}
-                        </TableCell>
-                      </TableRow>
-                      {/* Odometer */}
-                      <TableRow hover role="checkbox" tabIndex={-1}>
-                        <TableCell style={{ textAlign: "center" }}></TableCell>
-                        <TableCell style={{ textAlign: "center" }}></TableCell>
-                        <TableCell style={{ textAlign: "center" }}>
-                          Odometer
-                        </TableCell>
-                        <TableCell style={{ textAlign: "center" }}>
-                          {row.odometer}
-                        </TableCell>
-                        <FaDownload
-                          className="table-action-icon m-[auto]"
-                          style={{ color: "grey" }}
-                          onClick={() => handleDownloadPO(row.odometerFile)}
-                        />
-                        <TableCell style={{ textAlign: "center" }}>
-                          {row.odometerDesc}
-                        </TableCell>
-                      </TableRow>
-                      {/* Washing */}
-                      <TableRow hover role="checkbox" tabIndex={-1}>
-                        <TableCell style={{ textAlign: "center" }}></TableCell>
-                        <TableCell style={{ textAlign: "center" }}></TableCell>
-                        <TableCell style={{ textAlign: "center" }}>
-                          Washing
-                        </TableCell>
-                        <TableCell style={{ textAlign: "center" }}>
-                          {row.washing}
-                        </TableCell>
-                        <FaDownload
-                          className="table-action-icon m-[auto]"
-                          style={{ color: "grey" }}
-                          onClick={() => handleDownloadPO(row.washingFile)}
-                        />
-                        <TableCell style={{ textAlign: "center" }}>
-                          {row.washingDesc}
-                        </TableCell>
-                      </TableRow>
-                    </TableBody>
-                  ))}
-            </Table>
-            <div className="ml-10 m-2.5">
-              <Button
-                id="input-btn-submit"
-                className="submit"
-                type="submit"
-                variant="outlined"
-                onClick={update ? handleUpdateSubmit : handleUpdateClick}
-              >
-                {update ? "Submit" : "Update"}
-              </Button>
-              <Button
-                id="input-btn-cancel"
-                className="submit"
-                type="submit"
-                variant="outlined"
-                onClick={() => setUpdate(false)}
-              >
-                Cancel
-              </Button>
-            </div>
-          </TableContainer>
-        </div>
-      </section>
-    </Suspense>
+                          <TableCell style={{ textAlign: "center" }}>
+                            {row.maintenanceDesc}
+                          </TableCell>
+                        </TableRow>
+                        {/* Odometer */}
+                        <TableRow hover role="checkbox" tabIndex={-1}>
+                          <TableCell
+                            style={{ textAlign: "center" }}
+                          ></TableCell>
+                          <TableCell
+                            style={{ textAlign: "center" }}
+                          ></TableCell>
+                          <TableCell style={{ textAlign: "center" }}>
+                            Odometer
+                          </TableCell>
+                          <TableCell style={{ textAlign: "center" }}>
+                            {row.odometer}
+                          </TableCell>
+                          <FaDownload
+                            className="table-action-icon m-[auto]"
+                            style={{ color: "grey" }}
+                            onClick={() => handleDownloadPO(row.odometerFile)}
+                          />
+                          <TableCell style={{ textAlign: "center" }}>
+                            {row.odometerDesc}
+                          </TableCell>
+                        </TableRow>
+                        {/* Washing */}
+                        <TableRow hover role="checkbox" tabIndex={-1}>
+                          <TableCell
+                            style={{ textAlign: "center" }}
+                          ></TableCell>
+                          <TableCell
+                            style={{ textAlign: "center" }}
+                          ></TableCell>
+                          <TableCell style={{ textAlign: "center" }}>
+                            Washing
+                          </TableCell>
+                          <TableCell style={{ textAlign: "center" }}>
+                            {row.washing}
+                          </TableCell>
+                          <FaDownload
+                            className="table-action-icon m-[auto]"
+                            style={{ color: "grey" }}
+                            onClick={() => handleDownloadPO(row.washingFile)}
+                          />
+                          <TableCell style={{ textAlign: "center" }}>
+                            {row.washingDesc}
+                          </TableCell>
+                        </TableRow>
+                      </TableBody>
+                    ))}
+              </Table>
+              <div className="ml-10 m-2.5">
+                <Button
+                  id="input-btn-submit"
+                  className="submit"
+                  type="submit"
+                  variant="outlined"
+                  onClick={update ? handleUpdateSubmit : handleUpdateClick}
+                >
+                  {update ? "Submit" : "Update"}
+                </Button>
+                {update ? (
+                  <Button
+                    id="input-btn-cancel"
+                    className="submit"
+                    type="submit"
+                    variant="outlined"
+                    onClick={() => setUpdate(false)}
+                  >
+                    Cancel
+                  </Button>
+                ) : null}
+              </div>
+            </TableContainer>
+          </div>
+        </section>
+      )}
+    </>
   );
 };
 

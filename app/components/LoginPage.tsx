@@ -123,38 +123,39 @@ const LoginPage = () => {
             <i>GTT</i>
           </div>
         </div>
-      ) : null}
-      <div className="login-container">
-        <h1 className="company-name">GTT</h1>
-        <div className="login-content">
-          <h1 style={{ color: "white" }}>Login</h1>
-          <div className="text-field">
-            <input
-              type="text"
-              placeholder="Enter your username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            {error && <p style={{ color: "red" }}>{error}</p>}
-            <button
-              type="submit"
-              onClick={handleLogin}
-              style={{ cursor: "pointer" }}
-            >
-              Login
-            </button>
+      ) : (
+        <div className="login-container">
+          <h1 className="company-name">GTT</h1>
+          <div className="login-content">
+            <h1 style={{ color: "white" }}>Login</h1>
+            <div className="text-field">
+              <input
+                type="text"
+                placeholder="Enter your username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              {error && <p style={{ color: "red" }}>{error}</p>}
+              <button
+                type="submit"
+                onClick={handleLogin}
+                style={{ cursor: "pointer" }}
+              >
+                Login
+              </button>
+            </div>
+          </div>
+          <div className="login-image">
+            <Image src={SideImg} alt="Side Visual" className="login-image" />
           </div>
         </div>
-        <div className="login-image">
-          <Image src={SideImg} alt="Side Visual" className="login-image" />
-        </div>
-      </div>
+      )}
     </>
   );
 };

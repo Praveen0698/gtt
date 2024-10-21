@@ -68,30 +68,31 @@ const HomePageAdmin = () => {
             <i>GTT</i>
           </div>
         </div>
-      ) : null}
-      <section className="home-container">
-        <div className="home-bus-container">
-          <Navbar />
-          <Image
-            src={Elipse}
-            alt="elipse_design"
-            className="elipse-home-image"
-          />
-          <Image src={Bus} alt="bus" className="bus-home-image" />
-          <div className="text-home-bus">
-            <p className="text-p">
-              Home / <span style={{ color: "white" }}>Dashboard</span>
-            </p>
-            <div className="text-greet">
-              <h2>
-                {greeting}, {name}
-              </h2>
-              <p>Track & manage your transport here!</p>
+      ) : (
+        <section className="home-container">
+          <div className="home-bus-container">
+            <Navbar />
+            <Image
+              src={Elipse}
+              alt="elipse_design"
+              className="elipse-home-image"
+            />
+            <Image src={Bus} alt="bus" className="bus-home-image" />
+            <div className="text-home-bus">
+              <p className="text-p">
+                Home / <span style={{ color: "white" }}>Dashboard</span>
+              </p>
+              <div className="text-greet">
+                <h2>
+                  {greeting}, {name}
+                </h2>
+                <p>Track & manage your transport here!</p>
+              </div>
             </div>
           </div>
-        </div>
-        <CardPageAdmin setIsLoading={setIsLoading} />
-      </section>
+          <CardPageAdmin setIsLoading={setIsLoading} />
+        </section>
+      )}
     </>
   );
 };

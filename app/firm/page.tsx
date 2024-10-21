@@ -218,294 +218,300 @@ const FirmsTable: React.FC = () => {
             <i>GTT</i>
           </div>
         </div>
-      ) : null}
-      <section className="firm-main-container">
-        <Navbar />
-        <Image
-          src={Elipse}
-          alt="elipse_design"
-          style={{ width: "100%" }}
-          className="elipse-home-image"
-        />
-        <p className="text-p card-badge">
-          Home / <span style={{ color: "white" }}>Firm</span>
-        </p>
+      ) : (
+        <section className="firm-main-container">
+          <Navbar />
+          <Image
+            src={Elipse}
+            alt="elipse_design"
+            style={{ width: "100%" }}
+            className="elipse-home-image"
+          />
+          <p className="text-p card-badge">
+            Home / <span style={{ color: "white" }}>Firm</span>
+          </p>
 
-        <Modal
-          className="bus-form-modal"
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <div className="bus-form-container">
-            <form onSubmit={update ? handleUpdate : handleSubmit}>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  marginBottom: "20px",
+          <Modal
+            className="bus-form-modal"
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <div className="bus-form-container">
+              <form onSubmit={update ? handleUpdate : handleSubmit}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginBottom: "20px",
+                  }}
+                >
+                  <h3>{update ? "Update Firm" : "Add Firm"}</h3>
+                  <RxCrossCircled
+                    className="bus-form-cross"
+                    onClick={handleClose}
+                  />
+                </div>
+
+                <div className="data-input-fields">
+                  <div className="bus-input-label">
+                    <label className="input-label">Firm Name</label>
+                    <TextField
+                      className="bus-input"
+                      margin="dense"
+                      type="text"
+                      fullWidth
+                      name="firmName"
+                      id="firmName"
+                      value={formData.firmName}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+
+                  <div className="bus-input-label">
+                    <label className="input-label">Firm Type</label>
+                    <Select
+                      fullWidth
+                      name="firmType"
+                      value={formData.firmType}
+                      onChange={handleInputChange}
+                    >
+                      {firmType.map((type) => (
+                        <MenuItem key={type.value} value={type.value}>
+                          {type.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </div>
+                </div>
+                <div className="data-input-fields">
+                  <div className="bus-input-label">
+                    <label className="input-label">GST Number</label>
+                    <TextField
+                      className="bus-input"
+                      margin="dense"
+                      type="text"
+                      fullWidth
+                      name="gstNumber"
+                      id="gstNumber"
+                      value={formData.gstNumber}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+
+                  <div className="bus-input-label">
+                    <label className="input-label">GST Address</label>
+                    <TextField
+                      className="bus-input"
+                      margin="dense"
+                      type="text"
+                      fullWidth
+                      name="gstAddress"
+                      id="gstAddress"
+                      value={formData.gstAddress}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                </div>
+                <div className="data-input-fields">
+                  <div className="bus-input-label">
+                    <label className="input-label">PAN/TAN Number</label>
+                    <TextField
+                      className="bus-input"
+                      margin="dense"
+                      type="text"
+                      fullWidth
+                      name="panTanNumber"
+                      id="panTanNumber"
+                      value={formData.panTanNumber}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+
+                  <div className="bus-input-label">
+                    <label className="input-label">
+                      Propertior/Directors Name
+                    </label>
+                    <TextField
+                      className="bus-input"
+                      margin="dense"
+                      type="text"
+                      fullWidth
+                      name="propertiorName"
+                      id="propertiorName"
+                      value={formData.propertiorName}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                </div>
+
+                <div className="data-buttons" style={{ marginTop: "20px" }}>
+                  <Button
+                    id="input-btn-submit"
+                    className="submit"
+                    type="submit"
+                    variant="outlined"
+                  >
+                    {update ? "Update" : "Submit"}
+                  </Button>
+                  <Button
+                    id="input-btn-cancel"
+                    className="cancel"
+                    onClick={handleClose}
+                    variant="outlined"
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </form>
+            </div>
+          </Modal>
+
+          <div className="table-main-container">
+            <div className="title-button-container">
+              <h3 className="table-h3">Firms</h3>
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  setToggle(!toggle);
                 }}
+                id="add-btn"
+                className="add-btn-table"
               >
-                <h3>{update ? "Update Firm" : "Add Firm"}</h3>
-                <RxCrossCircled
-                  className="bus-form-cross"
-                  onClick={handleClose}
-                />
-              </div>
+                {toggle ? (
+                  <div className="hide" onClick={handleClose}>
+                    HIDE
+                  </div>
+                ) : (
+                  <div className="add" onClick={handleOpen}>
+                    + ADD FIRM
+                  </div>
+                )}
+              </Button>
+            </div>
+            <TableContainer component={Paper} className="table-container">
+              <Table sx={{ minWidth: 650 }} aria-label="caption table">
+                {getFirm.length === 0 ? (
+                  ""
+                ) : (
+                  <caption>
+                    <TablePagination
+                      rowsPerPageOptions={[5]}
+                      component="div"
+                      count={getFirm.length}
+                      rowsPerPage={rowsPerPage}
+                      page={page}
+                      onPageChange={handleChangePage}
+                      onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+                  </caption>
+                )}
 
-              <div className="data-input-fields">
-                <div className="bus-input-label">
-                  <label className="input-label">Firm Name</label>
-                  <TextField
-                    className="bus-input"
-                    margin="dense"
-                    type="text"
-                    fullWidth
-                    name="firmName"
-                    id="firmName"
-                    value={formData.firmName}
-                    onChange={handleInputChange}
-                  />
-                </div>
-
-                <div className="bus-input-label">
-                  <label className="input-label">Firm Type</label>
-                  <Select
-                    fullWidth
-                    name="firmType"
-                    value={formData.firmType}
-                    onChange={handleInputChange}
-                  >
-                    {firmType.map((type) => (
-                      <MenuItem key={type.value} value={type.value}>
-                        {type.label}
-                      </MenuItem>
+                <TableHead style={{ background: "#ddff8f" }}>
+                  <TableRow>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      SL
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      Firm Name
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      Firm Type
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      GST
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      Address
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      PAN/TAN
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      Propertior/Directors
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                      colSpan={2}
+                    >
+                      Actions
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {getFirm
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row, index) => (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={row._id}
+                      >
+                        <TableCell style={{ textAlign: "center" }}>
+                          {index + 1}
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {row.firmName}
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {row.firmType}
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {row.gstNumber}
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {row.gstAddress}
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {row.panTanNumber}
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {row.propertiorName}
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          <FaEdit
+                            className="table-action-icon m-[auto]"
+                            style={{ color: "blue" }}
+                            onClick={() => updateClick(row._id)}
+                          />
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          <MdDelete
+                            className="table-action-icon m-[auto]"
+                            style={{ color: "red" }}
+                            onClick={() => deleteClick(row._id)}
+                          />
+                        </TableCell>
+                      </TableRow>
                     ))}
-                  </Select>
-                </div>
-              </div>
-              <div className="data-input-fields">
-                <div className="bus-input-label">
-                  <label className="input-label">GST Number</label>
-                  <TextField
-                    className="bus-input"
-                    margin="dense"
-                    type="text"
-                    fullWidth
-                    name="gstNumber"
-                    id="gstNumber"
-                    value={formData.gstNumber}
-                    onChange={handleInputChange}
-                  />
-                </div>
-
-                <div className="bus-input-label">
-                  <label className="input-label">GST Address</label>
-                  <TextField
-                    className="bus-input"
-                    margin="dense"
-                    type="text"
-                    fullWidth
-                    name="gstAddress"
-                    id="gstAddress"
-                    value={formData.gstAddress}
-                    onChange={handleInputChange}
-                  />
-                </div>
-              </div>
-              <div className="data-input-fields">
-                <div className="bus-input-label">
-                  <label className="input-label">PAN/TAN Number</label>
-                  <TextField
-                    className="bus-input"
-                    margin="dense"
-                    type="text"
-                    fullWidth
-                    name="panTanNumber"
-                    id="panTanNumber"
-                    value={formData.panTanNumber}
-                    onChange={handleInputChange}
-                  />
-                </div>
-
-                <div className="bus-input-label">
-                  <label className="input-label">
-                    Propertior/Directors Name
-                  </label>
-                  <TextField
-                    className="bus-input"
-                    margin="dense"
-                    type="text"
-                    fullWidth
-                    name="propertiorName"
-                    id="propertiorName"
-                    value={formData.propertiorName}
-                    onChange={handleInputChange}
-                  />
-                </div>
-              </div>
-
-              <div className="data-buttons" style={{ marginTop: "20px" }}>
-                <Button
-                  id="input-btn-submit"
-                  className="submit"
-                  type="submit"
-                  variant="outlined"
-                >
-                  {update ? "Update" : "Submit"}
-                </Button>
-                <Button
-                  id="input-btn-cancel"
-                  className="cancel"
-                  onClick={handleClose}
-                  variant="outlined"
-                >
-                  Cancel
-                </Button>
-              </div>
-            </form>
-          </div>
-        </Modal>
-
-        <div className="table-main-container">
-          <div className="title-button-container">
-            <h3 className="table-h3">Firms</h3>
-            <Button
-              variant="outlined"
-              onClick={() => {
-                setToggle(!toggle);
-              }}
-              id="add-btn"
-              className="add-btn-table"
-            >
-              {toggle ? (
-                <div className="hide" onClick={handleClose}>
-                  HIDE
-                </div>
-              ) : (
-                <div className="add" onClick={handleOpen}>
-                  + ADD FIRM
-                </div>
-              )}
-            </Button>
-          </div>
-          <TableContainer component={Paper} className="table-container">
-            <Table sx={{ minWidth: 650 }} aria-label="caption table">
+                </TableBody>
+              </Table>
               {getFirm.length === 0 ? (
-                ""
-              ) : (
-                <caption>
-                  <TablePagination
-                    rowsPerPageOptions={[5]}
-                    component="div"
-                    count={getFirm.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                  />
-                </caption>
-              )}
-
-              <TableHead style={{ background: "#ddff8f" }}>
-                <TableRow>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    SL
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    Firm Name
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    Firm Type
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    GST
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    Address
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    PAN/TAN
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    Propertior/Directors
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                    colSpan={2}
-                  >
-                    Actions
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {getFirm
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, index) => (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={row._id}>
-                      <TableCell style={{ textAlign: "center" }}>
-                        {index + 1}
-                      </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
-                        {row.firmName}
-                      </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
-                        {row.firmType}
-                      </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
-                        {row.gstNumber}
-                      </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
-                        {row.gstAddress}
-                      </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
-                        {row.panTanNumber}
-                      </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
-                        {row.propertiorName}
-                      </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
-                        <FaEdit
-                          className="table-action-icon m-[auto]"
-                          style={{ color: "blue" }}
-                          onClick={() => updateClick(row._id)}
-                        />
-                      </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
-                        <MdDelete
-                          className="table-action-icon m-[auto]"
-                          style={{ color: "red" }}
-                          onClick={() => deleteClick(row._id)}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  ))}
-              </TableBody>
-            </Table>
-            {getFirm.length === 0 ? (
-              <div className="table-nodata">
-                <h2>NO DATA</h2>
-              </div>
-            ) : null}
-          </TableContainer>
-        </div>
-      </section>
+                <div className="table-nodata">
+                  <h2>NO DATA</h2>
+                </div>
+              ) : null}
+            </TableContainer>
+          </div>
+        </section>
+      )}
     </>
   );
 };

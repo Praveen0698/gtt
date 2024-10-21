@@ -417,437 +417,443 @@ const EmployeeTable: React.FC = () => {
             <i>GTT</i>
           </div>
         </div>
-      ) : null}
-      <section className="firm-main-container">
-        <Navbar />
-        <Image
-          src={Elipse}
-          alt="elipse_design"
-          style={{ width: "100%" }}
-          className="elipse-home-image"
-        />
-        <p className="text-p card-badge">
-          Home / <span style={{ color: "white" }}>Employees</span>
-        </p>
+      ) : (
+        <section className="firm-main-container">
+          <Navbar />
+          <Image
+            src={Elipse}
+            alt="elipse_design"
+            style={{ width: "100%" }}
+            className="elipse-home-image"
+          />
+          <p className="text-p card-badge">
+            Home / <span style={{ color: "white" }}>Employees</span>
+          </p>
 
-        <Modal
-          className="bus-form-modal"
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <div className="bus-form-container">
-            <form onSubmit={update ? handleUpdate : handleSubmit}>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  marginBottom: "20px",
-                }}
-              >
-                <h3>Add Employee</h3>
-                <RxCrossCircled
-                  className="bus-form-cross"
-                  onClick={handleClose}
-                />
-              </div>
-
-              <div className="data-input-fields">
-                <div className="bus-input-label">
-                  <label className="input-label">Employee Name</label>
-                  <TextField
-                    className="bus-input"
-                    margin="dense"
-                    type="text"
-                    fullWidth
-                    name="employeeName"
-                    id="employeeName"
-                    value={formData.employeeName}
-                    onChange={handleInputChange}
-                    style={{ padding: "5px 0px", margin: "0" }}
-                  />
-                </div>
-                <div className="bus-input-label">
-                  <label className="input-label">Age</label>
-                  <TextField
-                    className="bus-input"
-                    margin="dense"
-                    type="text"
-                    fullWidth
-                    name="age"
-                    id="age"
-                    value={formData.age}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                <div className="bus-input-label">
-                  <label className="input-label">Address</label>
-                  <TextField
-                    className="bus-input"
-                    margin="dense"
-                    type="text"
-                    fullWidth
-                    name="address"
-                    id="address"
-                    value={formData.address}
-                    onChange={handleInputChange}
-                  />
-                </div>
-              </div>
-
-              <div className="data-input-fields">
-                <div className="bus-input-label">
-                  <label className="input-label">Experience</label>
-                  <TextField
-                    className="bus-input"
-                    margin="dense"
-                    type="text"
-                    fullWidth
-                    name="experience"
-                    id="experience"
-                    value={formData.experience}
-                    onChange={handleInputChange}
+          <Modal
+            className="bus-form-modal"
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <div className="bus-form-container">
+              <form onSubmit={update ? handleUpdate : handleSubmit}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginBottom: "20px",
+                  }}
+                >
+                  <h3>Add Employee</h3>
+                  <RxCrossCircled
+                    className="bus-form-cross"
+                    onClick={handleClose}
                   />
                 </div>
 
-                <div className="bus-input-label">
-                  <label className="input-label">Designation</label>
-                  <Select
-                    fullWidth
-                    name="designation"
-                    value={formData.designation}
-                    onChange={handleInputChange}
+                <div className="data-input-fields">
+                  <div className="bus-input-label">
+                    <label className="input-label">Employee Name</label>
+                    <TextField
+                      className="bus-input"
+                      margin="dense"
+                      type="text"
+                      fullWidth
+                      name="employeeName"
+                      id="employeeName"
+                      value={formData.employeeName}
+                      onChange={handleInputChange}
+                      style={{ padding: "5px 0px", margin: "0" }}
+                    />
+                  </div>
+                  <div className="bus-input-label">
+                    <label className="input-label">Age</label>
+                    <TextField
+                      className="bus-input"
+                      margin="dense"
+                      type="text"
+                      fullWidth
+                      name="age"
+                      id="age"
+                      value={formData.age}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                  <div className="bus-input-label">
+                    <label className="input-label">Address</label>
+                    <TextField
+                      className="bus-input"
+                      margin="dense"
+                      type="text"
+                      fullWidth
+                      name="address"
+                      id="address"
+                      value={formData.address}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                </div>
+
+                <div className="data-input-fields">
+                  <div className="bus-input-label">
+                    <label className="input-label">Experience</label>
+                    <TextField
+                      className="bus-input"
+                      margin="dense"
+                      type="text"
+                      fullWidth
+                      name="experience"
+                      id="experience"
+                      value={formData.experience}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+
+                  <div className="bus-input-label">
+                    <label className="input-label">Designation</label>
+                    <Select
+                      fullWidth
+                      name="designation"
+                      value={formData.designation}
+                      onChange={handleInputChange}
+                    >
+                      {designation.map((type) => (
+                        <MenuItem key={type.value} value={type.value}>
+                          {type.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </div>
+                </div>
+                <div className="data-input-fields">
+                  <div className="bus-input-label">
+                    <label className="input-label">Aadhar Number</label>
+
+                    <div className="input-upload-container">
+                      <TextField
+                        className="bus-input"
+                        margin="dense"
+                        type="text"
+                        fullWidth
+                        name="aadharNumber"
+                        id="aadharNumber"
+                        value={formData.aadharNumber}
+                        onChange={handleInputChange}
+                      />
+                      <input
+                        accept="image/*,.pdf"
+                        style={{ display: "none" }}
+                        id="aadharFile"
+                        type="file"
+                        name="aadharFile"
+                        onChange={handleInputChange}
+                      />
+                      <label htmlFor="aadharFile">
+                        <Button
+                          variant="contained"
+                          component="span"
+                          style={{ background: "#202023" }}
+                        >
+                          {formData.aadharFile ? "DONE" : "UPLOAD"}
+                        </Button>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="bus-input-label">
+                    <label className="input-label">DL Number</label>
+                    <div className="input-upload-container">
+                      <TextField
+                        className="bus-input"
+                        margin="dense"
+                        type="text"
+                        fullWidth
+                        name="dlNumber"
+                        id="dlNumber"
+                        value={formData.dlNumber}
+                        onChange={handleInputChange}
+                      />
+                      <input
+                        accept="image/*,.pdf"
+                        style={{ display: "none" }}
+                        id="dlFile"
+                        type="file"
+                        name="dlFile"
+                        onChange={handleInputChange}
+                      />
+                      <label htmlFor="dlFile">
+                        <Button
+                          variant="contained"
+                          component="span"
+                          style={{ background: "#202023" }}
+                        >
+                          {formData.dlFile ? "DONE" : "UPLOAD"}
+                        </Button>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div className="data-input-fields">
+                  <div className="bus-input-label">
+                    <label className="input-label">Username</label>
+                    <TextField
+                      className="bus-input"
+                      margin="dense"
+                      type="text"
+                      fullWidth
+                      name="username"
+                      id="username"
+                      value={formData.username}
+                      onChange={handleInputChange}
+                      style={{ padding: "5px 0px", margin: "0" }}
+                    />
+                  </div>
+                  <div className="bus-input-label">
+                    <label className="input-label">Password</label>
+                    <TextField
+                      className="bus-input"
+                      margin="dense"
+                      type="text"
+                      fullWidth
+                      name="password"
+                      id="password"
+                      value={update ? "Gudiabus@900" : formData.password}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                </div>
+                <div className="data-buttons" style={{ marginTop: "20px" }}>
+                  <Button
+                    id="input-btn-submit"
+                    className="submit"
+                    type="submit"
+                    variant="outlined"
                   >
-                    {designation.map((type) => (
-                      <MenuItem key={type.value} value={type.value}>
-                        {type.label}
-                      </MenuItem>
-                    ))}
-                  </Select>
+                    {update ? "Update" : "Submit"}
+                  </Button>
+                  <Button
+                    id="input-btn-cancel"
+                    className="cancel"
+                    onClick={handleClose}
+                    variant="outlined"
+                  >
+                    Cancel
+                  </Button>
                 </div>
-              </div>
-              <div className="data-input-fields">
-                <div className="bus-input-label">
-                  <label className="input-label">Aadhar Number</label>
-
-                  <div className="input-upload-container">
-                    <TextField
-                      className="bus-input"
-                      margin="dense"
-                      type="text"
-                      fullWidth
-                      name="aadharNumber"
-                      id="aadharNumber"
-                      value={formData.aadharNumber}
-                      onChange={handleInputChange}
-                    />
-                    <input
-                      accept="image/*,.pdf"
-                      style={{ display: "none" }}
-                      id="aadharFile"
-                      type="file"
-                      name="aadharFile"
-                      onChange={handleInputChange}
-                    />
-                    <label htmlFor="aadharFile">
-                      <Button
-                        variant="contained"
-                        component="span"
-                        style={{ background: "#202023" }}
-                      >
-                        {formData.aadharFile ? "DONE" : "UPLOAD"}
-                      </Button>
-                    </label>
-                  </div>
-                </div>
-
-                <div className="bus-input-label">
-                  <label className="input-label">DL Number</label>
-                  <div className="input-upload-container">
-                    <TextField
-                      className="bus-input"
-                      margin="dense"
-                      type="text"
-                      fullWidth
-                      name="dlNumber"
-                      id="dlNumber"
-                      value={formData.dlNumber}
-                      onChange={handleInputChange}
-                    />
-                    <input
-                      accept="image/*,.pdf"
-                      style={{ display: "none" }}
-                      id="dlFile"
-                      type="file"
-                      name="dlFile"
-                      onChange={handleInputChange}
-                    />
-                    <label htmlFor="dlFile">
-                      <Button
-                        variant="contained"
-                        component="span"
-                        style={{ background: "#202023" }}
-                      >
-                        {formData.dlFile ? "DONE" : "UPLOAD"}
-                      </Button>
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div className="data-input-fields">
-                <div className="bus-input-label">
-                  <label className="input-label">Username</label>
-                  <TextField
-                    className="bus-input"
-                    margin="dense"
-                    type="text"
-                    fullWidth
-                    name="username"
-                    id="username"
-                    value={formData.username}
-                    onChange={handleInputChange}
-                    style={{ padding: "5px 0px", margin: "0" }}
-                  />
-                </div>
-                <div className="bus-input-label">
-                  <label className="input-label">Password</label>
-                  <TextField
-                    className="bus-input"
-                    margin="dense"
-                    type="text"
-                    fullWidth
-                    name="password"
-                    id="password"
-                    value={update ? "Gudiabus@900" : formData.password}
-                    onChange={handleInputChange}
-                  />
-                </div>
-              </div>
-              <div className="data-buttons" style={{ marginTop: "20px" }}>
-                <Button
-                  id="input-btn-submit"
-                  className="submit"
-                  type="submit"
-                  variant="outlined"
-                >
-                  {update ? "Update" : "Submit"}
-                </Button>
-                <Button
-                  id="input-btn-cancel"
-                  className="cancel"
-                  onClick={handleClose}
-                  variant="outlined"
-                >
-                  Cancel
-                </Button>
-              </div>
-            </form>
-          </div>
-        </Modal>
-        <div className="table-main-container">
-          <div className="title-button-container">
-            <h3 className="table-h3">Employees</h3>
-            <div className="flex justify-center items-center gap-3">
-              <div className="flex justify-center items-center gap-2">
-                <label className="input-label">From</label>
-                <TextField
-                  className="bus-input"
-                  margin="dense"
-                  type="date"
-                  fullWidth
-                  value={fromDate}
-                  onChange={(e) => setFromDate(e.target.value)}
-                />
-              </div>
-              <span className="font-bold">--</span>
-              <div className="flex justify-center items-center gap-2">
-                <label className="input-label">To</label>
-                <TextField
-                  className="bus-input"
-                  margin="dense"
-                  type="date"
-                  fullWidth
-                  value={toDate}
-                  onChange={(e) => setToDate(e.target.value)}
-                />
-              </div>
+              </form>
             </div>
-
-            <Button
-              variant="outlined"
-              onClick={() => {
-                setToggle(!toggle);
-              }}
-              id="add-btn"
-              className="add-btn-table"
-            >
-              {" "}
-              {toggle ? (
-                <div className="hide" onClick={handleClose}>
-                  HIDE
-                </div>
-              ) : (
-                <div className="add" onClick={handleOpen}>
-                  + ADD EMPLOYEE
-                </div>
-              )}
-            </Button>
-          </div>
-          <TableContainer component={Paper} className="table-container">
-            <Table sx={{ minWidth: 650 }} aria-label="caption table">
-              {getEmployee.length === 0 ? (
-                ""
-              ) : (
-                <caption>
-                  <TablePagination
-                    rowsPerPageOptions={[5]}
-                    component="div"
-                    count={getEmployee.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
+          </Modal>
+          <div className="table-main-container">
+            <div className="title-button-container">
+              <h3 className="table-h3">Employees</h3>
+              <div className="flex justify-center items-center gap-3">
+                <div className="flex justify-center items-center gap-2">
+                  <label className="input-label">From</label>
+                  <TextField
+                    className="bus-input"
+                    margin="dense"
+                    type="date"
+                    fullWidth
+                    value={fromDate}
+                    onChange={(e) => setFromDate(e.target.value)}
                   />
-                </caption>
-              )}
-
-              <TableHead style={{ background: "#ddff8f" }}>
-                <TableRow>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    SL
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    Employee Name
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    Age
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    Address
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    Aadhar Number
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    Aadhar File
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    DL Number
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    DL File
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    Experience
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    Designation
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                  >
-                    Expenses
-                  </TableCell>
-                  <TableCell
-                    style={{ fontWeight: "bold", textAlign: "center" }}
-                    colSpan={2}
-                  >
-                    Actions
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {getEmployee
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, index) => (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={row._id}>
-                      <TableCell style={{ textAlign: "center" }}>
-                        {index + 1}
-                      </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
-                        {row.employeeName}
-                      </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
-                        {row.age}
-                      </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
-                        {row.address}
-                      </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
-                        {row.aadharNumber}
-                      </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
-                        <FaDownload
-                          className="table-action-icon m-[auto]"
-                          style={{ color: "grey" }}
-                          onClick={() => handleDownloadPO(row.aadharFile)}
-                        />
-                      </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
-                        {row.dlNumber}
-                      </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
-                        <FaDownload
-                          className="table-action-icon m-[auto]"
-                          style={{ color: "grey" }}
-                          onClick={() => handleDownloadPO(row.dlFile)}
-                        />
-                      </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
-                        {row.experience}
-                      </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
-                        {row.designation}
-                      </TableCell>
-                      <ExpensesTableRow employeeId={row._id} />
-                      <TableCell style={{ textAlign: "center" }}>
-                        <FaEdit
-                          className="table-action-icon m-[auto]"
-                          style={{ color: "blue" }}
-                          onClick={() => updateClick(row._id)}
-                        />
-                      </TableCell>
-                      <TableCell style={{ textAlign: "center" }}>
-                        <MdDelete
-                          className="table-action-icon m-[auto]"
-                          style={{ color: "red" }}
-                          onClick={() => deleteClick(row._id)}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  ))}
-              </TableBody>
-            </Table>
-            {getEmployee.length === 0 ? (
-              <div className="table-nodata">
-                <h2>NO DATA</h2>
+                </div>
+                <span className="font-bold">--</span>
+                <div className="flex justify-center items-center gap-2">
+                  <label className="input-label">To</label>
+                  <TextField
+                    className="bus-input"
+                    margin="dense"
+                    type="date"
+                    fullWidth
+                    value={toDate}
+                    onChange={(e) => setToDate(e.target.value)}
+                  />
+                </div>
               </div>
-            ) : null}
-          </TableContainer>
-        </div>
-      </section>
+
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  setToggle(!toggle);
+                }}
+                id="add-btn"
+                className="add-btn-table"
+              >
+                {" "}
+                {toggle ? (
+                  <div className="hide" onClick={handleClose}>
+                    HIDE
+                  </div>
+                ) : (
+                  <div className="add" onClick={handleOpen}>
+                    + ADD EMPLOYEE
+                  </div>
+                )}
+              </Button>
+            </div>
+            <TableContainer component={Paper} className="table-container">
+              <Table sx={{ minWidth: 650 }} aria-label="caption table">
+                {getEmployee.length === 0 ? (
+                  ""
+                ) : (
+                  <caption>
+                    <TablePagination
+                      rowsPerPageOptions={[5]}
+                      component="div"
+                      count={getEmployee.length}
+                      rowsPerPage={rowsPerPage}
+                      page={page}
+                      onPageChange={handleChangePage}
+                      onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+                  </caption>
+                )}
+
+                <TableHead style={{ background: "#ddff8f" }}>
+                  <TableRow>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      SL
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      Employee Name
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      Age
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      Address
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      Aadhar Number
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      Aadhar File
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      DL Number
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      DL File
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      Experience
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      Designation
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                    >
+                      Expenses
+                    </TableCell>
+                    <TableCell
+                      style={{ fontWeight: "bold", textAlign: "center" }}
+                      colSpan={2}
+                    >
+                      Actions
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {getEmployee
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row, index) => (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={row._id}
+                      >
+                        <TableCell style={{ textAlign: "center" }}>
+                          {index + 1}
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {row.employeeName}
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {row.age}
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {row.address}
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {row.aadharNumber}
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          <FaDownload
+                            className="table-action-icon m-[auto]"
+                            style={{ color: "grey" }}
+                            onClick={() => handleDownloadPO(row.aadharFile)}
+                          />
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {row.dlNumber}
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          <FaDownload
+                            className="table-action-icon m-[auto]"
+                            style={{ color: "grey" }}
+                            onClick={() => handleDownloadPO(row.dlFile)}
+                          />
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {row.experience}
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {row.designation}
+                        </TableCell>
+                        <ExpensesTableRow employeeId={row._id} />
+                        <TableCell style={{ textAlign: "center" }}>
+                          <FaEdit
+                            className="table-action-icon m-[auto]"
+                            style={{ color: "blue" }}
+                            onClick={() => updateClick(row._id)}
+                          />
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          <MdDelete
+                            className="table-action-icon m-[auto]"
+                            style={{ color: "red" }}
+                            onClick={() => deleteClick(row._id)}
+                          />
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                </TableBody>
+              </Table>
+              {getEmployee.length === 0 ? (
+                <div className="table-nodata">
+                  <h2>NO DATA</h2>
+                </div>
+              ) : null}
+            </TableContainer>
+          </div>
+        </section>
+      )}
     </>
   );
 };
