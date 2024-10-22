@@ -451,11 +451,6 @@ const VehicleTable: React.FC = () => {
     }
   };
 
-  // useEffect(() => {
-  //   if (date.length > 0 && vehicleNumber.length > 0) handleSearch();
-  // }, [date, vehicleNumber]);
-
-  console.log(results);
   return (
     <>
       {isLoading ? (

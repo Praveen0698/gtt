@@ -670,7 +670,7 @@ const ShiftTable: React.FC = () => {
                   ))}
                 </TableBody>
               </Table>
-              <div className="ml-10 m-2.5">
+              <div className="m-2.5">
                 <Button
                   id="input-btn-submit"
                   className="submit"

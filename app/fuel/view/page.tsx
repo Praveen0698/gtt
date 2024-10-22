@@ -400,7 +400,11 @@ const FuelViewTable: React.FC = () => {
                     ].map((header, index) => (
                       <TableCell
                         key={index}
-                        style={{ fontWeight: "bold", textAlign: "center" }}
+                        style={{
+                          fontWeight: "bold",
+                          textAlign: "center",
+                          minWidth: "170px",
+                        }}
                       >
                         {header}
                       </TableCell>
@@ -573,7 +577,7 @@ const FuelViewTable: React.FC = () => {
                       </TableBody>
                     ))}
               </Table>
-              <div className="ml-10 m-2.5">
+              <div className="m-2.5">
                 <Button
                   id="input-btn-submit"
                   className="submit"

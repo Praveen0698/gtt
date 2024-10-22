@@ -467,8 +467,6 @@ const ShiftViewTable: React.FC = () => {
     setSelectedOptions([]);
   };
 
-  console.log(role);
-
   return (
     <>
       {isLoading ? (
@@ -556,64 +554,112 @@ const ShiftViewTable: React.FC = () => {
                 <TableHead style={{ background: "#ddff8f" }}>
                   <TableRow>
                     <TableCell
-                      style={{ fontWeight: "bold", textAlign: "center" }}
+                      style={{
+                        fontWeight: "bold",
+                        textAlign: "center",
+                        minWidth: "170px",
+                      }}
                     >
                       SL
                     </TableCell>
                     <TableCell
-                      style={{ fontWeight: "bold", textAlign: "center" }}
+                      style={{
+                        fontWeight: "bold",
+                        textAlign: "center",
+                        minWidth: "170px",
+                      }}
                     >
                       Vehicle
                     </TableCell>
                     <TableCell
-                      style={{ fontWeight: "bold", textAlign: "center" }}
+                      style={{
+                        fontWeight: "bold",
+                        textAlign: "center",
+                        minWidth: "170px",
+                      }}
                     >
                       Source
                     </TableCell>
                     <TableCell
-                      style={{ fontWeight: "bold", textAlign: "center" }}
+                      style={{
+                        fontWeight: "bold",
+                        textAlign: "center",
+                        minWidth: "170px",
+                      }}
                     >
                       Destination
                     </TableCell>
                     <TableCell
-                      style={{ fontWeight: "bold", textAlign: "center" }}
+                      style={{
+                        fontWeight: "bold",
+                        textAlign: "center",
+                        minWidth: "170px",
+                      }}
                     >
                       A-in / C-out
                     </TableCell>
                     <TableCell
-                      style={{ fontWeight: "bold", textAlign: "center" }}
+                      style={{
+                        fontWeight: "bold",
+                        textAlign: "center",
+                        minWidth: "170px",
+                      }}
                     >
                       General In
                     </TableCell>
                     <TableCell
-                      style={{ fontWeight: "bold", textAlign: "center" }}
+                      style={{
+                        fontWeight: "bold",
+                        textAlign: "center",
+                        minWidth: "170px",
+                      }}
                     >
                       Shuttle 2
                     </TableCell>
                     <TableCell
-                      style={{ fontWeight: "bold", textAlign: "center" }}
+                      style={{
+                        fontWeight: "bold",
+                        textAlign: "center",
+                        minWidth: "170px",
+                      }}
                     >
                       B-in / A-out
                     </TableCell>
                     <TableCell
-                      style={{ fontWeight: "bold", textAlign: "center" }}
+                      style={{
+                        fontWeight: "bold",
+                        textAlign: "center",
+                        minWidth: "170px",
+                      }}
                     >
                       Shuttle 3
                     </TableCell>
                     <TableCell
-                      style={{ fontWeight: "bold", textAlign: "center" }}
+                      style={{
+                        fontWeight: "bold",
+                        textAlign: "center",
+                        minWidth: "170px",
+                      }}
                     >
                       General Out
                     </TableCell>
                     <TableCell
-                      style={{ fontWeight: "bold", textAlign: "center" }}
+                      style={{
+                        fontWeight: "bold",
+                        textAlign: "center",
+                        minWidth: "170px",
+                      }}
                     >
                       C-in / C-out
                     </TableCell>
                     {update ? (
                       <TableCell
                         colSpan={2}
-                        style={{ fontWeight: "bold", textAlign: "center" }}
+                        style={{
+                          fontWeight: "bold",
+                          textAlign: "center",
+                          minWidth: "170px",
+                        }}
                       >
                         Actions
                       </TableCell>

@@ -426,3 +426,66 @@ body {
   height: 100vh;
   text-align: center;
 }
+
+@media screen and (max-width: 1080px) {
+  .text-p {
+    display: none;
+  }
+  .home-bus-container .bus-home-image {
+    width: 85%;
+    height: 55%;
+  }
+
+  .home-bus-container .text-home-bus .text-greet h2 {
+    margin-top: -180px;
+  }
+
+  .table-main-container {
+    margin-top: 20px;
+  }
+}
+
+@media screen and (max-width: 880px) {
+  .text-p {
+    display: none;
+  }
+
+  .home-bus-container .bus-home-image {
+    width: 85%;
+    height: 50%;
+  }
+
+  .home-bus-container .text-home-bus .text-greet h2 {
+    margin-top: -150px;
+  }
+
+  .table-main-container {
+    margin-top: 20px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .login-image {
+    display: none;
+  }
+
+  .text-p {
+    display: none;
+  }
+
+  .home-bus-container .bus-home-image {
+    display: none;
+  }
+
+  .table-main-container {
+    margin-top: 20px;
+  }
+  .home-bus-container .text-home-bus .text-greet h2 {
+    margin-top: 20px;
+    font-size: 30px;
+  }
+
+  .home-bus-container .text-home-bus {
+    left: 10px;
+  }
+}

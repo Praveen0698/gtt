@@ -436,7 +436,11 @@ const ShiftViewTable: React.FC = () => {
                         colSpan={
                           header === "Actions" && update === true ? 2 : 1
                         }
-                        style={{ fontWeight: "bold", textAlign: "center" }}
+                        style={{
+                          fontWeight: "bold",
+                          textAlign: "center",
+                          minWidth: "170px",
+                        }}
                       >
                         {header}
                       </TableCell>
@@ -770,7 +774,7 @@ const ShiftViewTable: React.FC = () => {
                       </TableBody>
                     ))}
               </Table>
-              <div className="ml-10 m-2.5">
+              <div className="m-2.5">
                 <Button
                   id="input-btn-submit"
                   className="submit"

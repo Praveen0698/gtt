@@ -285,7 +285,11 @@ const FuelTable: React.FC = () => {
                       <TableCell
                         key={index}
                         colSpan={header === "Actions" ? 2 : 1}
-                        style={{ fontWeight: "bold", textAlign: "center" }}
+                        style={{
+                          fontWeight: "bold",
+                          textAlign: "center",
+                          minWidth: "170px",
+                        }}
                       >
                         {header}
                       </TableCell>
@@ -408,10 +412,7 @@ const FuelTable: React.FC = () => {
                   </TableBody>
                 ))}
               </Table>
-              <div
-                className="data-buttons"
-                style={{ margin: "10px", textAlign: "right" }}
-              >
+              <div className="data-buttons" style={{ margin: "10px" }}>
                 <Button
                   id="input-btn-submit"
                   className="submit"

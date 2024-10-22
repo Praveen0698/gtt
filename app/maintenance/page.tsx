@@ -319,7 +319,11 @@ const MaintenanceTable: React.FC = () => {
                       <TableCell
                         key={index}
                         colSpan={header === "Actions" ? 2 : 1}
-                        style={{ fontWeight: "bold", textAlign: "center" }}
+                        style={{
+                          fontWeight: "bold",
+                          textAlign: "center",
+                          minWidth: "170px",
+                        }}
                       >
                         {header}
                       </TableCell>
@@ -540,7 +544,7 @@ const MaintenanceTable: React.FC = () => {
               </Table>
               <div
                 className="data-buttons"
-                style={{ margin: "10px", textAlign: "right" }}
+                style={{ margin: "10px", textAlign: "left" }}
               >
                 <Button
                   id="input-btn-submit"
