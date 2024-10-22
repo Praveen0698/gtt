@@ -7,7 +7,6 @@ export async function POST(req) {
   await connectDB();
 
   const expenseData = await req.json();
-  console.log(expenseData);
   const { employeeId, employeeName, adminName, amount, date } =
     expenseData.formData;
 

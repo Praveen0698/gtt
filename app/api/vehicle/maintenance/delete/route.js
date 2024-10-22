@@ -1,31 +1,3 @@
-// import { NextResponse } from "next/server";
-// import connectDB from "../../../../../utils/db";
-// import Maintenance from "../../../../../models/Maintenance";
-// export const dynamic = "force-dynamic";
-
-// export async function DELETE(req) {
-//   await connectDB();
-//   const { id } = await req.json();
-
-//   try {
-//     const deletedMaintenance = await Maintenance.findByIdAndDelete(id);
-
-//     if (!deletedMaintenance) {
-//       return NextResponse.json(
-//         { message: "Maintenance not found" },
-//         { status: 404 }
-//       );
-//     }
-
-//     return NextResponse.json(
-//       { message: "Maintenance deleted successfully" },
-//       { status: 200 }
-//     );
-//   } catch (error) {
-//     return NextResponse.json({ message: "Server error" }, { status: 500 });
-//   }
-// }
-
 import { NextResponse } from "next/server";
 import connectDB from "../../../../../utils/db";
 import Maintenance from "../../../../../models/Maintenance";

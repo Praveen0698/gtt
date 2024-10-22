@@ -37,7 +37,6 @@ async function deleteS3Object(fileKey) {
       Key: fileKey,
     });
     await s3.send(command);
-    console.log(`File ${fileKey} deleted from S3.`);
   } catch (error) {
     console.error(`Error deleting ${fileKey} from S3:`, error);
     throw new Error(`Failed to delete ${fileKey} from S3.`);

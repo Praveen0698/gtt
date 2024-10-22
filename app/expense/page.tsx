@@ -181,9 +181,8 @@ const FirmsTable: React.FC = () => {
     setIsLoading(true);
     await axios
       .patch("/api/employee/expense", { formData })
-      .then((res) => console.log(res))
-      .catch((err) => console.error(err))
-      .finally(() => setIsLoading(false));
+      .then(() => setIsLoading(false))
+      .catch((err) => console.error(err));
     await axios
       .post("/api/expense/create", { formData })
       .then(() => fetchExpense())

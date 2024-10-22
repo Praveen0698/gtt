@@ -426,7 +426,6 @@ const ShiftViewTable: React.FC = () => {
 
   const handleExport = (data: ShiftData, options: (keyof Item)[]) => {
     const doc = new jsPDF();
-    console.log(data);
     const { projectId, projectName, employeeId, date, items } = data;
 
     // Add project and employee details

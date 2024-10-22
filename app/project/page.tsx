@@ -198,8 +198,6 @@ const ProjectTable: React.FC = () => {
       (employee) => employee.employeeName === selectedEmployeeName
     );
 
-    console.log(selectedEmployee);
-
     if (selectedEmployee) {
       setFormData((prevData) => ({
         ...prevData,
@@ -208,8 +206,6 @@ const ProjectTable: React.FC = () => {
       }));
     }
   };
-
-  console.log(formData);
 
   const handleSubmit = async (e: any) => {
     setIsLoading(true);

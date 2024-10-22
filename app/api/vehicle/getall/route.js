@@ -12,7 +12,6 @@ export async function GET() {
     // Return Vehicles data
     return NextResponse.json(Vehicles, { status: 200 });
   } catch (error) {
-    console.log(error);
     return NextResponse.json({ message: "Server error" }, { status: 500 });
   }
 }

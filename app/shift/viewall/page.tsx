@@ -62,7 +62,6 @@ const ShiftViewTable: React.FC = () => {
         const decodedToken = accessToken
           ? decodeAccessToken(accessToken)
           : null;
-        console.log(decodedToken);
         if (
           !response.data.isLoggedIn ||
           !accessToken ||
@@ -102,7 +101,6 @@ const ShiftViewTable: React.FC = () => {
     setIsLoading(true);
     try {
       const res = await axios.get(`/api/shift/getall/${empId}/${projectId}`);
-      console.log(res.data);
       setGetShift(res.data);
     } catch (err) {
       console.error(err);

@@ -25,7 +25,6 @@ const deleteS3Object = async (fileUrl) => {
       Key: fileKey,
     });
     await s3.send(command);
-    console.log(`Deleted file from S3: ${fileKey}`);
   } catch (error) {
     console.error(`Error deleting file ${fileKey} from S3:`, error);
     throw new Error("Failed to delete file from S3");

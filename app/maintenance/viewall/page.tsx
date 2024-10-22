@@ -62,7 +62,6 @@ const MaintenanceViewTable: React.FC = () => {
         const decodedToken = accessToken
           ? decodeAccessToken(accessToken)
           : null;
-        console.log(decodedToken);
         if (
           !response.data.isLoggedIn ||
           !accessToken ||
@@ -104,7 +103,6 @@ const MaintenanceViewTable: React.FC = () => {
       const res = await axios.get(
         `/api/vehicle/maintenance/getall/${empId}/${projectId}`
       );
-      console.log(res.data);
       setGetShift(res.data);
     } catch (err) {
       console.error(err);

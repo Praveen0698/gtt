@@ -59,11 +59,6 @@ const FirmsTable: React.FC = () => {
         const decodedToken = accessToken
           ? decodeAccessToken(accessToken)
           : null;
-        console.log(
-          response.data.isLoggedIn ||
-            cookieAccessToken ||
-            decodedToken?.role === "admin"
-        );
         if (
           !response.data.isLoggedIn ||
           !cookieAccessToken ||

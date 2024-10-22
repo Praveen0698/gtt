@@ -21,7 +21,6 @@ export async function GET(req, { params }) {
     // Return Expense data
     return NextResponse.json(expense, { status: 200 });
   } catch (error) {
-    console.log(error);
     return NextResponse.json({ message: "Server error" }, { status: 500 });
   }
 }

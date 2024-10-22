@@ -230,9 +230,8 @@ const MaintenanceTable: React.FC = () => {
     setIsLoading(true);
     await axios
       .post("/api/vehicle/maintenance/create", formData)
-      .then((res) => console.log("success"))
-      .catch((err) => console.error(err))
-      .finally(() => setIsLoading(false));
+      .then(() => setIsLoading(false))
+      .catch((err) => console.error(err));
     setFormData({
       projectId: projectId,
       projectName: projectName,

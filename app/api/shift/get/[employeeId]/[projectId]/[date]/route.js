@@ -18,7 +18,6 @@ export async function GET(req, { params }) {
       employeeId: employeeId,
       date: date,
     });
-    // console.log(shift);
 
     if (!shift) {
       return NextResponse.json(

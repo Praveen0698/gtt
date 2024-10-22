@@ -123,7 +123,6 @@ const FuelTable: React.FC = () => {
       },
     ],
   });
-  console.log(formData);
 
   const addItem = () => {
     const newItem: Item = {
@@ -206,9 +205,8 @@ const FuelTable: React.FC = () => {
     setIsLoading(true);
     await axios
       .post("/api/fuel/create", formData)
-      .then((res) => console.log("success"))
-      .catch((err) => console.error(err))
-      .finally(() => setIsLoading(false));
+      .then(() => setIsLoading(false))
+      .catch((err) => console.error(err));
     setFormData({
       projectId: projectId,
       projectName: projectName,

@@ -30,7 +30,6 @@ const deleteS3Object = async (fileUrl) => {
       Key: fileKey,
     });
     await s3.send(command);
-    console.log(`Deleted old file from S3: ${fileKey}`);
   } catch (error) {
     console.error(`Error deleting file ${fileKey}:`, error);
   }
@@ -58,7 +57,6 @@ const uploadToS3 = async (base64String, folder) => {
     });
 
     await s3.send(command);
-    console.log(`Uploaded new file to S3: ${key}`);
     return `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`;
   } catch (error) {
     console.error("S3 upload error:", error);

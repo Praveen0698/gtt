@@ -25,8 +25,6 @@ export async function GET(req, { params }) {
       { maxTimeMS: 60000, allowDiskUse: true }
     );
 
-    console.log(dataGot);
-
     if (dataGot.length === 0) {
       return NextResponse.json({ message: "No data found" }, { status: 200 });
     }
