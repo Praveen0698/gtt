@@ -19,6 +19,7 @@ import { FaEdit, FaDownload } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import jwt, { JwtPayload } from "jsonwebtoken";
+import { format } from "date-fns";
 interface DecodedToken extends JwtPayload {
   userId: string;
 }
@@ -409,6 +410,7 @@ const VehicleTable: React.FC = () => {
 
   const [vehicleNumber, setVehicleNumber] = useState<string>("");
   const [date, setDate] = useState<string>("");
+  const [endDate, setEndDate] = useState<string>("");
   const [results, setResults] = useState<any[]>([]);
 
   interface Item {
@@ -433,17 +435,36 @@ const VehicleTable: React.FC = () => {
     __v: number;
   }
 
+  const getDatesInRange = (date: string, endDate: string): any[] => {
+    const dates = [];
+    let currentDate = new Date(date);
+    let toDate = new Date(endDate);
+    while (currentDate <= toDate) {
+      dates.push(format(currentDate, "yyyy-MM-dd"));
+      currentDate.setDate(currentDate.getDate() + 1); // Increment the date by one day
+    }
+
+    return dates;
+  };
+
   const handleSearch = async (e: any) => {
     e.preventDefault();
-
+    const datesInRange = getDatesInRange(date, endDate).join(",");
     try {
       const response = await axios.get(
-        `/api/fuel/search/${vehicleNumber}/${date}`
+        `/api/fuel/search/${vehicleNumber}/${datesInRange}`
       );
-      const filteredItems: Item[] = response.data.dataGot.flatMap(
-        (entry: Entry) =>
-          entry.items.filter((item: Item) => item.vehicle === vehicleNumber)
-      );
+
+      const filteredItems = response.data.dataGot.flatMap((entry: Entry) => {
+        const filteredVehicleItems = entry.items.filter(
+          (item: Item) => item.vehicle === vehicleNumber
+        );
+        // Return an array of objects containing both the date and the filtered items
+        return filteredVehicleItems.map((item: Item) => ({
+          date: entry.date, // Include the date from the entry
+          item: item, // Include the filtered item
+        }));
+      });
       handleOpenFuel();
       setResults(filteredItems);
     } catch (err: any) {
@@ -1260,6 +1281,14 @@ const VehicleTable: React.FC = () => {
                           textAlign: "center",
                         }}
                       >
+                        Date
+                      </TableCell>
+                      <TableCell
+                        style={{
+                          fontWeight: "bold",
+                          textAlign: "center",
+                        }}
+                      >
                         Vehicle
                       </TableCell>
                       <TableCell
@@ -1313,13 +1342,16 @@ const VehicleTable: React.FC = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {results.map((item) => (
+                    {results.map(({ date, item }) => (
                       <TableRow
                         key={item.id}
                         hover
                         role="checkbox"
                         tabIndex={-1}
                       >
+                        <TableCell style={{ textAlign: "center" }}>
+                          {date} {/* Display the date here */}
+                        </TableCell>
                         <TableCell style={{ textAlign: "center" }}>
                           {item.vehicle}
                         </TableCell>
@@ -1343,7 +1375,7 @@ const VehicleTable: React.FC = () => {
                           {item.amount}
                         </TableCell>
                         <TableCell style={{ textAlign: "center" }}>
-                          {item.odometerFile ? (
+                          {item.amountFile ? (
                             <FaDownload
                               className="table-action-icon m-[auto]"
                               style={{ color: "grey" }}
@@ -1368,6 +1400,7 @@ const VehicleTable: React.FC = () => {
               </TableContainer>
             </div>
           </Modal>
+
           <div className="table-main-container">
             <div className="title-button-container">
               <h3 className="table-h3">Vehicles</h3>
@@ -1404,13 +1437,29 @@ const VehicleTable: React.FC = () => {
                     htmlFor="date"
                     className="text-xs font-medium text-gray-400"
                   >
-                    Date
+                    From Date
                   </label>
                   <input
                     type="date"
                     id="date"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
+                    required
+                    className="border-[1px] outline-none border-gray-400 w-[150px] px-2 py-1 rounded-md"
+                  />
+                </div>
+                <div className="flex flex-col justify-start">
+                  <label
+                    htmlFor="date"
+                    className="text-xs font-medium text-gray-400"
+                  >
+                    To Date
+                  </label>
+                  <input
+                    type="date"
+                    id="date"
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
                     required
                     className="border-[1px] outline-none border-gray-400 w-[150px] px-2 py-1 rounded-md"
                   />
