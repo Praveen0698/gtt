@@ -613,7 +613,7 @@ const ShiftViewTable: React.FC = () => {
                         minWidth: "170px",
                       }}
                     >
-                      Shuttle 2
+                      Shuttle 1
                     </TableCell>
                     <TableCell
                       style={{
@@ -631,7 +631,7 @@ const ShiftViewTable: React.FC = () => {
                         minWidth: "170px",
                       }}
                     >
-                      Shuttle 3
+                      Shuttle 2
                     </TableCell>
                     <TableCell
                       style={{
@@ -747,7 +747,9 @@ const ShiftViewTable: React.FC = () => {
                           >
                             {getEmployee.length > 0 ? (
                               getEmployee
-                                .filter((type) => type.designation === "driver")
+                                .filter(
+                                  (type) => type.designation === "Driver-1"
+                                )
                                 .map((type) => (
                                   <MenuItem
                                     key={type._id}
@@ -771,7 +773,11 @@ const ShiftViewTable: React.FC = () => {
                           >
                             {getEmployee.length > 0 ? (
                               getEmployee
-                                .filter((type) => type.designation === "driver")
+                                .filter((type) =>
+                                  ["Driver-1", "Driver-2", "Driver-3"].includes(
+                                    type.designation
+                                  )
+                                )
                                 .map((type) => (
                                   <MenuItem
                                     key={type._id}
@@ -795,7 +801,11 @@ const ShiftViewTable: React.FC = () => {
                           >
                             {getEmployee.length > 0 ? (
                               getEmployee
-                                .filter((type) => type.designation === "driver")
+                                .filter((type) =>
+                                  ["Driver-1", "Driver-2", "Driver-3"].includes(
+                                    type.designation
+                                  )
+                                )
                                 .map((type) => (
                                   <MenuItem
                                     key={type._id}
@@ -819,7 +829,11 @@ const ShiftViewTable: React.FC = () => {
                           >
                             {getEmployee.length > 0 ? (
                               getEmployee
-                                .filter((type) => type.designation === "driver")
+                                .filter((type) =>
+                                  ["Driver-1", "Driver-2", "Driver-3"].includes(
+                                    type.designation
+                                  )
+                                )
                                 .map((type) => (
                                   <MenuItem
                                     key={type._id}
@@ -843,7 +857,11 @@ const ShiftViewTable: React.FC = () => {
                           >
                             {getEmployee.length > 0 ? (
                               getEmployee
-                                .filter((type) => type.designation === "driver")
+                                .filter((type) =>
+                                  ["Driver-1", "Driver-2", "Driver-3"].includes(
+                                    type.designation
+                                  )
+                                )
                                 .map((type) => (
                                   <MenuItem
                                     key={type._id}
@@ -867,7 +885,11 @@ const ShiftViewTable: React.FC = () => {
                           >
                             {getEmployee.length > 0 ? (
                               getEmployee
-                                .filter((type) => type.designation === "driver")
+                                .filter((type) =>
+                                  ["Driver-1", "Driver-2", "Driver-3"].includes(
+                                    type.designation
+                                  )
+                                )
                                 .map((type) => (
                                   <MenuItem
                                     key={type._id}
@@ -891,7 +913,11 @@ const ShiftViewTable: React.FC = () => {
                           >
                             {getEmployee.length > 0 ? (
                               getEmployee
-                                .filter((type) => type.designation === "driver")
+                                .filter((type) =>
+                                  ["Driver-1", "Driver-2", "Driver-3"].includes(
+                                    type.designation
+                                  )
+                                )
                                 .map((type) => (
                                   <MenuItem
                                     key={type._id}
