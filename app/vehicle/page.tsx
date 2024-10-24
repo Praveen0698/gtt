@@ -29,6 +29,7 @@ const VehicleTable: React.FC = () => {
   const [rowsPerPage, setRowsPerPage] = useState<number>(5);
   const [toggle, setToggle] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [fuelMainBtn, setFuelMainBtn] = useState(false);
   const router = useRouter();
 
   const getCookie = (name: string): string | null => {
@@ -447,13 +448,39 @@ const VehicleTable: React.FC = () => {
     return dates;
   };
 
-  const handleSearch = async (e: any) => {
+  const handleSearchFuel = async (e: any) => {
     e.preventDefault();
     const datesInRange = getDatesInRange(date, endDate).join(",");
     try {
       const response = await axios.get(
         `/api/fuel/search/${vehicleNumber}/${datesInRange}`
       );
+
+      const filteredItems = response.data.dataGot.flatMap((entry: Entry) => {
+        const filteredVehicleItems = entry.items.filter(
+          (item: Item) => item.vehicle === vehicleNumber
+        );
+        // Return an array of objects containing both the date and the filtered items
+        return filteredVehicleItems.map((item: Item) => ({
+          date: entry.date, // Include the date from the entry
+          item: item, // Include the filtered item
+        }));
+      });
+      handleOpenFuel();
+      setResults(filteredItems);
+    } catch (err: any) {
+      console.error(err.message);
+    }
+  };
+  const handleSearchMaintenance = async (e: any) => {
+    e.preventDefault();
+    const datesInRange = getDatesInRange(date, endDate).join(",");
+    try {
+      const response = await axios.get(
+        `/api/vehicle/maintenance/search/${vehicleNumber}/${datesInRange}`
+      );
+
+      console.log(response);
 
       const filteredItems = response.data.dataGot.flatMap((entry: Entry) => {
         const filteredVehicleItems = entry.items.filter(
@@ -1406,7 +1433,9 @@ const VehicleTable: React.FC = () => {
               <h3 className="table-h3">Vehicles</h3>
               <form
                 className="flex justify-center items-end gap-2"
-                onSubmit={handleSearch}
+                onSubmit={
+                  fuelMainBtn ? handleSearchMaintenance : handleSearchFuel
+                }
               >
                 <div className="flex flex-col justify-start">
                   <label
@@ -1464,13 +1493,24 @@ const VehicleTable: React.FC = () => {
                     className="border-[1px] outline-none border-gray-400 w-[150px] px-2 py-1 rounded-md"
                   />
                 </div>
-                <button
-                  type="submit"
-                  id="input-btn-submit"
-                  className="px-2 py-1 rounded-sm"
-                >
-                  view
-                </button>
+                <div className="flex justify-center items-center">
+                  <button
+                    type="submit"
+                    id="input-btn-submit"
+                    className="px-2 py-1 rounded-sm"
+                    onClick={() => setFuelMainBtn(false)}
+                  >
+                    Fuel
+                  </button>
+                  <button
+                    type="submit"
+                    id="input-btn-submit"
+                    className="px-2 py-1 rounded-sm"
+                    onClick={() => setFuelMainBtn(true)}
+                  >
+                    Maintenance
+                  </button>
+                </div>
               </form>
               <Button
                 variant="outlined"

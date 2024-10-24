@@ -18,6 +18,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { IoMdAdd } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
+import "jspdf-autotable";
 
 interface Item {
   id: string;
@@ -434,22 +435,26 @@ const ShiftViewTable: React.FC = () => {
     doc.text(`Employee ID: ${employeeId}`, 10, 30);
     doc.text(`Date: ${date}`, 10, 40);
 
-    // Add selected item details
-    items.forEach((item, index) => {
-      const baseYPosition = 50 + index * 50; // Adjust base spacing between items
+    // Prepare table headers
+    const headers = ["Vehicle", "Source", "Destination", ...options];
 
-      doc.text(`Vehicle: ${item.vehicle}`, 10, baseYPosition);
-      doc.text(`Source: ${item.source}`, 10, baseYPosition + 10);
-      doc.text(`Destination: ${item.destination}`, 10, baseYPosition + 20);
-
-      // Iterate over options to display each selected option
+    // Prepare table rows
+    const rows = items.map((item) => {
+      const row = [item.vehicle, item.source, item.destination];
       options.forEach((option) => {
-        doc.text(
-          `${option}: ${item[option]}`,
-          10,
-          baseYPosition + 30 + options.indexOf(option) * 10
-        );
+        row.push(item[option]); // Add dynamic values for selected options
       });
+      return row;
+    });
+
+    // Add table to PDF
+    (doc as any).autoTable({
+      head: [headers],
+      body: rows,
+      startY: 50, // Adjust starting position of the table
+      theme: "grid", // You can also use other themes like 'striped', 'plain', etc.
+      headStyles: { fillColor: [22, 160, 133] }, // Custom header style (optional)
+      margin: { top: 10 }, // Adjust margins
     });
 
     // Save the PDF
