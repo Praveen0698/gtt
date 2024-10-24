@@ -130,6 +130,7 @@ const VehicleTable: React.FC = () => {
   const [openDoc, setOpenDoc] = useState(false);
   const [openOther, setOpenOther] = useState(false);
   const [openFuel, setOpenFuel] = useState(false);
+  const [openMaintenance, setOpenMaintenance] = useState(false);
   const [update, setUpdate] = useState(false);
   const [vehicleDocument, setVehicleDocument] = useState(docField);
   const [formData, setFormData] = useState(docField);
@@ -139,6 +140,9 @@ const VehicleTable: React.FC = () => {
   };
   const handleOpenFuel = () => {
     setOpenFuel(true);
+  };
+  const handleOpenMaintenance = () => {
+    setOpenMaintenance(true);
   };
 
   const handleOpenDoc = (doc: any) => {
@@ -159,6 +163,10 @@ const VehicleTable: React.FC = () => {
   const handleCloseFuel = () => {
     setToggle(false);
     setOpenFuel(false);
+  };
+  const handleCloseMaintenance = () => {
+    setToggle(false);
+    setOpenMaintenance(false);
   };
 
   const handleCloseDoc = () => {
@@ -436,6 +444,43 @@ const VehicleTable: React.FC = () => {
     __v: number;
   }
 
+  const fetchAndFilterByDateAndVehicle = async (
+    apiUrl: string,
+    vehicleNumber: string,
+    date: string,
+    endDate: string
+  ) => {
+    const datesInRange = getDatesInRange(date, endDate).join(",");
+    try {
+      const response = await axios.get(
+        `${apiUrl}/${vehicleNumber}/${datesInRange}`
+      );
+
+      // Filter results by vehicle and date
+      const filteredItems = response.data.dataGot.flatMap((entry: Entry) => {
+        // Check if the date of the entry is within the specified range
+        if (datesInRange.includes(entry.date)) {
+          const filteredVehicleItems = entry.items.filter(
+            (item: Item) => item.vehicle === vehicleNumber
+          );
+
+          // Return the items with the date included
+          return filteredVehicleItems.map((item: Item) => ({
+            date: entry.date,
+            item: item,
+          }));
+        }
+        return [];
+      });
+
+      return filteredItems;
+    } catch (err: any) {
+      console.error(err.message);
+      return [];
+    }
+  };
+
+  // Date range generator function (unchanged)
   const getDatesInRange = (date: string, endDate: string): any[] => {
     const dates = [];
     let currentDate = new Date(date);
@@ -448,56 +493,41 @@ const VehicleTable: React.FC = () => {
     return dates;
   };
 
-  const handleSearchFuel = async (e: any) => {
+  // Combined search handler
+  const handleSearch = async (e: any, searchType: "fuel" | "maintenance") => {
     e.preventDefault();
-    const datesInRange = getDatesInRange(date, endDate).join(",");
-    try {
-      const response = await axios.get(
-        `/api/fuel/search/${vehicleNumber}/${datesInRange}`
-      );
 
-      const filteredItems = response.data.dataGot.flatMap((entry: Entry) => {
-        const filteredVehicleItems = entry.items.filter(
-          (item: Item) => item.vehicle === vehicleNumber
-        );
-        // Return an array of objects containing both the date and the filtered items
-        return filteredVehicleItems.map((item: Item) => ({
-          date: entry.date, // Include the date from the entry
-          item: item, // Include the filtered item
-        }));
-      });
-      handleOpenFuel();
-      setResults(filteredItems);
-    } catch (err: any) {
-      console.error(err.message);
+    const apiUrl =
+      searchType === "fuel"
+        ? "/api/fuel/search"
+        : "/api/vehicle/maintenance/search";
+
+    const filteredItems = await fetchAndFilterByDateAndVehicle(
+      apiUrl,
+      vehicleNumber,
+      date,
+      endDate
+    );
+
+    if (searchType === "fuel") {
+      if (filteredItems.length > 0) {
+        handleOpenFuel();
+      } else {
+        alert("No fuel expenses found");
+      }
+    } else {
+      if (filteredItems.length > 0) {
+        handleOpenMaintenance();
+      } else {
+        alert("No maintenance expenses found");
+      }
     }
-  };
-  const handleSearchMaintenance = async (e: any) => {
-    e.preventDefault();
-    const datesInRange = getDatesInRange(date, endDate).join(",");
-    try {
-      const response = await axios.get(
-        `/api/vehicle/maintenance/search/${vehicleNumber}/${datesInRange}`
-      );
 
-      console.log(response);
-
-      const filteredItems = response.data.dataGot.flatMap((entry: Entry) => {
-        const filteredVehicleItems = entry.items.filter(
-          (item: Item) => item.vehicle === vehicleNumber
-        );
-        // Return an array of objects containing both the date and the filtered items
-        return filteredVehicleItems.map((item: Item) => ({
-          date: entry.date, // Include the date from the entry
-          item: item, // Include the filtered item
-        }));
-      });
-      handleOpenFuel();
-      setResults(filteredItems);
-    } catch (err: any) {
-      console.error(err.message);
-    }
+    setResults(filteredItems);
   };
+
+  const handleSearchFuel = (e: any) => handleSearch(e, "fuel");
+  const handleSearchMaintenance = (e: any) => handleSearch(e, "maintenance");
 
   return (
     <>
@@ -1423,6 +1453,136 @@ const VehicleTable: React.FC = () => {
                       </TableRow>
                     ))}
                   </TableBody>
+                </Table>
+              </TableContainer>
+            </div>
+          </Modal>
+
+          {/* maintenance */}
+
+          <Modal
+            className="bus-form-modal"
+            open={openMaintenance}
+            onClose={handleCloseMaintenance}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <div className="bus-form-container" style={{ width: "80%" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginBottom: "20px",
+                }}
+              >
+                <h3>Vehicle Maintenance Expenses</h3>
+                <RxCrossCircled
+                  className="bus-form-cross"
+                  onClick={handleCloseMaintenance}
+                />
+              </div>
+              <TableContainer component={Paper} className="table-container">
+                <Table sx={{ minWidth: 650 }} aria-label="caption table">
+                  <TableHead style={{ background: "#ddff8f" }}>
+                    <TableRow>
+                      <TableCell>Date</TableCell>
+                      <TableCell>Vehicle</TableCell>
+                      <TableCell>Expense Type</TableCell>
+                      <TableCell>Amount</TableCell>
+                      <TableCell>Image</TableCell>
+                      <TableCell>Description</TableCell>
+                    </TableRow>
+                  </TableHead>
+
+                  {results.map(({ date, item }) => (
+                    <TableBody key={item.id}>
+                      <TableRow hover>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {date}
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {item.vehicle}
+                        </TableCell>
+                        {/* Fuel */}
+                        <TableCell style={{ textAlign: "center" }}>
+                          Tyre Rotation
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {item.tyreRotation}
+                        </TableCell>
+                        <TableCell>
+                          <FaDownload
+                            className="table-action-icon m-[auto]"
+                            style={{ color: "grey" }}
+                            onClick={() =>
+                              handleDownloadPO(item.tyreRotationFile)
+                            }
+                          />
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {item.tyreRotationDesc}
+                        </TableCell>
+                      </TableRow>
+                      {/* Maintenance */}
+                      <TableRow hover role="checkbox" tabIndex={-1}>
+                        <TableCell style={{ textAlign: "center" }}></TableCell>
+                        <TableCell style={{ textAlign: "center" }}></TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          Maintenance
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {item.maintenance}
+                        </TableCell>
+                        <FaDownload
+                          className="table-action-icon m-[auto]"
+                          style={{ color: "grey" }}
+                          onClick={() => handleDownloadPO(item.maintenanceFile)}
+                        />
+                        <TableCell style={{ textAlign: "center" }}>
+                          {item.maintenanceDesc}
+                        </TableCell>
+                      </TableRow>
+                      {/* Odometer */}
+                      <TableRow hover role="checkbox" tabIndex={-1}>
+                        <TableCell style={{ textAlign: "center" }}></TableCell>
+                        <TableCell style={{ textAlign: "center" }}></TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          Odometer
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {item.odometer}
+                        </TableCell>
+                        <FaDownload
+                          className="table-action-icon m-[auto]"
+                          style={{ color: "grey" }}
+                          onClick={() => handleDownloadPO(item.odometerFile)}
+                        />
+                        <TableCell style={{ textAlign: "center" }}>
+                          {item.odometerDesc}
+                        </TableCell>
+                      </TableRow>
+                      {/* Washing */}
+                      <TableRow hover role="checkbox" tabIndex={-1}>
+                        <TableCell style={{ textAlign: "center" }}></TableCell>
+                        <TableCell style={{ textAlign: "center" }}></TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          Washing
+                        </TableCell>
+                        <TableCell style={{ textAlign: "center" }}>
+                          {item.washing}
+                        </TableCell>
+                        <FaDownload
+                          className="table-action-icon m-[auto]"
+                          style={{ color: "grey" }}
+                          onClick={() => handleDownloadPO(item.washingFile)}
+                        />
+                        <TableCell style={{ textAlign: "center" }}>
+                          {item.washingDesc}
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  ))}
                 </Table>
               </TableContainer>
             </div>
