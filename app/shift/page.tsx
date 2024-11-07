@@ -374,12 +374,12 @@ const ShiftTable: React.FC = () => {
                     <TableCell
                       style={{ fontWeight: "bold", textAlign: "center" }}
                     >
-                      A-in / C-out
+                      A-shift 5am
                     </TableCell>
                     <TableCell
                       style={{ fontWeight: "bold", textAlign: "center" }}
                     >
-                      General In
+                      General In 8am
                     </TableCell>
                     <TableCell
                       style={{ fontWeight: "bold", textAlign: "center" }}
@@ -389,7 +389,7 @@ const ShiftTable: React.FC = () => {
                     <TableCell
                       style={{ fontWeight: "bold", textAlign: "center" }}
                     >
-                      B-in / A-out
+                      B-shift 1pm
                     </TableCell>
                     <TableCell
                       style={{ fontWeight: "bold", textAlign: "center" }}
@@ -399,12 +399,12 @@ const ShiftTable: React.FC = () => {
                     <TableCell
                       style={{ fontWeight: "bold", textAlign: "center" }}
                     >
-                      General Out
+                      General Out 5pm
                     </TableCell>
                     <TableCell
                       style={{ fontWeight: "bold", textAlign: "center" }}
                     >
-                      C-in / C-out
+                      C-shift 9pm
                     </TableCell>
 
                     <TableCell
