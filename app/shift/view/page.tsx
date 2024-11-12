@@ -229,7 +229,7 @@ const ShiftViewTable: React.FC = () => {
     projectId: projectId,
     projectName: projectName,
     employeeId: empId,
-    date: getFormattedDate(),
+    date: "",
     items: [
       {
         id: "",
@@ -327,6 +327,10 @@ const ShiftViewTable: React.FC = () => {
 
   const handleUpdateClick = () => {
     setUpdate(true);
+    setFormData({
+      ...formData,
+      date: getShiftData?.date || "",
+    });
     setItem(getShiftData?.items ?? []);
   };
 
@@ -340,7 +344,6 @@ const ShiftViewTable: React.FC = () => {
           id: shiftId, // Use the _id of the existing shift
           formData, // Send the updated formData
         });
-        alert("Shift updated successfully");
       }
 
       fetchShift();
@@ -600,7 +603,7 @@ const ShiftViewTable: React.FC = () => {
                         minWidth: "170px",
                       }}
                     >
-                      A-in / C-out
+                      A-shift 5am
                     </TableCell>
                     <TableCell
                       style={{
@@ -609,7 +612,7 @@ const ShiftViewTable: React.FC = () => {
                         minWidth: "170px",
                       }}
                     >
-                      General In
+                      General In 8am
                     </TableCell>
                     <TableCell
                       style={{
@@ -627,7 +630,7 @@ const ShiftViewTable: React.FC = () => {
                         minWidth: "170px",
                       }}
                     >
-                      B-in / A-out
+                      B-shift 1pm
                     </TableCell>
                     <TableCell
                       style={{
@@ -645,7 +648,7 @@ const ShiftViewTable: React.FC = () => {
                         minWidth: "170px",
                       }}
                     >
-                      General Out
+                      General Out 5pm
                     </TableCell>
                     <TableCell
                       style={{
@@ -654,7 +657,7 @@ const ShiftViewTable: React.FC = () => {
                         minWidth: "170px",
                       }}
                     >
-                      C-in / C-out
+                      C-shift 9pm
                     </TableCell>
                     {update ? (
                       <TableCell
@@ -752,8 +755,10 @@ const ShiftViewTable: React.FC = () => {
                           >
                             {getEmployee.length > 0 ? (
                               getEmployee
-                                .filter(
-                                  (type) => type.designation === "Driver-1"
+                                .filter((type) =>
+                                  ["Driver-1", "Driver-2", "Driver-3"].includes(
+                                    type.designation
+                                  )
                                 )
                                 .map((type) => (
                                   <MenuItem
@@ -1022,7 +1027,13 @@ const ShiftViewTable: React.FC = () => {
                     className="submit"
                     type="submit"
                     variant="outlined"
-                    onClick={() => setUpdate(false)}
+                    onClick={() => {
+                      setUpdate(false);
+                      setFormData({
+                        ...formData,
+                        date: "",
+                      });
+                    }}
                   >
                     Cancel
                   </Button>
