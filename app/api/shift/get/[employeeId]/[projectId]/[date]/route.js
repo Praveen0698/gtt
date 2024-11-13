@@ -27,7 +27,11 @@ export async function GET(req, { params }) {
     }
 
     return NextResponse.json(
-      { message: "Shift found in the first element", data: shift.items },
+      {
+        message: "Shift found in the first element",
+        data: shift.items,
+        date: shift.date,
+      },
       { status: 200 }
     );
   } catch (error) {

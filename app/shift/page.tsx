@@ -153,7 +153,7 @@ const ShiftTable: React.FC = () => {
     projectId: projectId,
     projectName: projectName,
     employeeId: empId,
-    date: getFormattedDate(),
+    date: "",
     items: [
       {
         id: "",
@@ -260,7 +260,7 @@ const ShiftTable: React.FC = () => {
       projectId: projectId,
       projectName: projectName,
       employeeId: empId,
-      date: getFormattedDate(),
+      date: "",
       items: [
         {
           id: "",
@@ -303,7 +303,11 @@ const ShiftTable: React.FC = () => {
     setIsLoading(true);
     await axios
       .get(`/api/shift/get/${empId}/${projectId}/${yesterdayDate}`)
-      .then((res) => setItem(res.data.data))
+      .then((res) => {
+        setItem(res.data.data);
+        setFormData({ ...formData, date: res.data.date });
+        console.log(res.data);
+      })
       .catch((err) => console.error(err))
       .finally(() => setIsLoading(false));
   };
@@ -332,19 +336,38 @@ const ShiftTable: React.FC = () => {
           <div className="table-main-container">
             <div
               className="title-button-container"
-              style={{ justifyContent: "flex-start", gap: "20px" }}
+              style={{
+                justifyContent: "space-between",
+                alignItems: "center",
+                gap: "20px",
+              }}
             >
-              {getShift.length > 0 ? (
-                <Button
-                  id="input-btn-cancel"
-                  className="cancel"
-                  style={{ background: "#ccc", color: "black" }}
-                  onClick={handleAutoFill}
-                  variant="outlined"
-                >
-                  Auto
-                </Button>
-              ) : null}
+              <div className="flex justify-between items-centers gap-5">
+                {getShift.length > 0 ? (
+                  <Button
+                    id="input-btn-cancel"
+                    className="cancel"
+                    style={{ background: "#ccc", color: "black" }}
+                    onClick={handleAutoFill}
+                    variant="outlined"
+                  >
+                    Auto
+                  </Button>
+                ) : null}
+                <input
+                  type="date"
+                  style={{
+                    width: "150px",
+                    border: "1px solid black",
+                    padding: "2px 10px",
+                    borderRadius: "5px",
+                  }}
+                  value={formData.date}
+                  onChange={(e) =>
+                    setFormData({ ...formData, date: e.target.value })
+                  }
+                />
+              </div>
               <h3 className="table-h3">Project wise Shifts</h3>
             </div>
             <TableContainer component={Paper} className="table-container">
