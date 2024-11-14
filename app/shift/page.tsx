@@ -294,22 +294,38 @@ const ShiftTable: React.FC = () => {
     ]);
   };
 
-  const currentDate = new Date();
-  currentDate.setDate(currentDate.getDate() - 1);
-
-  const yesterdayDate = currentDate.toISOString().split("T")[0];
-
   const handleAutoFill = async () => {
-    setIsLoading(true);
-    await axios
-      .get(`/api/shift/get/${empId}/${projectId}/${yesterdayDate}`)
-      .then((res) => {
-        setItem(res.data.data);
-        setFormData({ ...formData, date: res.data.date });
-        console.log(res.data);
-      })
-      .catch((err) => console.error(err))
-      .finally(() => setIsLoading(false));
+    if (formData.date) {
+      setIsLoading(true);
+      await axios
+        .get(`/api/shift/get/${empId}/${projectId}/${formData.date}`)
+        .then((res) => {
+          setItem(res.data.data);
+          setFormData({ ...formData, date: res.data.date });
+          console.log(res.data);
+        })
+        .catch(() => {
+          setItem([
+            {
+              id: "",
+              vehicle: "",
+              source: "",
+              destination: "",
+              aincout: "",
+              generalIn: "",
+              shuttle2: "",
+              binaout: "",
+              shuttle3: "",
+              generalOut: "",
+              cincout: "",
+            },
+          ]);
+          formData.date = "";
+        })
+        .finally(() => setIsLoading(false));
+    } else {
+      alert("Select date!!");
+    }
   };
 
   return (

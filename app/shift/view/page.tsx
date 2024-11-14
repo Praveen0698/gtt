@@ -72,16 +72,14 @@ const ShiftViewTable: React.FC = () => {
   const empId = searchParams.get("empId");
 
   const shiftData = searchParams.get("shift");
-  const getShiftData: ShiftData | null = shiftData
-    ? JSON.parse(shiftData)
-    : null;
+  let getShiftData: ShiftData | null = shiftData ? JSON.parse(shiftData) : null;
 
+  const [finalShiftData, setFinalShiftData] = useState(getShiftData);
   const [getSource, setGetSource] = useState<any[]>([]);
   const [getDestination, setGetDestination] = useState<any[]>([]);
   const [getVehicle, setGetVehicle] = useState<any[]>([]);
   const [update, setUpdate] = useState(false);
   const [shiftId, setShiftId] = useState("");
-
   const [getProject, setGetProject] = useState<any[]>([]);
   const projectDetails = async () => {
     setIsLoading(true);
@@ -308,20 +306,7 @@ const ShiftViewTable: React.FC = () => {
     }
   };
 
-  const [getShift, setGetShift] = useState<any[]>([]);
-
-  const fetchShift = async () => {
-    setIsLoading(true);
-    try {
-      const res = await axios.get(`/api/shift/getall/${empId}/${projectId}`);
-      setGetShift(res.data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   useEffect(() => {
-    fetchShift();
     fetchEmployee();
   }, [empId, projectId]);
 
@@ -340,17 +325,19 @@ const ShiftViewTable: React.FC = () => {
 
     try {
       if (shiftId) {
-        await axios.put(`/api/shift/update`, {
-          id: shiftId, // Use the _id of the existing shift
-          formData, // Send the updated formData
-        });
-      }
-
-      fetchShift();
-      if (role === "admin") {
-        router.push("/dashboard");
-      } else if (role === "manager") {
-        router.push("/dashboard/manager");
+        await axios
+          .put(`/api/shift/update`, {
+            id: shiftId, // Use the _id of the existing shift
+            formData, // Send the updated formData
+          })
+          .then(() => {
+            if (role === "admin") {
+              router.push("/dashboard");
+            } else {
+              router.push("/dashboard/manager");
+            }
+          })
+          .catch((err) => console.error(err));
       }
     } catch (err) {
       console.error("Error saving shift:", err);
@@ -966,7 +953,7 @@ const ShiftViewTable: React.FC = () => {
                   </TableBody>
                 ) : (
                   <TableBody>
-                    {getShiftData?.items.map((row, index) => (
+                    {finalShiftData?.items.map((row, index) => (
                       <TableRow
                         hover
                         role="checkbox"
